@@ -6,9 +6,9 @@
 </head>
 <body>
 <h1>
-	테스트
+	<a href="index.do">index</a>
 </h1>
-
+	<h2>한글테스트</h2>
 <P>  The time on the server is ${serverTime}. </P>
 </body>
 </html>
