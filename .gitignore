@@ -1,0 +1,5 @@
+comicproject/.settings/
+comicproject/_comicproject/
+comicproject/target/
+comicproject/src/main/webapp/WEB-INF/lib/
+patch.diff
