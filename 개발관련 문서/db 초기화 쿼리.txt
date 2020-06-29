@@ -1,0 +1,67 @@
+create table T_USER(
+  uidx number,
+  id varchar2(16),
+  pwd varchar2(20),
+  uname varchar2(10),
+  addr varchar2(200),
+  phone varchar2(15),
+  point number default 0,
+  sdate varchar2(20),
+  edate varchar2(20),
+  grade number default 0,
+  isyn number,
+  constraint user_pk primary key(uidx),
+  constraint user_ck_id check (length(id) >= 5),
+  constraint user_ck_pwd check (length(pwd) >= 8),
+  constraint user_ck_uname check (length(uname) >= 2)
+);
+
+create sequence user_pk_seq
+increment by 1
+start with 1
+minvalue 1
+nocycle
+nocache;
+
+create or replace procedure proc_add_user(
+p_id in T_USER.id%type,
+p_pwd in T_USER.pwd%type,
+p_uname in T_USER.uname%type,
+p_addr in T_USER.addr%type,
+p_phone in T_USER.phone%type,
+p_err out boolean)
+is
+  vn_cnt number := 0;
+begin
+  select count(*)
+  into vn_cnt
+  from T_USER
+  where p_id = id;
+  
+  if vn_cnt = 0 then
+    insert into T_USER(uidx, id, pwd, uname, addr, phone)
+    values('U' || LPAD(user_pk_seq.nextval, 10, '0'), p_id, p_pwd, p_uname, p_addr, p_phone );
+    p_err := false;
+  else
+    p_err := true;
+  end if;
+end;
+
+create or replace procedure proc_del_user(
+p_id in T_USER.id%type,
+p_err out boolean)
+is
+  vn_cnt number := 0;
+begin
+  select count(*)
+  into vn_cnt
+  from T_USER
+  where p_id = id;
+  
+  if vn_cnt = 1 then
+    delete from T_USER where p_id = id;
+    p_err := false;
+  else
+    p_err := true;
+  end if;
+end;
