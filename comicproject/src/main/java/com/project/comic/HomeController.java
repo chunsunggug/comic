@@ -1,9 +1,6 @@
 package com.project.comic;
 
-<<<<<<< HEAD
-=======
 import java.util.List;
->>>>>>> branch 'master' of https://github.com/chunsunggug/comic.git
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,32 +21,23 @@ public class HomeController {
 	
 
 	
-<<<<<<< HEAD
-=======
 	@Autowired
 	private UserDao userDao;
 	
-	//private SqlSessionFactory sqlSessionFactory; factory ¸»°í ´Ù¿À ºÒ·¯¿À±â auto°¡ ¸ÅÄª ½ÃÄÑÁÜ
->>>>>>> branch 'master' of https://github.com/chunsunggug/comic.git
 	@RequestMapping(value = "/index.do", method = RequestMethod.GET)
 	public ModelAndView index(HttpServletRequest request) {
 		Set pathSet = request.getSession().getServletContext().getResourcePaths("/");
-		System.out.println("sql µé¾î°¡±âÀü ");
+		System.out.println("sql ï¿½ï¿½î°¡ï¿½ï¿½ï¿½ï¿½ ");
 		
 		
 		
 		List<UserDTO> ls = userDao.userList();
-		System.out.println("¸®½ºÆ® È®ÀÎ"+ls);
+		System.out.println("ï¿½ï¿½ï¿½ï¿½Æ® È®ï¿½ï¿½"+ls);
 		
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("index");
 
-		//SqlSessionTemplate template = new SqlSessionTemplate(sqlSessionFactory);
-		//UserMapper userMapper = template.getMapper(UserMapper.class);
-		//UserDTO userDTO = userMapper.getUser("id");
-		
-		//System.out.println(userDTO.getId());
 		
 		return mv;
 	}	
