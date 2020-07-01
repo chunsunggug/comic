@@ -1,3 +1,8 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="false" contentType="text/html; charset=UTF-8"%>
+
+
+
 <body id="body" class="up-scroll">
 
   <!-- Preloader -->
@@ -27,7 +32,8 @@
               </svg>
             </a>
             <div class="float-right btn-wrapper">
-              <a class="btn btn-outline-primary" href="add-listings.html">+ <span>Add listing</span></a>
+              <a class="btn btn-outline-primary" href="add-listings.html"> <span id="signin">로그인</span></a>
+              <a class="btn btn-outline-primary" href="add-listings.html" style="margin-left: 30px;margin-right: 30px;"> <span id="signup">회원가입</span></a>
             </div>
             <ul class="menuzord-menu menuzord-right">
               <li class="active">

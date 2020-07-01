@@ -1,3 +1,8 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="false" contentType="text/html; charset=UTF-8"%>
+
+
+
   <footer class="footer-dark" style="background-image: url(resources/img/background/bg-footer.jpg)">
 
     <div class="container">

@@ -1,6 +1,9 @@
 package com.project.comic;
 
+<<<<<<< HEAD
+=======
 import java.util.List;
+>>>>>>> branch 'master' of https://github.com/chunsunggug/comic.git
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,10 +24,13 @@ public class HomeController {
 	
 
 	
+<<<<<<< HEAD
+=======
 	@Autowired
 	private UserDao userDao;
 	
 	//private SqlSessionFactory sqlSessionFactory; factory 말고 다오 불러오기 auto가 매칭 시켜줌
+>>>>>>> branch 'master' of https://github.com/chunsunggug/comic.git
 	@RequestMapping(value = "/index.do", method = RequestMethod.GET)
 	public ModelAndView index(HttpServletRequest request) {
 		Set pathSet = request.getSession().getServletContext().getResourcePaths("/");
