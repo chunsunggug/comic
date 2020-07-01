@@ -1,9 +1,7 @@
 package com.project.comic;
 
-<<<<<<< HEAD
-=======
+
 import java.util.List;
->>>>>>> branch 'master' of https://github.com/chunsunggug/comic.git
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,32 +22,20 @@ public class HomeController {
 	
 
 	
-<<<<<<< HEAD
-=======
 	@Autowired
 	private UserDao userDao;
 	
-	//private SqlSessionFactory sqlSessionFactory; factory 말고 다오 불러오기 auto가 매칭 시켜줌
->>>>>>> branch 'master' of https://github.com/chunsunggug/comic.git
 	@RequestMapping(value = "/index.do", method = RequestMethod.GET)
 	public ModelAndView index(HttpServletRequest request) {
 		Set pathSet = request.getSession().getServletContext().getResourcePaths("/");
-		System.out.println("sql 들어가기전 ");
-		
-		
 		
 		List<UserDTO> ls = userDao.userList();
-		System.out.println("리스트 확인"+ls);
+		System.out.println(""+ls);
 		
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("index");
 
-		//SqlSessionTemplate template = new SqlSessionTemplate(sqlSessionFactory);
-		//UserMapper userMapper = template.getMapper(UserMapper.class);
-		//UserDTO userDTO = userMapper.getUser("id");
-		
-		//System.out.println(userDTO.getId());
 		
 		return mv;
 	}	
