@@ -1,3 +1,6 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="false" contentType="text/html; charset=UTF-8"%>
+
 
     <div class="main-wrapper">
 
@@ -21,33 +24,28 @@
 
         <!-- Search Box -->
         <div class="search-box-2">
-          <form class="form-row justify-content-center" method="GET" action="listings-half-screen-map-list.html">
+          <form class="form-row justify-content-center" method="GET" action="#">
 
             <div class="form-group col-md-5 col-lg-4">
               <div class="input-group mb-2">
                 <div class="input-group-prepend">
-                  <div class="input-group-text">Find</div>
+                  
+                <!--<div class="input-group-text">Find</div>-->
+                <select class="input-group-text" name="findBook">
+                	<option selected="selected" value="title">책 제목</option>
+                	<option value="author">저자</option>
+                	<option value="library">출판사</option>
+                </select>
+                
+                
                 </div>
-                <input type="text" class="form-control" placeholder="What are you looking for?">
+                  <input type="text" class="form-control" placeholder="찾는 책이 있나요?">
               </div>
             </div>
 
-            <div class="form-group prepend-append col-md-5 col-lg-4">
-              <div class="input-group mb-2">
-                <div class="input-group-prepend">
-                  <div class="input-group-text">Near</div>
-                </div>
-                <input type="text" class="form-control" placeholder="Location">
-                <div class="input-group-append">
-                  <span class="input-group-text" data-toggle="tooltip" data-placement="left" title="Find my location">
-                    <i class="icon-listy icon-target" aria-hidden="true"></i>
-                  </span>
-                </div>
-              </div>
-            </div>
 
             <div class="form-group col-md-3 col-lg-2">
-              <button type="submit" class="btn btn-block btn-primary">Search
+              <button type="submit" class="btn btn-block btn-primary">검색
                 <i class="fa fa-search" aria-hidden="true"></i>
               </button>
             </div>
