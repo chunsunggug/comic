@@ -17,9 +17,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public List userList() {
-		System.out.println("userdaoimpl");
 		List rs = sqlMap.selectList("userList");
-		System.out.println("userdaoimpl after");		
 		return rs;
 	}
 

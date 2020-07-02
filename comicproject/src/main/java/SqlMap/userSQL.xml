@@ -4,7 +4,7 @@
         
         <!-- select id => class 내의 스테이트먼트 파람 -->
 <mapper namespace="com.project.comic.user.UserDao">
-    <select id="functionname" resultType="com.project.comic.user.UserDTO">
+    <select id="userList" resultType="com.project.comic.user.UserDTO">
     select * from t_user
     </select>
 </mapper>

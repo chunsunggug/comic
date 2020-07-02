@@ -17,7 +17,70 @@
     </div>
   </div>
 
+ <!-- register modal -->
+   <div class="modal fade" id="reg-modal" tabindex="-1" role="dialog"
+      aria-labelledby="Login" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
 
+         <div class="modal-content">
+            <div class="modal-header">
+               <h4 class="modal-title" id="Login">회원가입</h4>
+               <button type="button" class="close" data-dismiss="modal"
+                  aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+
+
+               <form action="memberJoin.do" method="post" name="memberJoin" onsubmit="return checkValue()">
+                  <div class="form-group">
+                     <input type="text" class="form-control" name="id"
+                        id="id" placeholder="ID 입력란" readonly>
+                        <p class="text-center" style="margin-top: 16px;"><input type="button" onclick="openIdCheck()" value="ID 중복확인" class="btn btn-primary">
+                  </p>
+                  </div>
+                  <div class="form-group">
+                     <input type="password" class="form-control" name="pwd"
+                        id="pwd" placeholder="비밀번호" required>
+                  </div>
+                  <div class="form-group">
+                     <input type="password" class="form-control" id="pwdcheck"
+                     placeholder="비밀번호 재입력" required autofocus>
+                  </div>
+                  <div class="form-group">
+                     <input type="text" class="form-control" name="name"
+                        id="name" placeholder="이름" required>
+                  </div>
+                  <div class="form-group">
+                     <input type="text" class="form-control" name="addr"
+                        id="addr" placeholder="주소" required>
+                  </div>
+                  <div class="form-group">
+                     <input type="text" class="form-control" name="phone"
+                        id="phone" placeholder="핸드폰" required>
+                  </div>
+                  <div class="form-group">
+                     <input type="text" class="form-control" name="birth"
+                        id="birth" placeholder="생년월일(ex:19931230)" required>
+                  </div>
+                  
+                  
+                  
+                  
+                  <p class="text-center">
+                     <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-sign-in"></i> 회원가입
+                     </button>
+                  </p>
+                  
+                  
+               </form>
+
+            </div>
+         </div>
+      </div>
+   </div>
+   
+   
     <!-- HEADER -->
     <header class="header">
       <nav class="nav-menuzord nav-menuzord-transparent navbar-sticky">
@@ -32,8 +95,13 @@
               </svg>
             </a>
             <div class="float-right btn-wrapper">
-              <a class="btn btn-outline-primary" href="add-listings.html"> <span id="signin">로그인</span></a>
-              <a class="btn btn-outline-primary" href="add-listings.html" style="margin-left: 30px;margin-right: 30px;"> <span id="signup">회원가입</span></a>
+              <a class="btn btn-outline-primary" href="signin.do"> <span id="signin">로그인</span></a>
+              <a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#reg-modal"><span id="signup">회원가입</span> </a>
+              
+              
+              
+              
+              <a class="btn btn-outline-primary" href="signup.do" style="margin-left: 30px;margin-right: 30px;"> <span id="signup">회원가입</span></a>
             </div>
             <ul class="menuzord-menu menuzord-right">
               <li class="active">

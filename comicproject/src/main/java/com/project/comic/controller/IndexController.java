@@ -1,4 +1,4 @@
-package com.project.comic;
+package com.project.comic.controller;
 
 import java.util.List;
 import java.util.Set;
@@ -17,22 +17,13 @@ import com.project.comic.user.UserDTO;
 import com.project.comic.user.UserDao;
 
 @Controller
-public class HomeController {
-	
-
-	
-	@Autowired
-	private UserDao userDao;
+public class IndexController {
 	
 	@RequestMapping(value = "/index.do", method = RequestMethod.GET)
 	public ModelAndView index(HttpServletRequest request) {
 		Set pathSet = request.getSession().getServletContext().getResourcePaths("/");
-		System.out.println("sql ������ ");
 		
 		
-		
-		List<UserDTO> ls = userDao.userList();
-		System.out.println("����Ʈ Ȯ��"+ls);
 		
 		
 		ModelAndView mv = new ModelAndView();
@@ -41,4 +32,7 @@ public class HomeController {
 		
 		return mv;
 	}	
+	
+	
+	
 }
