@@ -4,7 +4,24 @@
         
         <!-- select id => class 내의 스테이트먼트 파람 -->
 <mapper namespace="com.project.comic.user.UserDao">
-    <select id="functionname" resultType="com.project.comic.user.UserDTO">
-    select * from t_user
+    <select id="getUser" resultType="com.project.comic.user.UserDTO" parameterType="java.lang.String">
+    select * from t_user where id=#{id}
     </select>
+    
+    <select id="getUserAll" resultType="com.project.comic.user.UserDTO" >
+    select * from t_user;
+    </select>
+    
+    <insert id="addUser" parameterType="com.project.comic.user.UserDTO">
+    insert into t_user(id,pwd,name,phone,birth)
+    values(#{id},#{pwd},#{name},#{phone},#{birth})
+    </insert>
+    
+    <delete id="deleteUser" parameterType="java.lang.String">
+    delete from t_user where id=#{id}
+    </delete>
+    
+    <delete id="deleteUserAll">
+    delete from t_user;
+    </delete>
 </mapper>

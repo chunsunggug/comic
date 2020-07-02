@@ -51,11 +51,7 @@
 
 	
  	 
- 	<bean id="userDao" class="com.project.comic.user.UserDaoImpl">
- 		<constructor-arg>
-			<ref bean="sqlSessionTemplate"/>
-		</constructor-arg>
- 	</bean> 
+ 	<bean id="userDao" class="com.project.comic.user.UserDaoImpl"/>
  	
  	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->

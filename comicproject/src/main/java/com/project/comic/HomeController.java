@@ -6,8 +6,6 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,9 +27,14 @@ public class HomeController {
 	public ModelAndView index(HttpServletRequest request) {
 		Set pathSet = request.getSession().getServletContext().getResourcePaths("/");
 		
-		List<UserDTO> ls = userDao.userList();
-		System.out.println(""+ls);
+		List<UserDTO> ls = userDao.getUserAll();
+		UserDTO getuserDto = userDao.getUser("id2");
+		getuserDto.setId("id10");
+		userDao.addUser(getuserDto);
+		userDao.deleteUserAll();
 		
+		System.out.println(ls.get(0).getName());
+		System.out.println(getuserDto);
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("index");
