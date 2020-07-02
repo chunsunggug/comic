@@ -1,26 +1,4 @@
 set foreign_key_checks = 0;
-DROP TABLE if exists T_USER cascade;
-CREATE TABLE `t_user_addr` (
-	`pidx` INT(11) NOT NULL AUTO_INCREMENT COMMENT '주소 인덱스',
-	`uidx` INT(11) NOT NULL COMMENT '유저 인덱스',
-	`post` VARCHAR(15) NOT NULL COMMENT '우편번호' COLLATE 'utf8_general_ci',
-	`new_addr` VARCHAR(50) NOT NULL COMMENT '신주소' COLLATE 'utf8_general_ci',
-	`old_addr` VARCHAR(50) NOT NULL COMMENT '구주소' COLLATE 'utf8_general_ci',
-	`detail` VARCHAR(50) NULL COMMENT '상세주소' COLLATE 'utf8_general_ci',
-	PRIMARY KEY (`pidx`) USING BTREE,
-	INDEX `uidx` (`uidx`) USING BTREE,
-	CONSTRAINT `uidx` FOREIGN KEY (`uidx`) REFERENCES `comic`.`t_user` (`uidx`) ON UPDATE CASCADE ON DELETE CASCADE,
-	CONSTRAINT 'pwd' CHECK ( CHAR_LENGTH(pwd) BETWEEN 8 AND 20 ),
-	CONSTRAINT 'id' CHECK ( CHAR_LENGTH(id) >= 5),
-	CONSTRAINT 'name' CHECK (CHAR_LENGTH(NAME) >= 2),
-	CONSTRAINT 'phone' CHECK ( CHAR_LENGTH(phone) >= 8)
-	CONSTRAINT 'birth' CHECK ( DATE_FORMAT (birth, 'YYYYMMDD') BETWEEN DATE_FORMAT(1900-01-01,'YYYYMMDD') AND DATE_FORMAT(NOW(), 'YYYYMMDD') )
-	CONSTRAINT 'point' CHECK ( POINT >= 0 )
-)
-COLLATE='utf8_general_ci'
-ENGINE=InnoDB
-;
-
 DROP TABLE if exists T_USER_ADDR cascade;
 CREATE TABLE `t_user_addr` (
 	`pidx` INT(11) NOT NULL AUTO_INCREMENT COMMENT '주소 인덱스',
@@ -36,10 +14,36 @@ CREATE TABLE `t_user_addr` (
 COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 ;
+DROP TABLE if exists T_USER cascade;
+CREATE TABLE `t_user` (
+	`uidx` INT(11) NOT NULL AUTO_INCREMENT COMMENT '기본키',
+	`id` VARCHAR(20) NOT NULL COLLATE 'utf8_general_ci',
+	`pwd` VARCHAR(20) NOT NULL COLLATE 'utf8_general_ci',
+	`name` VARCHAR(20) NOT NULL COLLATE 'utf8_general_ci',
+	`phone` VARCHAR(15) NOT NULL COLLATE 'utf8_general_ci',
+	`birth` CHAR(8) NOT NULL COLLATE 'utf8_general_ci',
+	`point` INT(11) NOT NULL DEFAULT '500',
+	`sdate` DATETIME NOT NULL DEFAULT current_timestamp(),
+	`edate` DATETIME NULL,
+	`type` CHAR(1) NOT NULL DEFAULT 'C' COLLATE 'utf8_general_ci',
+	`isYn` CHAR(1) NOT NULL DEFAULT 'Y' COLLATE 'utf8_general_ci',
+	PRIMARY KEY (`uidx`) USING BTREE,
+	UNIQUE INDEX `id` (`id`) USING BTREE,
+	CONSTRAINT chk_pwd CHECK ( CHAR_LENGTH(pwd) BETWEEN 8 AND 20 ),
+	CONSTRAINT chk_id CHECK ( CHAR_LENGTH(id) >= 5),
+	CONSTRAINT chk_name CHECK (CHAR_LENGTH(NAME) >= 2),
+	CONSTRAINT chk_phone CHECK ( CHAR_LENGTH(phone) >= 8),
+	CONSTRAINT chk_point CHECK ( POINT >= 0 )
+)
+COMMENT='유저 테이블'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
 set foreign_key_checks = 1;
 
-INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id1', 'pwd1', 'name1', '01011112222', '20001212');
-INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id2', 'pwd2', 'name2', '01011112222', '20001212');
-INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id3', 'pwd3', 'name3', '01011112222', '20001212');
-INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id4', 'pwd4', 'name4', '01011112222', '20001212');
-INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id5', 'pwd5', 'name5', '01011112222', '20001212');
+INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id001', 'pwd00001', 'name1', '01011112222', '20001212');
+INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id002', 'pwd00002', 'name2', '01011112222', '20001212');
+INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id003', 'pwd00003', 'name3', '01011112222', '20001212');
+INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id004', 'pwd00004', 'name4', '01011112222', '20001212');
+INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id005', 'pwd00005', 'name5', '01011112222', '20001212');
