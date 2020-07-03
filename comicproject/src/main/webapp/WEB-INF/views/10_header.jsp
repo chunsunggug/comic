@@ -31,10 +31,11 @@
 
 
 					<form action="signup.do" method="post" name="signup"
-						onsubmit="return checkValue()" novalidate="novalidate">
+						onsubmit="return checkValue()">
 						<div class="form-group">
 							<input type="email" class="form-control" name="id" id="id"
-								placeholder="E-Mail 형식 ID(ex: abc@mail.com)" onblur="checkId()">
+								placeholder="E-Mail 형식 ID(ex: abc@mail.com)" onblur="checkId()"
+								required>
 							<p class="text-center" style="margin-top: 16px;">
 								<span id="checkEmail"></span>
 							</p>
@@ -42,7 +43,7 @@
 
 						<div class="form-group">
 							<input type="password" class="form-control" name="pwd" id="pwd"
-								placeholder="비밀번호" required>
+								placeholder="비밀번호 (8자리이상)" required>
 						</div>
 						<div class="form-group">
 							<input type="password" class="form-control" id="pwdcheck"
@@ -54,7 +55,7 @@
 						</div>
 
 
-						<input type="text" name="addr" id="addr" />
+						<input type="hidden" name="addr" id="addr" value="check" />
 
 						<div class="form-group">
 							<input type="text" class="form-control" id="addrf"
@@ -69,18 +70,18 @@
 
 						<div class="form-group">
 							<input type="text" class="form-control" name="addrd" id="addrd"
-								onblur="addrAppend()" placeholder="상세 주소 입력" required>
+								placeholder="상세 주소 입력" required>
 						</div>
 
 
 
 						<div class="form-group">
-							<input type="text" class="form-control" name="phone" id="phone"
+							<input type="tel" class="form-control" name="phone" id="phone"
 								placeholder="핸드폰 번호 (ex: 01039063915)" required>
 						</div>
 						<div class="form-group">
-							<input type="text" class="form-control" name="birth" id="birth"
-								placeholder="생년월일(ex: 19931230)" required>
+							<input type="date" class="form-control" name="birth" id="birth"
+								onblur="addrAppend()" max="today()" required>
 						</div>
 
 
@@ -173,24 +174,30 @@
 	</script>
 
 	<script>
-<!--하단의 Ajac첫번째 파라미터 url 경로 destnation , 두번째 파라미터는 보낼 데이터 값을 입력 ,	세번째 파라미터 펑션으로 실행하는데 데이터 값을 받음  리턴 받는 이름 data 리턴 받은 data를 통해 확인-->
-function checkId() {
-	$.post("idCheck.do",{ 
-		"id" : $("#id").val()
-	},function(data){
-		if(data=='0'){
-			$("#checkEmail").html("사용가능한 EMAIL 입니다.").css("color","green");
-			$("#input_pwd").focus();
-		}else{
-			$("#checkEmail").html("사용불가능한 EMAIL 입니다.").css("color","red");
-			$("#input_email").focus();
+	<!--하단의 Ajac첫번째 파라미터 url 경로 destnation , 두번째 파라미터는 보낼 데이터 값을 입력 ,	세번째 파라미터 펑션으로 실행하는데 데이터 값을 받음  리턴 받는 이름 data 리턴 받은 data를 통해 확인-->
+		function checkId() {
+			var id = $("#id").val();
+			var check = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+
+			if (!check.test(id)) {
+				$("#checkEmail").html("EMAIL 형식이 다릅니다.").css("color", "red");
+			} else {
+				$.post("idCheck.do", {
+					"id" : $("#id").val()
+				}, function(data) {
+					if (data == '0') {
+						$("#checkEmail").html("사용가능한 EMAIL 입니다.").css("color",
+								"green");
+						$("#input_pwd").focus();
+					} else {
+						$("#checkEmail").html("사용불가능한 EMAIL 입니다.").css("color",
+								"red");
+						$("#input_email").focus();
+					}
+				});
+			}
 		}
-	});
-	
-	
-}
-	
-</script>
+	</script>
 
 
 
@@ -206,8 +213,9 @@ function checkId() {
 			var phone = document.signup.phone.value;
 			var regExp = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
 			var id = document.signup.id.value;
+			var birth = document.getElementById('birth').value;
+			var checkbirth = document.getElementById('birth').value = new Date().toISOString().substring(0,4);
 			if (!document.signup.id.value) {
-				
 				alert("아이디를 다시 확인하세요.");
 				return false;
 			}
@@ -228,13 +236,28 @@ function checkId() {
 				return false;
 			}
 		}
-		function openIdCheck() {
-			window.open('idCheckForm.do', 'idCheck', 'width=300,height=200');
-		}
 	</script>
 
+<!-- date check max today -->
+	<script>
+		document.getElementById('birth').value = new Date().toISOString()
+				.substring(0, 10);
+		var today = new Date();
+		var yyyy = today.getFullYear();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+		 if(dd<10){
+		        dd='0'+dd
+		    } 
+		    if(mm<10){
+		        mm='0'+mm
+		    } 
 
-
+		today = yyyy+'-'+mm+'-'+dd;
+		document.getElementById('birth').setAttribute("max", today);
+		 
+		 
+	</script>
 
 
 

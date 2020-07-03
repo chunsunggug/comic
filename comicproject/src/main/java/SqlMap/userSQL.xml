@@ -13,8 +13,8 @@
     </select>
     
     <insert id="addUser" parameterType="com.project.comic.user.UserDTO">
-    insert into t_user(id,pwd,name,phone,birth)
-    values(#{id},#{pwd},#{name},#{phone},#{birth})
+    insert into t_user(id,pwd,name,addr,phone,birth)
+    values(#{id},#{pwd},#{name},#{addr},#{phone},#{birth})
     </insert>
     
     <delete id="deleteUser" parameterType="java.lang.String">

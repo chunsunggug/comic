@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +24,21 @@ public class UserController {
 
 	@Autowired
 	private UserDao userDao;
+
 	
+	
+	@RequestMapping(value = "/signup.do",method = RequestMethod.POST)
+	public ModelAndView SignUp(UserDTO userDto) {
+		
+    	System.out.println("파람 확인 : "+userDto.getAddr());
+		System.out.println("user Controller" );
+		userDao.addUser(userDto);
+		
+		
+    	ModelAndView mv = new ModelAndView();
+    	mv.setViewName("user/login");
+    	return mv;
+    }
 	
 	@RequestMapping(value = "/signin.do",method = RequestMethod.POST)
 	public ModelAndView Login() {

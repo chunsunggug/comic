@@ -27,15 +27,6 @@ public class IndexController {
 		Set pathSet = request.getSession().getServletContext().getResourcePaths("/");
 		
 		
-		List<UserDTO> ls = userDao.getUserAll();
-//		UserDTO getuserDto = userDao.getUser("id2");
-//		getuserDto.setId("id10");
-//		userDao.addUser(getuserDto);
-//		userDao.deleteUserAll();
-//		
-//		System.out.println(ls.get(0).getName());
-//		System.out.println(getuserDto);
-		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("index");
 

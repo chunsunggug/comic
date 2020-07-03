@@ -16,7 +16,6 @@ public class UserDaoImpl implements UserDao {
 		return rs;
 	}
 
-
 	@Override
 	public UserDTO getUser(String id) {
 		UserDTO userDto = sqlMap.selectOne("getUser", id);
@@ -27,27 +26,25 @@ public class UserDaoImpl implements UserDao {
 	public void deleteUser(String id) {
 		sqlMap.delete("deleteUser");
 	}
-	
+
 	@Override
 	public void deleteUserAll() {
 		sqlMap.delete("deleteUserAll");
 	}
-
 
 	@Override
 	public void addUser(UserDTO userDto) {
 		sqlMap.insert("addUser", userDto);
 	}
 
-
 	@Override
 	public int checkUser(String id) {
-		int count = sqlMap.selectOne("checkUser",id);
+		int count = sqlMap.selectOne("checkUser", id);
 		return count;
 	}
 
-            @Override
+	@Override
 	public void updateUser(UserDTO userDto) {
 		sqlMap.update("updateUser", userDto);
-    }
+	}
 }
