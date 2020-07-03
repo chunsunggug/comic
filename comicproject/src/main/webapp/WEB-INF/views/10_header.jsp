@@ -33,8 +33,9 @@
 					<form action="signup.do" method="post" name="signup"
 						onsubmit="return checkValue()">
 						<div class="form-group">
+						<span>아이디</span>
 							<input type="email" class="form-control" name="id" id="id"
-								placeholder="E-Mail 형식 ID(ex: abc@mail.com)" onblur="checkId()"
+								placeholder="E-Mail 형식 (ex: abc@mail.com)" onblur="checkId()"
 								required>
 							<p class="text-center" style="margin-top: 16px;">
 								<span id="checkEmail"></span>
@@ -42,24 +43,28 @@
 						</div>
 
 						<div class="form-group">
+						<span>비밀번호</span>
 							<input type="password" class="form-control" name="pwd" id="pwd"
-								placeholder="비밀번호 (8자리이상)" required>
+								placeholder="8자리이상 입력" required>
 						</div>
 						<div class="form-group">
+						<span>비밀번호 확인</span>
 							<input type="password" class="form-control" id="pwdcheck"
 								placeholder="비밀번호 재입력" required autofocus>
 						</div>
 						<div class="form-group">
+						<span>이 름</span>
 							<input type="text" class="form-control" name="name" id="name"
-								placeholder="이름" required>
+								placeholder="이 름 입력" required>
 						</div>
 
 
 						<input type="hidden" name="addr" id="addr" value="check" />
 
 						<div class="form-group">
+						<span>주 소</span>
 							<input type="text" class="form-control" id="addrf"
-								placeholder="주소" readonly>
+								placeholder="검색 버튼 클릭" readonly>
 							<p class="text-center" style="margin-top: 16px;">
 								<input type="button" onclick="openApiAddr()" value="검색"
 									class="btn btn-primary">
@@ -69,19 +74,22 @@
 
 
 						<div class="form-group">
+						<span>상세 주소</span>
 							<input type="text" class="form-control" name="addrd" id="addrd"
-								placeholder="상세 주소 입력" required>
+								placeholder="나머지 주소 입력" required>
 						</div>
 
 
 
 						<div class="form-group">
-							<input type="tel" class="form-control" name="phone" id="phone"
-								placeholder="핸드폰 번호 (ex: 01039063915)" required>
+						<span>연락처</span>
+							<input type="tel" class="form-control" name="phone" id="phone" maxlength="12"
+								placeholder="핸드폰 번호 (ex: 01039063915)" onblur="addrAppend()" required>
 						</div>
 						<div class="form-group">
+						<span>생년월일</span>
 							<input type="date" class="form-control" name="birth" id="birth"
-								onblur="addrAppend()" max="today()" required>
+								required>
 						</div>
 
 
@@ -165,11 +173,16 @@
 	</script>
 
 
+	<!-- address hidden value add -->
 	<script>
 		function addrAppend() {
+			$("#phone").on("keyup", function() {
+			    $(this).val($(this).val().replace(/[^0-9]/g,""));
+			});
+			document.getElementById("addr").value=null;
 			document.getElementById("addr").value = document
 					.getElementById("addr").value
-					+ " " + document.getElementById("addrd").value
+					+ " " + document.getElementById("addrd").value;
 		}
 	</script>
 
@@ -178,7 +191,7 @@
 		function checkId() {
 			var id = $("#id").val();
 			var check = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
-
+			
 			if (!check.test(id)) {
 				$("#checkEmail").html("EMAIL 형식이 다릅니다.").css("color", "red");
 			} else {
@@ -201,7 +214,7 @@
 
 
 
-
+<!--if submit to check value -->
 	<script>
 		$(document).ready(function() {
 			document.signup.id.value = "";
@@ -213,15 +226,14 @@
 			var phone = document.signup.phone.value;
 			var regExp = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
 			var id = document.signup.id.value;
-			var birth = document.getElementById('birth').value;
-			var checkbirth = document.getElementById('birth').value = new Date().toISOString().substring(0,4);
+			
 			if (!document.signup.id.value) {
 				alert("아이디를 다시 확인하세요.");
 				return false;
 			}
-			if (!document.signup.pwd.value) {
-				alert("비밀번호를 입력하세요.");
-				document.memberJoin.pwd.focus();
+			if (document.signup.pwd.value.length<8) {
+				alert("비밀번호를 확인하세요.");
+				document.signup.pwd.focus();
 				return false;
 			}
 			if (document.signup.pwd.value != document
@@ -240,8 +252,6 @@
 
 <!-- date check max today -->
 	<script>
-		document.getElementById('birth').value = new Date().toISOString()
-				.substring(0, 10);
 		var today = new Date();
 		var yyyy = today.getFullYear();
 		var dd = today.getDate();
@@ -255,8 +265,6 @@
 
 		today = yyyy+'-'+mm+'-'+dd;
 		document.getElementById('birth').setAttribute("max", today);
-		 
-		 
 	</script>
 
 

@@ -34,19 +34,24 @@ public class UserController {
 	@RequestMapping(value = "/signup.do",method = RequestMethod.POST)
 	public ModelAndView SignUp(UserDTO userDto) {
 		
-    	System.out.println("파람 확인 : "+userDto.getAddr());
-		System.out.println("user Controller" );
-		userDao.addUser(userDto);
+		ModelAndView mv = new ModelAndView();
 		
-		
-    	ModelAndView mv = new ModelAndView();
+		String url = "";
+		int result = userDao.addUser(userDto);
+		if(result<1) {
+			url = "error";
+		}else {
+			url = "user/login";
+			mv.addObject("msg", userDto.getName()+"님의 가입을 환영합니다.");
+			mv.addObject("gourl", "index.do");
+		}
     	mv.setViewName("user/login");
     	return mv;
     }
 	
 	@RequestMapping(value = "/signin.do",method = RequestMethod.POST)
 	public ModelAndView Login() { 
-		System.out.println("user Controller" );
+		System.out.println("user Controller " );
     	ModelAndView mv = new ModelAndView();
     	mv.setViewName("user/login");
     	return mv;
