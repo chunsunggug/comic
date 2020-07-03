@@ -8,5 +8,5 @@ public interface UserDao {
 	public void deleteUser(String id);
 	public void deleteUserAll();
 	public void addUser(UserDTO userDto);
-	
+	public void updateUser(UserDTO userDto);
 }

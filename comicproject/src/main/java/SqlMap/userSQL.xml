@@ -24,4 +24,11 @@
     <delete id="deleteUserAll">
     delete from t_user;
     </delete>
+
+    <update id="updateUser">
+    update t_user set id = #{id}, pwd=#{pwd},
+                            name=#{name}, phone=#{phone},
+                            birth=#{birth}, point=#{point}
+                       where id=#{id}
+    </update>
 </mapper>

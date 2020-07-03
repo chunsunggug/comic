@@ -40,4 +40,8 @@ public class UserDaoImpl implements UserDao {
 		sqlMap.insert("addUser", userDto);
 	}
 
+            @Override
+	public void updateUser(UserDTO userDto) {
+		sqlMap.update("updateUser", userDto);
+            }
 }
