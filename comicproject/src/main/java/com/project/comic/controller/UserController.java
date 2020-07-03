@@ -1,6 +1,5 @@
 package com.project.comic.controller;
 
-<<<<<<< HEAD
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,8 +7,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-=======
->>>>>>> branch 'master' of https://github.com/chunsunggug/comic.git
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.project.comic.user.UserDao;
 import com.project.comic.user.UserService;
+import com.project.comic.user.UserDTO;
 
 @Controller
 public class UserController {
@@ -47,7 +45,7 @@ public class UserController {
     }
 	
 	@RequestMapping(value = "/signin.do",method = RequestMethod.POST)
-	public ModelAndView Login() {
+	public ModelAndView Login() { 
 		System.out.println("user Controller" );
     	ModelAndView mv = new ModelAndView();
     	mv.setViewName("user/login");
@@ -62,5 +60,4 @@ public class UserController {
     	return Integer.toString(count);
     	
     }
-	
 }
