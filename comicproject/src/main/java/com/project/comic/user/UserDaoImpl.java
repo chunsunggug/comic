@@ -23,18 +23,18 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void deleteUser(String id) {
-		sqlMap.delete("deleteUser");
+	public int deleteUser(String id) {
+		return sqlMap.delete("deleteUser");
 	}
 
 	@Override
-	public void deleteUserAll() {
-		sqlMap.delete("deleteUserAll");
+	public int deleteUserAll() {
+		return sqlMap.delete("deleteUserAll");
 	}
 
 	@Override
-	public void addUser(UserDTO userDto) {
-		sqlMap.insert("addUser", userDto);
+	public int addUser(UserDTO userDto) {
+		return sqlMap.insert("addUser", userDto);
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void updateUser(UserDTO userDto) {
-		sqlMap.update("updateUser", userDto);
-	}
+	public int updateUser(UserDTO userDto) {
+		return sqlMap.update("updateUser", userDto);
+    }
 }

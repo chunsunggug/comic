@@ -5,9 +5,9 @@ import java.util.List;
 public interface UserDao {
 	public List getUserAll();
 	public UserDTO getUser(String id);
-	public void deleteUser(String id);
-	public void deleteUserAll();
-	public void addUser(UserDTO userDto);
-	public void updateUser(UserDTO userDto);
+	public int deleteUser(String id);
+	public int deleteUserAll();
+	public int addUser(UserDTO userDto);
+	public int updateUser(UserDTO userDto);
 	public int checkUser(String id);
 }

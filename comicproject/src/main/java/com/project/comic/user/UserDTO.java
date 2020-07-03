@@ -3,16 +3,16 @@ package com.project.comic.user;
 import java.util.Date;
 
 import lombok.Data;
-import lombok.ToString;
+
 
 @Data
 public class UserDTO {
 	private String id;
 	private String pwd;
 	private String name;
-	private String addr;
 	private String phone;
 	private String birth;
+	private String addr;
 	private int point;
 	private Date sdate;
 	private Date edate;
@@ -21,15 +21,15 @@ public class UserDTO {
 	
 	public UserDTO() {}
 	
-	public UserDTO(String id, String pwd, String name, String addr, String phone, String birth, int point, Date sdate,
+	public UserDTO(String id, String pwd, String name, String phone, String birth,String addr, int point, Date sdate,
 			Date edate, String type, String isyn) {
 		super();
 		this.id = id;
 		this.pwd = pwd;
 		this.name = name;
-		this.addr = addr;
 		this.phone = phone;
 		this.birth = birth;
+		this.addr = addr;
 		this.point = point;
 		this.sdate = sdate;
 		this.edate = edate;
