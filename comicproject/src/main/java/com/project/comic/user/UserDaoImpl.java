@@ -16,13 +16,10 @@ public class UserDaoImpl implements UserDao {
 		return rs;
 	}
 
-
-	@Override
 	public UserDTO getUser(String id) {
 		UserDTO userDto = sqlMap.selectOne("getUser", id);
 		return userDto;
 	}
-
 
 	@Override
 	public void deleteUser(String id) {

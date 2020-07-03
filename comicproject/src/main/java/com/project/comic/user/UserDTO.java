@@ -18,12 +18,11 @@ public class UserDTO {
 	private Date edate;
 	private String type;
 	private String isyn;
-	private String post;
 	
 	public UserDTO() {}
 	
 	public UserDTO(String id, String pwd, String name, String addr, String phone, String birth, int point, Date sdate,
-			Date edate, String type, String isyn, String post) {
+			Date edate, String type, String isyn) {
 		super();
 		this.id = id;
 		this.pwd = pwd;
@@ -36,7 +35,6 @@ public class UserDTO {
 		this.edate = edate;
 		this.type = type;
 		this.isyn = isyn;
-		this.post = post;
 	}
 	
 }
