@@ -33,11 +33,10 @@
 					<form action="signup.do" method="post" name="signup"
 						onsubmit="return checkValue()" novalidate="novalidate">
 						<div class="form-group">
-							<input type="text" class="form-control" name="id" id="id"
-								placeholder="ID" >
+							<input type="email" class="form-control" name="id" id="id"
+								placeholder="E-Mail 형식 ID(ex: abc@mail.com)" onblur="checkId()">
 							<p class="text-center" style="margin-top: 16px;">
-								<input type="button" onclick="openIdCheck()" value="ID 중복확인"
-									class="btn btn-primary">
+								<span id="checkEmail"></span>
 							</p>
 						</div>
 
@@ -163,8 +162,8 @@
 					}).open();
 		}
 	</script>
-	
-	
+
+
 	<script>
 		function addrAppend() {
 			document.getElementById("addr").value = document
@@ -173,10 +172,32 @@
 		}
 	</script>
 
+	<script>
+<!--하단의 Ajac첫번째 파라미터 url 경로 destnation , 두번째 파라미터는 보낼 데이터 값을 입력 ,	세번째 파라미터 펑션으로 실행하는데 데이터 값을 받음  리턴 받는 이름 data 리턴 받은 data를 통해 확인-->
+function checkId() {
+	$.post("idCheck.do",{ 
+		"id" : $("#id").val()
+	},function(data){
+		if(data=='0'){
+			$("#checkEmail").html("사용가능한 EMAIL 입니다.").css("color","green");
+			$("#input_pwd").focus();
+		}else{
+			$("#checkEmail").html("사용불가능한 EMAIL 입니다.").css("color","red");
+			$("#input_email").focus();
+		}
+	});
+	
+	
+}
+	
+</script>
+
+
+
 
 	<script>
 		$(document).ready(function() {
-			document.signup.id.value = "abcd";
+			document.signup.id.value = "";
 		});
 		function back() {
 			window.location.href = 'index.do';
@@ -184,8 +205,10 @@
 		function checkValue() {
 			var phone = document.signup.phone.value;
 			var regExp = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
+			var id = document.signup.id.value;
 			if (!document.signup.id.value) {
-				alert("아이디를 입력하세요.");
+				
+				alert("아이디를 다시 확인하세요.");
 				return false;
 			}
 			if (!document.signup.pwd.value) {

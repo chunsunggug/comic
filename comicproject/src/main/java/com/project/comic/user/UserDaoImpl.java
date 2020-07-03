@@ -11,18 +11,13 @@ public class UserDaoImpl implements UserDao {
 	private SqlSessionTemplate sqlMap;
 
 	@Override
-	public List getUserAll() {
-		List rs = sqlMap.selectList("getUserAll");
+	public List<UserDTO> getUserAll() {
+		List<UserDTO> rs = sqlMap.selectList("getUserAll");
 		return rs;
 	}
 
 
 	@Override
-<<<<<<< HEAD
-	public List userList() {
-		List rs = sqlMap.selectList("userList");
-		return rs;
-=======
 	public UserDTO getUser(String id) {
 		UserDTO userDto = sqlMap.selectOne("getUser", id);
 		return userDto;
@@ -43,7 +38,15 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void addUser(UserDTO userDto) {
 		sqlMap.insert("addUser", userDto);
->>>>>>> branch 'master' of https://github.com/chunsunggug/comic.git
+	}
+
+
+	@Override
+	public int checkUser(String id) {
+		System.out.println("userdaoimpl");
+		int count = sqlMap.selectOne("checkUser",id);
+		System.out.println("userdaoimpl count:"+count);
+		return count;
 	}
 
 }

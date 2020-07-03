@@ -4,13 +4,8 @@
         
         <!-- select id => class 내의 스테이트먼트 파람 -->
 <mapper namespace="com.project.comic.user.UserDao">
-<<<<<<< HEAD
-    <select id="userList" resultType="com.project.comic.user.UserDTO">
-    select * from t_user
-=======
     <select id="getUser" resultType="com.project.comic.user.UserDTO" parameterType="java.lang.String">
     select * from t_user where id=#{id}
->>>>>>> branch 'master' of https://github.com/chunsunggug/comic.git
     </select>
     
     <select id="getUserAll" resultType="com.project.comic.user.UserDTO" >
@@ -29,4 +24,8 @@
     <delete id="deleteUserAll">
     delete from t_user;
     </delete>
+    
+    <select id="checkUser" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select COUNT(id) from t_user where id=#{id}
+    </select>
 </mapper>
