@@ -21,7 +21,7 @@ CREATE TABLE `t_user` (
 	`pwd` VARCHAR(20) NOT NULL COLLATE 'utf8_general_ci',
 	`name` VARCHAR(20) NOT NULL COLLATE 'utf8_general_ci',
 	`phone` VARCHAR(15) NOT NULL COLLATE 'utf8_general_ci',
-	`birth` CHAR(8) NOT NULL COLLATE 'utf8_general_ci',
+	`birth` CHAR(10) NOT NULL COLLATE 'utf8_general_ci',
 	`point` INT(11) NOT NULL DEFAULT '500',
 	`sdate` DATETIME NOT NULL DEFAULT current_timestamp(),
 	`edate` DATETIME NULL,
@@ -42,8 +42,8 @@ ENGINE=InnoDB
 
 set foreign_key_checks = 1;
 
-INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id001', 'pwd00001', 'name1', '01011112222', '20001212');
-INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id002', 'pwd00002', 'name2', '01011112222', '20001212');
-INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id003', 'pwd00003', 'name3', '01011112222', '20001212');
-INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id004', 'pwd00004', 'name4', '01011112222', '20001212');
-INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id005', 'pwd00005', 'name5', '01011112222', '20001212');
+INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id001', 'pwd00001', 'name1', '01011112222', '2000-12-11');
+INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id002', 'pwd00002', 'name2', '01011112222', '2000-12-12');
+INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id003', 'pwd00003', 'name3', '01011112222', '2000-12-13');
+INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id004', 'pwd00004', 'name4', '01011112222', '2000-12-14');
+INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id005', 'pwd00005', 'name5', '01011112222', '2000-12-15');

@@ -25,11 +25,14 @@
     delete from t_user;
     </delete>
 
-    <update id="updateUser">
-    update t_user set id = #{id}, pwd=#{pwd},
-                            name=#{name}, phone=#{phone},
-                            birth=#{birth}, point=#{point}
-                       where id=#{id}
+    <update id="updateUser" parameterType="com.project.comic.user.UserDTO">
+    update t_user set pwd=#{pwd},
+                      name=#{name}, phone=#{phone}
+                      where id=#{id}
+    </update>
+    
+    <update id="updateUserPoint" parameterType="com.project.comic.user.UserDTO">
+    update t_user set point=#{point} where id=#{id}
     </update>
     
     <select id="checkUser" parameterType="java.lang.String" resultType="java.lang.Integer">

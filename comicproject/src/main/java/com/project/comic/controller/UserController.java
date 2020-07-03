@@ -1,9 +1,5 @@
 package com.project.comic.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.project.comic.user.UserDTO;
 import com.project.comic.user.UserDao;
+import com.project.comic.user.UserService;
 
 @Controller
 public class UserController {
@@ -22,11 +18,12 @@ public class UserController {
 	@Autowired
 	private UserDao userDao;
 	
+	@Autowired
+	private UserService userService;
+	
 	
 	@RequestMapping(value = "/signin.do",method = RequestMethod.POST)
 	public ModelAndView Login() {
-    	
-		
 		System.out.println("user Controller" );
     	ModelAndView mv = new ModelAndView();
     	mv.setViewName("user/login");
@@ -36,10 +33,7 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "/idCheck.do",method = RequestMethod.POST)
 	public String IdCheck(@RequestParam String id) {
-    	
-		
-		
-		int count =  userDao.checkUser(id);
+		int count =  userService.checkUserId(id);
 		System.out.println("user Controller\n"+id+"\n"+count );
     	return Integer.toString(count);
     	
