@@ -11,11 +11,13 @@ public class UserDaoImpl implements UserDao {
 	private SqlSessionTemplate sqlMap;
 
 	@Override
-	public List getUserAll() {
-		List rs = sqlMap.selectList("getUserAll");
+	public List<UserDTO> getUserAll() {
+		List<UserDTO> rs = sqlMap.selectList("getUserAll");
 		return rs;
 	}
 
+
+	@Override
 	public UserDTO getUser(String id) {
 		UserDTO userDto = sqlMap.selectOne("getUser", id);
 		return userDto;
@@ -37,8 +39,15 @@ public class UserDaoImpl implements UserDao {
 		sqlMap.insert("addUser", userDto);
 	}
 
+
+	@Override
+	public int checkUser(String id) {
+		int count = sqlMap.selectOne("checkUser",id);
+		return count;
+	}
+
             @Override
 	public void updateUser(UserDTO userDto) {
 		sqlMap.update("updateUser", userDto);
-            }
+    }
 }

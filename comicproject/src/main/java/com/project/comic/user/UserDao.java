@@ -9,4 +9,5 @@ public interface UserDao {
 	public void deleteUserAll();
 	public void addUser(UserDTO userDto);
 	public void updateUser(UserDTO userDto);
+	public int checkUser(String id);
 }
