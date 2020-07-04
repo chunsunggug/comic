@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,30 +31,35 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	
+	@Transactional
 	@RequestMapping(value = "/signup.do",method = RequestMethod.POST)
 	public ModelAndView SignUp(UserDTO userDto) {
+		HashMap mapAddr = addrSet(userDto.getAddr());
+		userDto.setAddr("1");
 		
 		ModelAndView mv = new ModelAndView();
 		
 		String url = "";
 		int result = userDao.addUser(userDto);
-		if(result<1) {
-			url = "error";
+		int resultAddr = userDao.addAddr(mapAddr);
+		
+		if(result+resultAddr<2) {
+			url = "errorPage";
 		}else {
 			url = "user/login";
 			mv.addObject("msg", userDto.getName()+"님의 가입을 환영합니다.");
 			mv.addObject("gourl", "index.do");
 		}
-    	mv.setViewName("user/login");
+    	mv.setViewName("errorPage");
     	return mv;
     }
 	
 	@RequestMapping(value = "/signin.do",method = RequestMethod.POST)
 	public ModelAndView Login() { 
 		System.out.println("user Controller " );
-    	ModelAndView mv = new ModelAndView();
-    	mv.setViewName("user/login");
+    	
+		
+		ModelAndView mv = new ModelAndView();
     	return mv;
     }
 	
@@ -65,4 +71,23 @@ public class UserController {
     	return Integer.toString(count);
     	
     }
+	
+	
+	private HashMap addrSet(String addrDto) {
+		String[] addr = addrDto.split(" ");
+		addr[4]="";
+		HashMap mapAddr = new HashMap();
+		for(int i = 4;i<addr.length;i++) {
+			addr[4]+=addr[i];
+		}
+		for(int i=0;i<5;i++) {
+			mapAddr.put("addr"+i, addr[i]);
+		}
+		
+		return mapAddr;
+		
+		
+		
+		
+	}
 }

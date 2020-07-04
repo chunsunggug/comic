@@ -7,6 +7,7 @@ import lombok.Data;
 
 @Data
 public class UserDTO {
+	private int uidx;
 	private String id;
 	private String pwd;
 	private String name;
@@ -21,9 +22,10 @@ public class UserDTO {
 	
 	public UserDTO() {}
 	
-	public UserDTO(String id, String pwd, String name, String phone, String birth,String addr, int point, Date sdate,
+	public UserDTO(int uidx,String id, String pwd, String name, String phone, String birth,String addr, int point, Date sdate,
 			Date edate, String type, String isyn) {
 		super();
+		this.uidx=uidx;
 		this.id = id;
 		this.pwd = pwd;
 		this.name = name;

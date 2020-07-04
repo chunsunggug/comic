@@ -1,6 +1,7 @@
 package com.project.comic.user;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserDao {
 	public List getUserAll();
@@ -10,4 +11,5 @@ public interface UserDao {
 	public int addUser(UserDTO userDto);
 	public int updateUser(UserDTO userDto);
 	public int checkUser(String id);
+	public int addAddr(Map addr);
 }

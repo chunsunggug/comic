@@ -12111,7 +12111,7 @@ p {
 }
 
 .menuzord-menu > li > a {
-  color: #222;
+  color: #fff;
   text-transform: uppercase;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
@@ -12124,7 +12124,7 @@ p {
 }
 
 .menuzord-menu > li.active > a {
-  color: #2196f3;
+  color: #50bcdf;
 }
 
 .menuzord-menu li .indicator {
@@ -12132,6 +12132,7 @@ p {
 }
 
 .menuzord-menu li .indicator::before {
+  display:none;
   font-family: 'FontAwesome';
   content: "\f107";
   position: absolute;
@@ -12216,7 +12217,7 @@ p {
 
 /* Menu button Wrapper */
 .btn-wrapper {
-  margin-top: 0.625rem;
+  margin-top: 1.5em;
 }
 
 @media (min-width: 992px) {
