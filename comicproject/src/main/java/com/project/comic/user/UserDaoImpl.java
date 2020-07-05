@@ -1,6 +1,7 @@
 package com.project.comic.user;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,4 +48,9 @@ public class UserDaoImpl implements UserDao {
 	public int updateUser(UserDTO userDto) {
 		return sqlMap.update("updateUser", userDto);
     }
+
+	@Override
+	public int addAddr(Map addr) {
+		return sqlMap.insert("addAddr", addr);
+	}
 }

@@ -59,7 +59,7 @@
 						</div>
 
 
-						<input type="hidden" name="addr" id="addr" value="check" />
+						<input type="hidden" name="addr" id="addr" value="" />
 
 						<div class="form-group">
 						<span>주 소</span>
@@ -179,10 +179,6 @@
 			$("#phone").on("keyup", function() {
 			    $(this).val($(this).val().replace(/[^0-9]/g,""));
 			});
-			document.getElementById("addr").value=null;
-			document.getElementById("addr").value = document
-					.getElementById("addr").value
-					+ " " + document.getElementById("addrd").value;
 		}
 	</script>
 
@@ -226,7 +222,6 @@
 			var phone = document.signup.phone.value;
 			var regExp = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
 			var id = document.signup.id.value;
-			
 			if (!document.signup.id.value) {
 				alert("아이디를 다시 확인하세요.");
 				return false;
@@ -247,6 +242,7 @@
 				document.signup.phone.focus();
 				return false;
 			}
+			document.getElementById("addr").value = document.getElementById("addr").value+ " " + document.getElementById("addrd").value;
 		}
 	</script>
 
@@ -274,7 +270,7 @@
 
 	<!-- HEADER -->
 	<header class="header">
-		<nav class="nav-menuzord nav-menuzord-transparent navbar-sticky">
+		<nav class="nav-menuzord nav-menuzord-transparent navbar-sticky" id="navbackground">
 			<div class="container clearfix">
 				<div id="menuzord" class="menuzord menuzord-responsive">
 
@@ -290,11 +286,8 @@
 					<div class="float-right btn-wrapper">
 						<a class="btn btn-outline-primary" href="signin.do"> <span
 							id="signin">로그인</span></a> <a class="btn btn-outline-primary"
-							href="#" data-toggle="modal" data-target="#reg-modal"><span
-							id="signup">회원가입</span> </a> <a class="btn btn-outline-primary"
-							href="signup.do" style="margin-left: 30px; margin-right: 30px;">
-							<span id="signup">회원가입</span>
-						</a>
+							href="#" data-toggle="modal" data-target="#reg-modal" style="margin: 0 30px;"><span
+							id="signup">회원가입</span> </a> 
 					</div>
 					<ul class="menuzord-menu menuzord-right">
 						<li class="active"><a href="javascript:0">Home</a>
