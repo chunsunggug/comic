@@ -60,7 +60,7 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.project.comic.user,com.project.comic.controller" />
+	<context:component-scan base-package="com.project.comic,com.project.comic.user,com.project.comic.controller" />
 	
 	
 </beans:beans>
