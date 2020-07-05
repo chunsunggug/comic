@@ -3,7 +3,7 @@
 
 
 
-  <footer class="footer-dark" style="background-image: url(resources/img/background/bg-footer.jpg)">
+  <footer class="footer-dark" style="background-image: url(/comic/resources/img/background/bg-footer.jpg)">
 
     <div class="container">
       <div class="row">
@@ -117,30 +117,30 @@
 
     <!-- JAVASCRIPTS -->
 
-    <script src="resources/plugins/jquery/jquery-3.4.1.min.js"></script>
-    <script src="resources/plugins/bootstrap/js/bootstrap.bundle.js"></script>
-    <script src="resources/plugins/menuzord/js/menuzord.js"></script>
-    <script src="resources/plugins/selectric/jquery.selectric.min.js"></script>
-    <script src="resources/plugins/dzsparallaxer/dzsparallaxer.js"></script>
-    <script src="resources/plugins/dzsparallaxer/dzsparallaxer.js"></script>
-    <script src="resources/plugins/isotope/isotope.pkgd.min.js"></script>
-    <script src="resources/plugins/daterangepicker/moment.min.js"></script>
-    <script src="resources/plugins/daterangepicker/daterangepicker.js"></script>
-    <script src="resources/plugins/revolution/js/jquery.themepunch.tools.min.js"></script>
-    <script src="resources/plugins/revolution/js/jquery.themepunch.revolution.min.js"></script>
-    <script src="resources/plugins/owl-carousel/owl.carousel.min.js"></script>
-    <script src="resources/plugins/rateyo/jquery.rateyo.min.js"></script>
-    <script src="resources/plugins/fancybox/jquery.fancybox.min.js"></script>
-    <script src="resources/plugins/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="/comic/resources/plugins/jquery/jquery-3.4.1.min.js"></script>
+    <script src="/comic/resources/plugins/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="/comic/resources/plugins/menuzord/js/menuzord.js"></script>
+    <script src="/comic/resources/plugins/selectric/jquery.selectric.min.js"></script>
+    <script src="/comic/resources/plugins/dzsparallaxer/dzsparallaxer.js"></script>
+    <script src="/comic/resources/plugins/dzsparallaxer/dzsparallaxer.js"></script>
+    <script src="/comic/resources/plugins/isotope/isotope.pkgd.min.js"></script>
+    <script src="/comic/resources/plugins/daterangepicker/moment.min.js"></script>
+    <script src="/comic/resources/plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="/comic/resources/plugins/revolution/js/jquery.themepunch.tools.min.js"></script>
+    <script src="/comic/resources/plugins/revolution/js/jquery.themepunch.revolution.min.js"></script>
+    <script src="/comic/resources/plugins/owl-carousel/owl.carousel.min.js"></script>
+    <script src="/comic/resources/plugins/rateyo/jquery.rateyo.min.js"></script>
+    <script src="/comic/resources/plugins/fancybox/jquery.fancybox.min.js"></script>
+    <script src="/comic/resources/plugins/imagesloaded/imagesloaded.pkgd.min.js"></script>
 
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDU79W1lu5f6PIiuMqNfT1C6M0e_lq1ECY"></script>
-    <script src="resources/plugins/map/js/markerclusterer.js"></script>
-    <script src="resources/plugins/map/js/rich-marker.js"></script>
-    <script src="resources/plugins/map/js/infobox_packed.js"></script>
-    <script src="resources/js/map.js"></script>
+    <script src="/comic/resources/plugins/map/js/markerclusterer.js"></script>
+    <script src="/comic/resources/plugins/map/js/rich-marker.js"></script>
+    <script src="/comic/resources/plugins/map/js/infobox_packed.js"></script>
+    <script src="/comic/resources/js/map.js"></script>
 
-    <script src="resources/js/listty.js"></script>
+    <script src="/comic/resources/js/listty.js"></script>
   </body>
 </html>
 

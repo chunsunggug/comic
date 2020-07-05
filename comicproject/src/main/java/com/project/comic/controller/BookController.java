@@ -23,15 +23,19 @@ public class BookController {
 	private final String KAKAO_BOOK_SEARCH_URL = "https://dapi.kakao.com/v3/search/book";
 	private final String KAKAO_ID = "118237743806f276d679025f706c0e3c";
 	
+	private final String[] param_keyarr = {"sort","page","size"};
+	private final String[] param_keydefault = {"accuracy","1","15"};
+	
 	@RequestMapping(value="/search.do")
 	public String bookSearch(@RequestParam Map param, HttpServletRequest request) {
 		
-		JSONObject jsonObject = jsonObject = getBookSearchData(KAKAO_BOOK_SEARCH_URL, param);
+		JSONObject jsonObject = getBookSearchData(KAKAO_BOOK_SEARCH_URL, param);
 		
 		request.setAttribute("meta", jsonObject.get("meta").toString());
 		request.setAttribute("documents", jsonObject.get("documents").toString());
+		request.setAttribute("searchparam", param);
 		
-		return "serch";
+		return "book/booksearchpage";
 	}
 
 	// parameter key 설명
@@ -44,6 +48,10 @@ public class BookController {
 	private JSONObject getBookSearchData(String request_url, Map param){
 		URL url;
 		HttpURLConnection con;
+		
+		// key default 초기화
+		for(int i=0; i < param_keyarr.length; i++)
+			if( param.get(param_keyarr[i]) == null ) param.put(param_keyarr[i], param_keydefault[i] );
 		
 		Iterator key_iterator = param.keySet().iterator();
 		request_url += "?";
@@ -68,12 +76,12 @@ public class BookController {
 			
 			// 데이터를 성공적으로 가져오면 json으로 파싱해서 return
 			if( responseCode == 200 ) {
-				BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream())); // con throw
+				BufferedReader br = new BufferedReader( new InputStreamReader( con.getInputStream(), "utf-8" ) ); // con throw
 				StringBuffer sb = new StringBuffer();
 				
 				while( br.ready() )  			// throw
 					sb.append(br.readLine());	// throw
-				
+				System.out.println(sb);
 				JSONParser parser = new JSONParser();
 				JSONObject jsonObject = (JSONObject)parser.parse(sb.toString());	// throw
 				

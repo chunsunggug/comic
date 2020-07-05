@@ -8,7 +8,7 @@
 <!-- ====================================
 ———	BANNER SECTION (TRAVEL)
 ===================================== -->
-<section class="banner" style="background-image: url('resources/img/background/banner-img1.jpg');">
+<section class="banner" style="background-image: url('/comic/resources/img/background/banner-img1.jpg');">
   <div class="container">
     <div class="row text-center align-items-center justify-content-center" style="height:624px;">
       <div class="col-12">
@@ -172,7 +172,7 @@
 
         <div class="card rounded-0 card-hover-overlay">
           <div class="position-relative">
-            <img class="card-img rounded-0" src="resources/img/listing/listing-4.jpg" alt="Card image cap">
+            <img class="card-img rounded-0" src="/comic/resources/img/listing/listing-4.jpg" alt="Card image cap">
             <div class="card-img-overlay">
               <ul class="list-inline list-inline-rating">
                 <li class="list-inline-item">
@@ -217,7 +217,7 @@
 
         <div class="card rounded-0 card-hover-overlay">
           <div class="position-relative">
-            <img class="card-img rounded-0" src="resources/img/listing/listing-5.jpg" alt="Card image cap">
+            <img class="card-img rounded-0" src="/comic/resources/img/listing/listing-5.jpg" alt="Card image cap">
             <div class="card-img-overlay">
               <ul class="list-inline list-inline-rating">
                 <li class="list-inline-item">
@@ -262,7 +262,7 @@
 
         <div class="card rounded-0 card-hover-overlay">
           <div class="position-relative">
-            <img class="card-img rounded-0" src="resources/img/listing/listing-10.jpg" alt="Card image cap">
+            <img class="card-img rounded-0" src="/comic/resources/img/listing/listing-10.jpg" alt="Card image cap">
             <div class="card-img-overlay">
               <ul class="list-inline list-inline-rating">
                 <li class="list-inline-item">
@@ -307,7 +307,7 @@
 
         <div class="card rounded-0 card-hover-overlay">
           <div class="position-relative">
-            <img class="card-img rounded-0" src="resources/img/listing/listing-1.jpg" alt="Card image cap">
+            <img class="card-img rounded-0" src="/comic/resources/img/listing/listing-1.jpg" alt="Card image cap">
             <div class="card-img-overlay">
               <ul class="list-inline list-inline-rating">
                 <li class="list-inline-item">
@@ -352,7 +352,7 @@
 
         <div class="card rounded-0 card-hover-overlay">
           <div class="position-relative">
-            <img class="card-img rounded-0" src="resources/img/listing/listing-7.jpg" alt="Card image cap">
+            <img class="card-img rounded-0" src="/comic/resources/img/listing/listing-7.jpg" alt="Card image cap">
             <div class="card-img-overlay">
               <ul class="list-inline list-inline-rating">
                 <li class="list-inline-item">
@@ -397,7 +397,7 @@
 
         <div class="card rounded-0 card-hover-overlay">
           <div class="position-relative">
-            <img class="card-img rounded-0" src="resources/img/listing/listing-8.jpg" alt="Card image cap">
+            <img class="card-img rounded-0" src="/comic/resources/img/listing/listing-8.jpg" alt="Card image cap">
             <div class="card-img-overlay">
               <ul class="list-inline list-inline-rating">
                 <li class="list-inline-item">
@@ -451,7 +451,7 @@
 
 
 <div class="dzsparallaxer auto-init use-loading counter-paralax">
-  <div class="divimage dzsparallaxer--target"  data-src="resources/img/background/bg-countdown.jpg"></div>
+  <div class="divimage dzsparallaxer--target"  data-src="/comic/resources/img/background/bg-countdown.jpg"></div>
 
   <div class="container paralax-container">
     <div class="section-title">
@@ -510,7 +510,7 @@
 			<div class="col-sm-4 col-xs-12">
 				<div class="card">
 					<div class="mt-8 mb-3">
-						<img class="mx-auto d-block" src="resources/img/works/works-1.png" alt="Image works">
+						<img class="mx-auto d-block" src="/comic/resources/img/works/works-1.png" alt="Image works">
 					</div>
 					<div class="card-body text-center pb-6">
 						<h3 class="h4">
@@ -526,7 +526,7 @@
 			<div class="col-sm-4 col-xs-12">
 				<div class="card">
 					<div class="mt-8 mb-3">
-						<img class="mx-auto d-block" src="resources/img/works/works-2.png" alt="Image works">
+						<img class="mx-auto d-block" src="/comic/resources/img/works/works-2.png" alt="Image works">
 					</div>
 					<div class="card-body text-center pb-6">
 						<h3 class="h4">
@@ -542,7 +542,7 @@
 			<div class="col-sm-4 col-xs-12">
 				<div class="card">
 					<div class="mt-8 mb-3">
-						<img class="mx-auto d-block" src="resources/img/works/works-3.png" alt="Image works">
+						<img class="mx-auto d-block" src="/comic/resources/img/works/works-3.png" alt="Image works">
 					</div>
 					<div class="card-body text-center pb-6">
 						<h3 class="h4">
@@ -579,7 +579,7 @@
 			<div class="col-sm-4 col-xs-12">
 				<div class="card border-0 bg-transparent">
 					<a href="blog-details.html">
-						<img class="card-img-top rounded" src="resources/img/blog/blog-article-1.jpg" alt="Card image cap">
+						<img class="card-img-top rounded" src="/comic/resources/img/blog/blog-article-1.jpg" alt="Card image cap">
 					</a>
           <div class="card-body p-0 pt-5">
 						<div class="meta-post">
@@ -597,7 +597,7 @@
 			<div class="col-sm-4 col-xs-12">
         <div class="card border-0 bg-transparent">
 					<a href="blog-details.html">
-						<img class="card-img-top rounded" src="resources/img/blog/blog-article-2.jpg" alt="Card image cap">
+						<img class="card-img-top rounded" src="/comic/resources/img/blog/blog-article-2.jpg" alt="Card image cap">
 					</a>
 					<div class="card-body p-0 pt-5">
             <div class="meta-post">
@@ -615,7 +615,7 @@
 			<div class="col-sm-4 col-xs-12">
         <div class="card border-0 bg-transparent">
 					<a href="blog-details.html">
-						<img class="card-img-top rounded" src="resources/img/blog/blog-article-3.jpg" alt="Card image cap">
+						<img class="card-img-top rounded" src="/comic/resources/img/blog/blog-article-3.jpg" alt="Card image cap">
 					</a>
           <div class="card-body p-0 pt-5">
             <div class="meta-post">
