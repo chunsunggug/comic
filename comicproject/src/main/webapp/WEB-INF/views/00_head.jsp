@@ -13,28 +13,28 @@
   <title>행복한 토라비 - 도서 대여</title>
 
   <!-- PLUGINS CSS STYLE -->
-  <link href="resources/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-  <link href="resources/plugins/listtyicons/style.css" rel="stylesheet">
-  <link href="resources/plugins/menuzord/css/menuzord.css" rel="stylesheet">
-  <link href="resources/plugins/map/css/map.css" rel="stylesheet">
-  <link href="resources/plugins/selectric/selectric.css" rel="stylesheet">
-  <link href="resources/plugins/dzsparallaxer/dzsparallaxer.css" rel="stylesheet">
-  <link href="resources/plugins/owl-carousel/assets/owl.carousel.min.css" rel="stylesheet">
-  <link href="resources/plugins/owl-carousel/assets/owl.theme.default.min.css" rel="stylesheet">
-  <link href="resources/plugins/map/css/map.css" rel="stylesheet">
-  <link href="resources/plugins/fancybox/jquery.fancybox.min.css" rel="stylesheet">
+  <link href="/comic/resources/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="/comic/resources/plugins/listtyicons/style.css" rel="stylesheet">
+  <link href="/comic/resources/plugins/menuzord/css/menuzord.css" rel="stylesheet">
+  <link href="/comic/resources/plugins/map/css/map.css" rel="stylesheet">
+  <link href="/comic/resources/plugins/selectric/selectric.css" rel="stylesheet">
+  <link href="/comic/resources/plugins/dzsparallaxer/dzsparallaxer.css" rel="stylesheet">
+  <link href="/comic/resources/plugins/owl-carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="/comic/resources/plugins/owl-carousel/assets/owl.theme.default.min.css" rel="stylesheet">
+  <link href="/comic/resources/plugins/map/css/map.css" rel="stylesheet">
+  <link href="/comic/resources/plugins/fancybox/jquery.fancybox.min.css" rel="stylesheet">
 
   <!-- GOOGLE FONT -->
   <link href="https://fonts.googleapis.com/css?family=Muli:200,300,400,600,700,800,900" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
 
   <!-- CUSTOM CSS -->
-  <link href="resources/css/listty.css" rel="stylesheet" id="option_style">
+  <link href="/comic/resources/css/listty.css" rel="stylesheet" id="option_style">
 
-  <!-- <link rel="stylesheet" href="resources/css/default.css" id="option_color"> -->
+  <!-- <link rel="stylesheet" hreesources/css/default.css" id="option_color"> -->
 
   <!-- FAVICON -->
-  <link href="resources/img/favicon.png" rel="shortcut icon">
+  <link href="/comic/resources/img/favicon.png" rel="shortcut icon">
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
