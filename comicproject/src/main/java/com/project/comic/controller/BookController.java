@@ -27,11 +27,11 @@ public class BookController {
 	public String bookSearch(@RequestParam Map param, HttpServletRequest request) {
 		
 		JSONObject jsonObject = jsonObject = getBookSearchData(KAKAO_BOOK_SEARCH_URL, param);
-		
+		System.out.println("제이슨 확인 : "+jsonObject.get("documents").toString());
 		request.setAttribute("meta", jsonObject.get("meta").toString());
 		request.setAttribute("documents", jsonObject.get("documents").toString());
 		
-		return "serch";
+		return "index";
 	}
 
 	// parameter key 설명
