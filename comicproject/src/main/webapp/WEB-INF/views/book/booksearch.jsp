@@ -59,7 +59,7 @@
 				</div>
 			</c:forEach>
 		</div>
-		<div class="container text-center" >
+		<div class="container text-center">
 			<button class="btn btn-primary" id="btn_more_load" style="margin-bottom: 2em;"
 				onclick="show_contents()">더 보기</button>
 		</div>

@@ -1,5 +1,13 @@
 set foreign_key_checks = 0;
 DROP TABLE if exists T_USER_ADDR cascade;
+
+CREATE VIEW v_login AS
+SELECT u.uidx AS uidx,u.addr AS addr,u.id AS id,u.name AS name,u.phone AS phone,u.birth AS birth,u.point AS POINT
+	,a.post AS post,a.si AS si,a.gu AS gu,a.dong AS dong,a.detail AS detail,u.type AS type,u.isYn,u.pwd AS pwd
+	FROM t_user u,t_user_addr a
+	WHERE u.uidx = a.uidx;
+
+
 CREATE TABLE `t_user_addr` (
 	`pidx` INT(11) NOT NULL DEFAULT 1 COMMENT '주소 인덱스',
 	`uidx` INT(11) NOT NULL COMMENT '유저 인덱스',

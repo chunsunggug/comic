@@ -34,7 +34,8 @@ public class UserService {
 	@Transactional
 	public UserVO logingUser(Map mapLogin) {
 		
-	     
+	     System.out.println("id: "+mapLogin.get("id"));
+	     System.out.println("id: "+mapLogin.get("pwd"));
          UserVO getUser = userDao.loginUser(mapLogin); 
          
          return getUser;		

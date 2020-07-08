@@ -44,8 +44,7 @@
   <![endif]-->
 	<style type="text/css">
 	#navbackground{
-  	background:linear-gradient( to right, #3366f3, #b19cd9 );
-  	opacity: 0.8;
+  	background:linear-gradient( to right, #4aa8d8, #b19cd9 );
   }
 	</style>
 </head>
