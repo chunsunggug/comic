@@ -37,7 +37,7 @@ public class UserController {
 	@Transactional
 	@RequestMapping(value = "/signup.do",method = RequestMethod.POST)
 	public ModelAndView SignUp(UserDTO userDto) {
-		HashMap<String,String> mapAddr = addrSet(userDto.getAddr());
+		HashMap<String,String> mapAddr = addrSet(userDto.getAddr(),userDto.getId());
 		userDto.setAddr("1");
 		
 		ModelAndView mv = new ModelAndView();
@@ -117,8 +117,8 @@ public class UserController {
     }
 	
 	
-	private HashMap<String,String> addrSet(String addrDto) {
-		String[] addr = addrDto.split(" ");
+	private HashMap<String,String> addrSet(String addrDto,String idDto) {
+		String[] addr = addrDto.split(" "); 
 		addr[4]="";
 		HashMap<String,String> mapAddr = new HashMap<String,String>();
 		for(int i = 4;i<addr.length;i++) {
@@ -127,7 +127,7 @@ public class UserController {
 		for(int i=0;i<5;i++) {
 			mapAddr.put("addr"+i, addr[i]);
 		}
-		
+		mapAddr.put("uid",idDto);
 		return mapAddr;
 		
 		

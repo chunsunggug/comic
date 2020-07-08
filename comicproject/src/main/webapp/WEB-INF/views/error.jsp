@@ -15,7 +15,7 @@ document.getElementById("navbackground").style.backgroundColor = "#2196f3";
           </p>
         </div>
 
-        <form action="index.do">
+        <form action="/comic/index.do">
           <div class="input-group-1">
             <input type="text" class="form-control" placeholder="메인으로 돌아가시려면 우측 버튼을 클릭해주세요.">
             <button type="submit" class="btn btn-primary">메인으로....</button>

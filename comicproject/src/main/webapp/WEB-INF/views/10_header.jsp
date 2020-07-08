@@ -35,7 +35,7 @@
 							aria-hidden="true">&times;</button>
 					</div>
 					<div class="modal-body">
-						<form action="signin.do" method="post" name="signin"
+						<form action="/comic/signin.do" method="post" name="signin"
 						onsubmit="return checkLogin()">
 							<div class="form-group">
 								<input type="email" class="form-control" name="id"
@@ -80,7 +80,7 @@
 				<div class="modal-body">
 
 
-					<form action="signup.do" method="post" name="signup"
+					<form action="/comic/signup.do" method="post" name="signup"
 						onsubmit="return checkValue()">
 						<div class="form-group">
 						<span>아이디</span>
@@ -88,7 +88,7 @@
 								placeholder="E-Mail 형식 (ex: abc@mail.com)" onblur="checkId()"
 								required>
 							<p class="text-center" style="margin-top: 16px;">
-								<span id="checkEmail"></span>
+								<span id="checkEmailup"></span>
 							</p>
 						</div>
 
@@ -204,7 +204,7 @@
 									extraAddr = ' (' + extraAddr + ')';
 								}
 								// 조합된 참고항목을 해당 필드에 넣는다.
-								document.getElementById("addrf").value = extraAddr;
+								document.getElementById("addrd").value = extraAddr;
 
 							} else {
 								document.getElementById("addrf").value = '';
@@ -237,19 +237,18 @@
 		function checkId() {
 			var id = $("#id").val();
 			var check = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
-			
 			if (!check.test(id)) {
-				$("#checkEmail").html("EMAIL 형식이 아닙니다.").css("color", "red");
+				$("#checkEmailup").html("EMAIL 형식이 아닙니다.").css("color", "red");
 			} else {
 				$.post("idCheck.do", {
 					"id" : $("#id").val()
 				}, function(data) {
 					if (data == '0') {
-						$("#checkEmail").html("사용가능한 EMAIL 입니다.").css("color",
+						$("#checkEmailup").html("사용가능한 EMAIL 입니다.").css("color",
 								"green");
 						$("#input_pwd").focus();
 					} else {
-						$("#checkEmail").html("사용불가능한 EMAIL 입니다.").css("color",
+						$("#checkEmailup").html("사용불가능한 EMAIL 입니다.").css("color",
 								"red");
 						$("#input_email").focus();
 					}
@@ -354,7 +353,7 @@
 			<div class="container clearfix">
 				<div id="menuzord" class="menuzord menuzord-responsive">
 
-					<a href="index.do" class="menuzord-brand"> <svg
+					<a href="/comic/index.do" class="menuzord-brand"> <svg
 							class="logo-svg" version="1.1" xmlns="http://www.w3.org/2000/svg"
 							width="140" height="44">
                 <path class="fill-primay"
@@ -370,12 +369,12 @@
 					<c:when test="${isyn eq 'T'.charAt(0) and type eq 'C'.charAt(0)}">
 					<span style="color: blue">${name}(${id})님 환영합니다.</span><br>  
 					<span style="color: blue">현재 잔여 포인트 : ${point }</span>
-					<a href="signout.do"><span style="color: blue">로그아웃</span></a>
+					<a href="/comic/signout.do"><span style="color: blue">로그아웃</span></a>
 					</c:when>
 					<c:otherwise>
 					<a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#login-modal" style="margin-left:5px;"><span
 							id="sign">로그인</span> </a> 
-							<a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#reg-modal" style="margin: 0 15px;"><span
+							<a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#reg-modal" style="margin: 0 5px;"><span
 							id="signup">회원가입</span> </a>
 					</c:otherwise> 
 					</c:choose>

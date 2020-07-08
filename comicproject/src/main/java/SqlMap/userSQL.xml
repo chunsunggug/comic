@@ -47,7 +47,7 @@
     </select>
     
     <insert id="addAddr" parameterType="hashmap">
-    INSERT INTO t_user_addr(uidx,post,si,gu,dong,detail) VALUES(LAST_INSERT_ID(),#{addr0},#{addr1},#{addr2},#{addr3},#{addr4});
+    INSERT INTO t_user_addr(uidx,post,si,gu,dong,detail) VALUES((select uidx from t_user where id=#{uid}),#{addr0},#{addr1},#{addr2},#{addr3},#{addr4});
     </insert>
     
 </mapper>

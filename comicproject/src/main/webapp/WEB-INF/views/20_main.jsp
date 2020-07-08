@@ -24,7 +24,7 @@
 
         <!-- Search Box -->
         <div class="search-box-2">
-          <form class="form-row justify-content-center" method="GET" action="book/search.do">
+          <form class="form-row justify-content-center" method="GET" action="/comic/book/search.do">
 
             <div class="form-group col-md-5 col-lg-4">
               <div class="input-group mb-2">
@@ -39,7 +39,7 @@
                 
                 
                 </div>
-                  <input type="text" name="query" class="form-control" placeholder="찾는 책이 있나요?">
+                  <input type="text" name="query" class="form-control" placeholder="찾는 책이 있나요?" required>
               </div>
             </div>
 

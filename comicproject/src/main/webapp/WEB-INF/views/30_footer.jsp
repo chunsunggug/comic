@@ -9,7 +9,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-7 col-xs-12">
-				<a class="d-inline-block mb-6" href="index.html"> <svg
+				<a class="d-inline-block mb-6" href="/comic/index.do"> <svg
 						class="logo-svg" version="1.1" xmlns="http://www.w3.org/2000/svg"
 						width="140" height="44">
               <path class="fill-primay"
@@ -38,7 +38,7 @@
 					<h2 class="h4 text-white">Links</h2>
 				</div>
 				<ul class="list-unstyled list-gray">
-					<li class="mb-3"><a href="index.html">Home</a></li>
+					<li class="mb-3"><a href="/comic/index.do">Home</a></li>
 					<li class="mb-3"><a href="sign-up.html">Create Account</a></li>
 					<li class="mb-3"><a href="login.html">Login</a></li>
 					<li class="mb-3"><a href="add-listings.html">Add Listing</a></li>

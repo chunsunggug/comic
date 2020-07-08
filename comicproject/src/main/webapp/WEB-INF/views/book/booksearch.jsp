@@ -15,15 +15,15 @@
 						<div class="input-group mb-2">
 							<div class="input-group-prepend">
 								<!--<div class="input-group-text">Find</div>-->
-								<select class="input-group-text" name="findBook">
+								<select class="input-group-text" name="target">
 									<option selected="selected" value="title">책 제목</option>
-									<option value="author">저자</option>
-									<option value="library">출판사</option>
+									<option value="person">저자</option>
+									<option value="publisher">출판사</option>
 								</select>
 
 
 							</div>
-							<input type="text" class="form-control" placeholder="찾는 책이 있나요?">
+							<input type="text" class="form-control" name="query" placeholder="찾는 책이 있나요?" required>
 						</div>
 					</div>
 
@@ -60,9 +60,7 @@
 			</c:forEach>
 		</div>
 		<div class="container text-center">
-			total_count : ${meta.total_count}<br> pageable_count :
-			${meta.pageable_count}<br> is_end : ${meta.is_end}<br>
-			<button class="btn btn-primary" id="btn_more_load"
+			<button class="btn btn-primary" id="btn_more_load" style="margin-bottom: 2em;"
 				onclick="show_contents()">더 보기</button>
 		</div>
 	</div>
