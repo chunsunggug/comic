@@ -19,8 +19,8 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public UserDTO getUser(String id) {
-		UserDTO userDto = sqlMap.selectOne("getUser", id);
-		return userDto;
+		UserDTO userDTO = sqlMap.selectOne("getUser", id);
+		return userDTO;
 	}
 
 	@Override
@@ -52,5 +52,11 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public int addAddr(Map addr) {
 		return sqlMap.insert("addAddr", addr);
+	}
+
+	@Override
+	public UserVO loginUser(Map login) {
+		UserVO userVO = sqlMap.selectOne("loginUser", login);
+		return userVO;
 	}
 }

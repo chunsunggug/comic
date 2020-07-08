@@ -12,4 +12,5 @@ public interface UserDao {
 	public int updateUser(UserDTO userDto);
 	public int checkUser(String id);
 	public int addAddr(Map addr);
+	public UserVO loginUser(Map login);
 }

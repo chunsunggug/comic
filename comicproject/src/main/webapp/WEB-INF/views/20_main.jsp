@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" contentType="text/html; charset=UTF-8"%>
+<%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 
     <div class="main-wrapper">
@@ -24,22 +24,22 @@
 
         <!-- Search Box -->
         <div class="search-box-2">
-          <form class="form-row justify-content-center" method="GET" action="#">
+          <form class="form-row justify-content-center" method="GET" action="/comic/book/search.do">
 
             <div class="form-group col-md-5 col-lg-4">
               <div class="input-group mb-2">
                 <div class="input-group-prepend">
                   
                 <!--<div class="input-group-text">Find</div>-->
-                <select class="input-group-text" name="findBook">
+                <select class="input-group-text" name="target">
                 	<option selected="selected" value="title">책 제목</option>
-                	<option value="author">저자</option>
-                	<option value="library">출판사</option>
+                	<option value="person">저자</option>
+                	<option value="publisher">출판사</option>
                 </select>
                 
                 
                 </div>
-                  <input type="text" class="form-control" placeholder="찾는 책이 있나요?">
+                  <input type="text" name="query" class="form-control" placeholder="찾는 책이 있나요?" required>
               </div>
             </div>
 

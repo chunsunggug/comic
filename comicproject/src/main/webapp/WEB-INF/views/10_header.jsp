@@ -1,10 +1,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false" contentType="text/html; charset=UTF-8"%>
+<%@ page session="true" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<% request.setCharacterEncoding("utf-8"); %>
+<c:set var="id" value="${id }" scope="session" />
+<c:set var="name" value="${name }" scope="session" />
+<c:set var="point" value="${point }" scope="session" />
+<c:set var="type" value="${type }" scope="session" />
+<c:set var="isyn" value="${isyn }" scope="session" />
 
 
 <body id="body" class="up-scroll">
-
-	<!-- Preloader -->
+<!-- Preloader -->
 	<div id="preloader" class="smooth-loader-wrapper">
 		<div class="smooth-loader">
 			<div class="loader1">
@@ -15,6 +20,51 @@
 			</div>
 		</div>
 	</div>
+
+
+
+<!-- login modal -->
+		<div class="modal fade" id="login-modal" tabindex="-1" role="dialog"
+			aria-labelledby="Login" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
+
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="Login">로그인</h4>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+						<form action="/comic/signin.do" method="post" name="signin"
+						onsubmit="return checkLogin()">
+							<div class="form-group">
+								<input type="email" class="form-control" name="id"
+									id="email-modal" placeholder="id@email" required>
+									<span id="checkEmail"></span>
+							</div>
+							<div class="form-group">
+								<input type="password" class="form-control" name="pwd"
+									id="password-modal" placeholder="password" required>
+							</div>
+
+							<p class="text-center">
+								<button type="submit" class="btn btn-primary">
+									<i class="fa fa-sign-in"></i> Log in
+								</button>
+							</p>
+
+						</form>
+
+						<p class="text-center text-muted">
+							<a href="#" data-toggle="modal" data-target="#reg-modal"><strong>회원가입</strong></a>
+							<br><a href="#" data-toggle="modal" data-target="#findid-modal">아이디찾기</a>
+							<br><a href="#" data-toggle="modal" data-target="#findpwd-modal">비밀번호 찾기</a>
+						</p>
+
+					</div>
+				</div>
+			</div>
+		</div>
 
 	<!-- register modal -->
 	<div class="modal fade" id="reg-modal" tabindex="-1" role="dialog"
@@ -30,7 +80,7 @@
 				<div class="modal-body">
 
 
-					<form action="signup.do" method="post" name="signup"
+					<form action="/comic/signup.do" method="post" name="signup"
 						onsubmit="return checkValue()">
 						<div class="form-group">
 						<span>아이디</span>
@@ -38,7 +88,7 @@
 								placeholder="E-Mail 형식 (ex: abc@mail.com)" onblur="checkId()"
 								required>
 							<p class="text-center" style="margin-top: 16px;">
-								<span id="checkEmail"></span>
+								<span id="checkEmailup"></span>
 							</p>
 						</div>
 
@@ -154,7 +204,7 @@
 									extraAddr = ' (' + extraAddr + ')';
 								}
 								// 조합된 참고항목을 해당 필드에 넣는다.
-								document.getElementById("addrf").value = extraAddr;
+								document.getElementById("addrd").value = extraAddr;
 
 							} else {
 								document.getElementById("addrf").value = '';
@@ -183,23 +233,22 @@
 	</script>
 
 	<script>
-	<!--하단의 Ajac첫번째 파라미터 url 경로 destnation , 두번째 파라미터는 보낼 데이터 값을 입력 ,	세번째 파라미터 펑션으로 실행하는데 데이터 값을 받음  리턴 받는 이름 data 리턴 받은 data를 통해 확인-->
+	<!--회원가입 하단의 Ajac첫번째 파라미터 url 경로 destnation , 두번째 파라미터는 보낼 데이터 값을 입력 ,	세번째 파라미터 펑션으로 실행하는데 데이터 값을 받음  리턴 받는 이름 data 리턴 받은 data를 통해 확인-->
 		function checkId() {
 			var id = $("#id").val();
 			var check = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
-			
 			if (!check.test(id)) {
-				$("#checkEmail").html("EMAIL 형식이 다릅니다.").css("color", "red");
+				$("#checkEmailup").html("EMAIL 형식이 아닙니다.").css("color", "red");
 			} else {
 				$.post("idCheck.do", {
 					"id" : $("#id").val()
 				}, function(data) {
 					if (data == '0') {
-						$("#checkEmail").html("사용가능한 EMAIL 입니다.").css("color",
+						$("#checkEmailup").html("사용가능한 EMAIL 입니다.").css("color",
 								"green");
 						$("#input_pwd").focus();
 					} else {
-						$("#checkEmail").html("사용불가능한 EMAIL 입니다.").css("color",
+						$("#checkEmailup").html("사용불가능한 EMAIL 입니다.").css("color",
 								"red");
 						$("#input_email").focus();
 					}
@@ -208,7 +257,37 @@
 		}
 	</script>
 
-
+<!--if submit to check login -->
+	<script>
+		$(document).ready(function() {
+			document.signin.id.value = "";
+		});
+		function back() {
+			window.location.href = 'index.do';
+		}
+		
+		function checkLogin() {
+			var id = document.signin.id.value;
+			var pwd = document.signin.pwd.value;
+			var check = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+			var regExp = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
+			if (!check.test(id)) {
+				$("#checkEmail").html("EMAIL 형식이 아닙니다.").css("color", "red");
+				$("#id").focus();
+				return false;
+			} else {
+			if (!document.signin.id.value) {
+				alert("아이디를 다시 확인하세요.");
+				return false;
+			}
+			if (document.signin.pwd.value.length<8) {
+				alert("비밀번호를 확인하세요.");
+				document.signup.pwd.focus();
+				return false;
+			}
+			}
+		}
+	</script>
 
 <!--if submit to check value -->
 	<script>
@@ -274,7 +353,7 @@
 			<div class="container clearfix">
 				<div id="menuzord" class="menuzord menuzord-responsive">
 
-					<a href="index.html" class="menuzord-brand"> <svg
+					<a href="/comic/index.do" class="menuzord-brand"> <svg
 							class="logo-svg" version="1.1" xmlns="http://www.w3.org/2000/svg"
 							width="140" height="44">
                 <path class="fill-primay"
@@ -284,11 +363,26 @@
               </svg>
 					</a>
 					<div class="float-right btn-wrapper">
-						<a class="btn btn-outline-primary" href="signin.do"> <span
-							id="signin">로그인</span></a> <a class="btn btn-outline-primary"
-							href="#" data-toggle="modal" data-target="#reg-modal" style="margin: 0 30px;"><span
-							id="signup">회원가입</span> </a> 
-					</div>
+ 					
+ 					
+ 					<c:choose>
+					<c:when test="${isyn eq 'T'.charAt(0) and type eq 'C'.charAt(0)}">
+					<span style="color: blue">${name}(${id})님 환영합니다.</span><br>  
+					<span style="color: blue">현재 잔여 포인트 : ${point }</span>
+					<a href="/comic/signout.do"><span style="color: blue">로그아웃</span></a>
+					</c:when>
+					<c:otherwise>
+					<a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#login-modal" style="margin-left:5px;"><span
+							id="sign">로그인</span> </a> 
+							<a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#reg-modal" style="margin: 0 5px;"><span
+							id="signup">회원가입</span> </a>
+					</c:otherwise> 
+					</c:choose>
+					</div> 					
+ 					
+ 					
+ 					
+						
 					<ul class="menuzord-menu menuzord-right">
 						<li class="active"><a href="javascript:0">Home</a>
 							<ul class="dropdown">

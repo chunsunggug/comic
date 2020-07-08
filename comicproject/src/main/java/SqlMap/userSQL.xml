@@ -4,8 +4,15 @@
         
         <!-- select id => class 내의 스테이트먼트 파람 -->
 <mapper namespace="com.project.comic.user.UserDao">
-    <select id="getUser" resultType="com.project.comic.user.UserDTO" parameterType="java.lang.String">
+    <select id="getUser" resultType="com.project.comic.user.UserVO" parameterType="java.lang.String">
     select * from t_user where id=#{id}
+    </select>
+    
+    <select id="loginUser" resultType="com.project.comic.user.UserVO" parameterType="hashmap">
+    SELECT u.uidx AS uidx,u.addr AS addr,u.id AS id,u.name AS name,u.phone AS phone,u.birth AS birth,u.point AS POINT
+	,a.post AS post,a.si AS si,a.gu AS gu,a.dong AS dong,a.detail AS detail,u.type AS type,u.isYn
+	FROM t_user u,t_user_addr a
+	WHERE u.uidx=a.uidx AND u.addr = a.pidx AND u.id=#{id} AND u.id=#{id} AND u.pwd=#{pwd};
     </select>
     
     <select id="getUserAll" resultType="com.project.comic.user.UserDTO" >
@@ -40,7 +47,7 @@
     </select>
     
     <insert id="addAddr" parameterType="hashmap">
-    INSERT INTO t_user_addr(uidx,post,si,gu,dong,detail) VALUES(LAST_INSERT_ID(),#{addr0},#{addr1},#{addr2},#{addr3},#{addr4});
+    INSERT INTO t_user_addr(uidx,post,si,gu,dong,detail) VALUES((select uidx from t_user where id=#{uid}),#{addr0},#{addr1},#{addr2},#{addr3},#{addr4});
     </insert>
     
 </mapper>

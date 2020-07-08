@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +34,8 @@ public class BookController {
 	// 검색페이지로 이동해서 검색결과 보여줌
 	@RequestMapping(value="/search.do")
 	public String bookSearch(@RequestParam Map param, HttpSession session) {
-
+		
+		
 		JSONObject param_group = getBookSearchData( mapToJSON(param) );
 
 		if( param_group != null )
@@ -45,7 +47,7 @@ public class BookController {
 		return "book/booksearchpage";
 	}
 
-	// 검색페이지에서 검색을 누룬 경우
+	// 검색페이지에서 더보기를 누룬 경우
 	@ResponseBody
 	@RequestMapping(value="/searchmore.do", produces = "application/text; charset=UTF-8")
 	public String bookSearchMore(HttpSession session) {

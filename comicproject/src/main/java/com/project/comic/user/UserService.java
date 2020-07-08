@@ -1,5 +1,7 @@
 package com.project.comic.user;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,23 +32,12 @@ public class UserService {
 	// return 값 설명
 	// 실패 null, 성공 userDTO
 	@Transactional
-	public UserDTO logingUser(String id, String pwd) {
-		UserDTO getUser = userDao.getUser(id);
+	public UserVO logingUser(Map mapLogin) {
 		
-		if( getUser != null) {
-			if( getUser.getPwd().equals(pwd) ) {
-				System.out.println("Login Ok");
-				return getUser;
-			}
-			else
-			{
-				System.out.println("Login pwd failed");
-				return null;
-			}
-		}else {
-			System.out.println("none id");
-			return null;
-		}
+	     
+         UserVO getUser = userDao.loginUser(mapLogin); 
+         
+         return getUser;		
 	}
 	
 	// id 중복 검사

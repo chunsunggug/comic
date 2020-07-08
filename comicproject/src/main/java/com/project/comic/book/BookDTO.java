@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class BookDTO {
+	private int bidx;
 	private String name;			// 책이름
 	private String contents;		// 도서소개
 	private String url;				// 도서상세 url
@@ -19,9 +20,10 @@ public class BookDTO {
 	private String thumbnail;		// 도서표지 미리보기 url
 	private String status;			// 도서 판매 상태 정보
 	
-	public BookDTO(String name, String contents, String url, String isbn, Date datetime,
+	public BookDTO(int bidx,String name, String contents, String url, String isbn, Date datetime,
 			String authors, String publisher, String[] translators, int price, int sale_price,
 			String thumbnail, String status) {
+		this.bidx = bidx;
 		this.name = name;
 		this.contents = contents;
 		this.url = url;
