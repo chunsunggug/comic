@@ -5,7 +5,7 @@
 <section>
 	<div class="container">
 		<div class="row text-center align-items-center justify-content-center"
-			style="height: 624px;">
+			style="height: 300px;">
 			<!-- Search Box -->
 			<div class="search-box-2">
 				<form class="form-row justify-content-center" method="GET"
@@ -60,13 +60,11 @@
 			</c:forEach>
 		</div>
 		<div class="container text-center">
-			total_count : ${meta.total_count}<br> pageable_count :
-			${meta.pageable_count}<br> is_end : ${meta.is_end}<br>
 			<button class="btn btn-primary" id="btn_more_load"
 				onclick="show_contents()">더 보기</button>
 		</div>
 	</div>
 
-	
+
 </section>
 </body>
