@@ -119,11 +119,12 @@ public class UserController {
 	
 	private HashMap<String,String> addrSet(String addrDto,String idDto) {
 		String[] addr = addrDto.split(" "); 
-		addr[4]="";
+		String detail = ""; //addr[0] = post / addr[1] = si / addr[2] = gu / addr[3] = dong / addr[4,5,6,7...] = detail
 		HashMap<String,String> mapAddr = new HashMap<String,String>();
 		for(int i = 4;i<addr.length;i++) {
-			addr[4]+=addr[i];
+			detail+=addr[i];
 		}
+		addr[4] = detail;
 		for(int i=0;i<5;i++) {
 			mapAddr.put("addr"+i, addr[i]);
 		}

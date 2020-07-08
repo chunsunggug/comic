@@ -15,10 +15,10 @@
         <!-- Banner Info -->
         <div class="banner-info">
           <h1 class="text-uppercase text-white mb-4">
-            explore. discover. share
+            	집에서 편하게 시켜보자!
           </h1>
           <p class="lead text-white">
-            Listty helps to find out great things arround you
+            현재는 관악구 일대 지역만 서비스 가능합니다.
           </p>
         </div>
 
@@ -546,7 +546,7 @@
 					</div>
 					<div class="card-body text-center pb-6">
 						<h3 class="h4">
-							<a class="mb-3 d-inline-block text-dark text-decoration-none" href="how-it-works.html">Explore Location</a>
+							<a class="mb-3 d-inline-block text-dark text-decoration-none" href="how-it-works.html">집에서 편하게 대여하자!</a>
 						</h3>
 						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed eiusmod tempor incididunt  labore et dolore magna aliqua.</p>
 					</div>
