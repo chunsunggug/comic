@@ -77,21 +77,24 @@ ENGINE=InnoDB
 drop table if exists t_store cascade;
 CREATE TABLE `t_store` (
 	`sidx` INT(11) NOT NULL AUTO_INCREMENT COMMENT '기본키',
-	`sid` VARCHAR(20) NOT NULL DEFAULT '0' COMMENT '지점관리자' COLLATE 'utf8_general_ci',
+	`id` VARCHAR(20) NOT NULL DEFAULT '0' COMMENT '지점관리자' COLLATE 'utf8_general_ci',
 	`pwd` VARCHAR(20) NOT NULL COMMENT '비밀번호' COLLATE 'utf8_general_ci',
 	`name` VARCHAR(20) NOT NULL COMMENT '이름' COLLATE 'utf8_general_ci',
 	`phone` VARCHAR(15) NOT NULL COMMENT '연락처' COLLATE 'utf8_general_ci',
 	`point` INT(11) NOT NULL DEFAULT '500' COMMENT '현재포인트',
-	`img` BLOB NULL,
+	`img` VARCHAR(10000) NULL COLLATE 'utf8_general_ci',
 	`sdate` DATETIME NOT NULL DEFAULT current_timestamp() COMMENT '가입날짜',
 	`edate` DATETIME NULL COMMENT '탈퇴날짜',
 	`isyn` CHAR(1) NOT NULL DEFAULT Y COMMENT '탈퇴유무 N:탈퇴' COLLATE 'utf8_general_ci',
+	`birth` CHAR(8) NOT NULL COLLATE 'utf8_general_ci',
 	PRIMARY KEY (`sidx`) USING BTREE,
-	UNIQUE INDEX `sid` (`sid`) USING BTREE
+	UNIQUE INDEX `sid` (`id`) USING BTREE
 )
 COLLATE='utf8_general_ci'
 ENGINE=InnoDB
+AUTO_INCREMENT=23
 ;
+
 
 drop table if exists t_store_book cascade;
 CREATE TABLE `t_store_book` (
@@ -153,3 +156,9 @@ INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id002', 'pwd00002', 'name2'
 INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id003', 'pwd00003', 'name3', '01011112222', '2000-12-13');
 INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id004', 'pwd00004', 'name4', '01011112222', '2000-12-14');
 INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id005', 'pwd00005', 'name5', '01011112222', '2000-12-15');
+
+INSERT INTO t_store(id,pwd,name,phone,point,img,sdate,edate,birth,isyn) VALUES("ididid1", "pwdpwd1", "name1", "phone1", 0, "img1", "20001212", null, "20000101", "n");
+INSERT INTO t_store(id,pwd,name,phone,point,img,sdate,edate,birth,isyn) VALUES("ididid2", "pwdpwd2", "name2", "phone2", 0, "img2", "20001212", null, "20000101", "n");
+INSERT INTO t_store(id,pwd,name,phone,point,img,sdate,edate,birth,isyn) VALUES("ididid3", "pwdpwd3", "name3", "phone3", 0, "img3", "20001212", null, "20000101", "n");
+INSERT INTO t_store(id,pwd,name,phone,point,img,sdate,edate,birth,isyn) VALUES("ididid4", "pwdpwd4", "name4", "phone4", 0, "img4", "20001212", null, "20000101", "n");
+INSERT INTO t_store(id,pwd,name,phone,point,img,sdate,edate,birth,isyn) VALUES("ididid1", "pwdpwd5", "name5", "phone5", 0, "img5", "20001212", null, "20000101", "n");

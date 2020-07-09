@@ -4,5 +4,6 @@
 <configuration>
     <mappers>
         <mapper resource="SqlMap/userSQL.xml"/>
+        <mapper resource="SqlMap/storeSQL.xml"/>
     </mappers>
 </configuration>

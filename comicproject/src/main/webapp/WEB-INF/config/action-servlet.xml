@@ -47,11 +47,6 @@
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
 	</bean>
-
-	
- 	 
- 	<bean id="userDao" class="com.project.comic.user.UserDaoImpl"/>
- 	
  	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -59,7 +54,8 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.project.comic,com.project.comic.user,com.project.comic.controller" />
+	<context:component-scan base-package="com.project.comic,com.project.comic.user,com.project.comic.controller,
+																				com.project.comic.store" />
 	
 	
 </beans:beans>
