@@ -73,7 +73,7 @@ public class BookController {
 	// sort 	: 정렬방법 accuracy(정확도순), recency(최신순)
 	// page 	: 결과 페이지 번호 1~50, 디폴트 1
 	// size 	: 한페이지에 보여질 문서 수 1~50, 디폴트 10
-	// target 	:검색필드제한 title, isbn, publisher, person
+	// target 	: 검색필드제한 title, isbn, publisher, person
 	// url 뒤에 parameter 붙여서 데이터 가져온 후 JSON으로 parsing해서 return
 	private JSONObject getBookSearchData( JSONObject param ){
 		URL url;
