@@ -171,27 +171,58 @@
 							aria-hidden="true">&times;</button>
 					</div>
 					<div class="modal-body">
-						<form action="/comic/findId.do" method="post" name="findId"
-						onsubmit="return checkId()">
+						<form action="#" method="post" name="findIdAjax">
 							<div class="form-group">
 							<span>이름</span>
 								<input type="text" class="form-control" name="name"
-									id="name-modal" placeholder="이름 입력" required>
+									id="findIdname" placeholder="이름 입력" required>
 							</div>
 							<div class="form-group">
 							<span>생년월일</span>
 								<input type="date" class="form-control" name="birth"
-									id="birth" placeholder="생년월일 입력" required>
+									id="findIdbirth" placeholder="생년월일 입력" required>
 							</div>
 
 							<p class="text-center">
-								<button type="submit" class="btn btn-primary">
+							<span id="checkFindMes"></span><br>
+								<button type="button" class="btn btn-primary" id='findIdbutton' onclick="FindIdAjax();" style="margin-top: 5px;">
 									<i class="fa fa-sign-in"></i> 아이디 찾기
 								</button>
 							</p>
-
 						</form>
-
+<!--if submit to check findid -->
+	<script>
+		function FindIdAjax() {
+			
+			var name = $("#findIdname").val();
+			var birth = $("#findIdbirth").val();
+			console.log('check'+name+"||"+birth);
+			
+			if (name.length<1 ||birth.length!=10) {
+				$("#checkFindMes").html("이름 또는 생년월일을 확인해주세요.").css("color", "red");
+			} else {
+				$.post("findId.do", {
+					"name" : name,
+					"birth" : birth
+				}, function(data) {
+					if (data == '0') {
+						$("#checkFindMes").html("가입된 계정이 없습니다.").css("color",
+								"red");
+					} else {
+						var result = data.split(" ");
+						console.log('check data:'+result.length);
+						$("#checkFindMes").html("동명 이인 아이디 검색의 주의하세요.<br>").css("color",
+						"green");
+						for(var i =0;i<result.length;i++){
+							console.log('check data:'+result[i]);
+							$("#checkFindMes").append(result[i]+"<br>");
+						}
+						
+					}
+				});
+			} 
+		}
+	</script>
 						<p class="text-center text-muted">
 							<a href="#" data-dismiss="modal" data-toggle="modal" data-target="#reg-modal"><strong>회원가입</strong></a>
 							<br><a href="#" data-dismiss="modal" data-toggle="modal" data-target="#login-modal">로그인</a>
@@ -303,13 +334,6 @@
 
 <!--if submit to check login -->
 	<script>
-		$(document).ready(function() {
-			document.signin.id.value = "";
-		});
-		function back() {
-			window.location.href = 'index.do';
-		}
-		
 		function checkLogin() {
 			var id = document.signin.id.value;
 			var pwd = document.signin.pwd.value;
@@ -370,6 +394,8 @@
 		}
 	</script>
 
+
+
 <!-- date check max today -->
 	<script>
 		var today = new Date();
@@ -385,6 +411,7 @@
 
 		today = yyyy+'-'+mm+'-'+dd;
 		document.getElementById('birth').setAttribute("max", today);
+		document.getElementById('findIdbirth').setAttribute("max", today);
 	</script>
 
 

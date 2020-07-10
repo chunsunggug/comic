@@ -47,4 +47,7 @@
     INSERT INTO t_user_addr(uidx,post,si,gu,dong,detail) VALUES((select uidx from t_user where id=#{uid}),#{addr0},#{addr1},#{addr2},#{addr3},#{addr4});
     </insert>
     
+     <select id="findId" resultType="hashmap" >
+    select id from t_user where name=#{name} and birth=#{birth}
+    </select>
 </mapper>

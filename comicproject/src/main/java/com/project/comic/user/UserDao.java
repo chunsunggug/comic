@@ -13,4 +13,5 @@ public interface UserDao {
 	public int checkUser(String id);
 	public int addAddr(Map addr);
 	public UserVO loginUser(Map login);
+	public List findId(Map findIdinfo);
 }

@@ -116,6 +116,42 @@ public class UserController {
     	
     }
 	
+
+	@ResponseBody
+	@RequestMapping(value = "/findId.do",method = RequestMethod.POST)
+	public String FindId(@RequestParam HashMap findIdinfo) {
+		System.out.println("user Controller\n"+findIdinfo.get("name")+"\n"+findIdinfo.get("birth"));
+		List result =  userService.findId(findIdinfo);
+		String resultId="";
+		int rcnt=0;
+
+		
+		if(result.size()<1) {
+			return "0";
+		}else {
+			String resultreturn="";
+			for(int i =0;i<result.size();i++) {
+				resultId = result.get(i).toString().substring(4,result.get(i).toString().length()-1);
+				rcnt = resultId.indexOf("@");
+				if(rcnt<4) {
+					resultId = resultId.substring(0,rcnt/2)+"****"+resultId.substring(rcnt);
+					resultreturn+=resultId+" ";
+				}else {
+					resultId = resultId.substring(0,3)+"****"+resultId.substring(rcnt);
+					resultreturn+=resultId+" ";
+				}
+				
+			}
+			
+			System.out.println("resultreturn:"+resultreturn);
+			
+	    	return resultreturn.trim();
+		}
+		
+		
+		
+    	
+    }
 	
 	private HashMap<String,String> addrSet(String addrDto,String idDto) {
 		String[] addr = addrDto.split(" "); 
