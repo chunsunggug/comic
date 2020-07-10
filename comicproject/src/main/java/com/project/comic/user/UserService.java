@@ -1,5 +1,6 @@
 package com.project.comic.user;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -61,6 +62,10 @@ public class UserService {
 	
 	public List findId(Map findIdinfo) {
 		return userDao.findId(findIdinfo);
+	}
+
+	public List findPwd(HashMap findPwdinfo) {
+		return userDao.findPwd(findPwdinfo);
 	}
 	
 }

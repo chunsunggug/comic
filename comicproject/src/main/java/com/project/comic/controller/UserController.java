@@ -133,11 +133,11 @@ public class UserController {
 			for(int i =0;i<result.size();i++) {
 				resultId = result.get(i).toString().substring(4,result.get(i).toString().length()-1);
 				rcnt = resultId.indexOf("@");
-				if(rcnt<4) {
-					resultId = resultId.substring(0,rcnt/2)+"****"+resultId.substring(rcnt);
+				if(rcnt<5) {
+					resultId = resultId.substring(0,rcnt/2)+"******"+resultId.substring(rcnt-1);
 					resultreturn+=resultId+" ";
 				}else {
-					resultId = resultId.substring(0,3)+"****"+resultId.substring(rcnt);
+					resultId = resultId.substring(0,3)+"******"+resultId.substring(rcnt-1);
 					resultreturn+=resultId+" ";
 				}
 				
@@ -147,10 +147,23 @@ public class UserController {
 			
 	    	return resultreturn.trim();
 		}
+    }
+	
+	@ResponseBody
+	@RequestMapping(value = "/findPwd.do",method = RequestMethod.POST)
+	public ModelAndView FindPwd(@RequestParam HashMap findIdinfo) {
+		System.out.println("user Controller\n"+findIdinfo.get("name")+"\n"+findIdinfo.get("phone"));
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName(url);
+		List result =  userService.findPwd(findIdinfo);
 		
+		System.out.println("result ="+result.get(0));
 		
+		String resultId="";
+		int rcnt=0;
+
 		
-    	
+		return mv;
     }
 	
 	private HashMap<String,String> addrSet(String addrDto,String idDto) {

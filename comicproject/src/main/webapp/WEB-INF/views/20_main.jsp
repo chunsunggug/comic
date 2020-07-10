@@ -15,10 +15,10 @@
         <!-- Banner Info -->
         <div class="banner-info">
           <h1 class="text-uppercase text-white mb-4">
-            	집에서 편하게 시켜보자!
+            	집에서 편하게 빌려보자!
           </h1>
           <p class="lead text-white">
-            현재는 관악구 일대 지역만 서비스 가능합니다.
+            현재는 관악구 봉천동 일대 지역만 서비스 가능합니다.
           </p>
         </div>
 
