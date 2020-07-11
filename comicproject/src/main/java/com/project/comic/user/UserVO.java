@@ -1,10 +1,8 @@
 package com.project.comic.user;
 
-import java.util.Date;
+import lombok.Getter;
 
-import lombok.Data;
-
-@Data
+@Getter
 public class UserVO {
 	private int uidx;
 	private String addr;

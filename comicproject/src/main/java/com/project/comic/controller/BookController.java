@@ -2,22 +2,17 @@ package com.project.comic.controller;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,7 +31,7 @@ public class BookController {
 	public String bookSearch(@RequestParam Map param, HttpSession session) {
 		
 		
-		JSONObject param_group = getBookSearchData( mapToJSON(param) );
+		JSONObject param_group = getBookSearchData( mapToJSON(param) ); // 폼에서 전달받은 데이터로 검색
 
 		if( param_group != null )
 			setSessionParam(session, param_group);
@@ -51,9 +46,9 @@ public class BookController {
 	@ResponseBody
 	@RequestMapping(value="/searchmore.do", produces = "application/text; charset=UTF-8")
 	public String bookSearchMore(HttpSession session) {
-		JSONObject json_param = (JSONObject)session.getAttribute("searchparam");
-		JSONObject json_meta = (JSONObject)session.getAttribute("meta");
-		JSONObject json_group = null;
+		JSONObject json_param = (JSONObject)session.getAttribute("searchparam");	// 폼에서 가져온 데이터
+		JSONObject json_meta = (JSONObject)session.getAttribute("meta");			// 가지고 있던 카카오 meta 데이터
+		JSONObject json_group = null;												// 카카오 서버에서 받아온 데이터 넣을 변수
 
 		System.out.println("받아온 param : " + json_param.toJSONString());
 
@@ -70,7 +65,7 @@ public class BookController {
 		}else
 			return null;
 		
-		return json_group.get("documents").toString();
+		return json_group.toString();
 	}
 
 	// parameter key 설명
@@ -78,7 +73,7 @@ public class BookController {
 	// sort 	: 정렬방법 accuracy(정확도순), recency(최신순)
 	// page 	: 결과 페이지 번호 1~50, 디폴트 1
 	// size 	: 한페이지에 보여질 문서 수 1~50, 디폴트 10
-	// target 	:검색필드제한 title, isbn, publisher, person
+	// target 	: 검색필드제한 title, isbn, publisher, person
 	// url 뒤에 parameter 붙여서 데이터 가져온 후 JSON으로 parsing해서 return
 	private JSONObject getBookSearchData( JSONObject param ){
 		URL url;

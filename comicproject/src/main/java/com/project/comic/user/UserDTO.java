@@ -15,15 +15,15 @@ public class UserDTO {
 	private String birth;
 	private String addr;
 	private int point;
-	private Date sdate;
-	private Date edate;
+	private String sdate;
+	private String edate;
 	private String type;
 	private String isyn;
 	
 	public UserDTO() {}
 	
-	public UserDTO(int uidx,String id, String pwd, String name, String phone, String birth,String addr, int point, Date sdate,
-			Date edate, String type, String isyn) {
+	public UserDTO(int uidx,String id, String pwd, String name, String phone, String birth,String addr, int point,
+			String sdate,String edate, String type, String isyn) {
 		super();
 		this.uidx=uidx;
 		this.id = id;

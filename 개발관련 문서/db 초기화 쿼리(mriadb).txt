@@ -1,28 +1,11 @@
 set foreign_key_checks = 0;
-DROP TABLE if exists T_USER_ADDR cascade;
+
 
 CREATE VIEW v_login AS
 SELECT u.uidx AS uidx,u.addr AS addr,u.id AS id,u.name AS name,u.phone AS phone,u.birth AS birth,u.point AS POINT
 	,a.post AS post,a.si AS si,a.gu AS gu,a.dong AS dong,a.detail AS detail,u.type AS type,u.isYn,u.pwd AS pwd
 	FROM t_user u,t_user_addr a
 	WHERE u.uidx = a.uidx;
-
-
-CREATE TABLE `t_user_addr` (
-	`pidx` INT(11) NOT NULL DEFAULT 1 COMMENT '주소 인덱스',
-	`uidx` INT(11) NOT NULL COMMENT '유저 인덱스',
-	`post` VARCHAR(15) NOT NULL COMMENT '우편번호',
-	`si` VARCHAR(50) NOT NULL COMMENT '시',
-	`gu` VARCHAR(50) NOT NULL COMMENT '구',
-	`dong` VARCHAR(50) NOT NULL COMMENT '동',
-	`detail` VARCHAR(50) NULL DEFAULT NULL COMMENT '상세주소',
-	INDEX `uidx` (`uidx`) USING BTREE,
-	CONSTRAINT `uidx` FOREIGN KEY (`uidx`) REFERENCES `t_user` (`uidx`) ON UPDATE CASCADE ON DELETE CASCADE
-)
-COLLATE='utf8_general_ci'
-ENGINE=InnoDB
-;
-
 
 DROP TABLE if exists T_USER cascade;
 CREATE TABLE `t_user` (
@@ -50,6 +33,122 @@ COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 ;
 
+DROP TABLE if exists T_USER_ADDR cascade;
+CREATE TABLE `t_user_addr` (
+	`pidx` INT(11) NOT NULL DEFAULT 1 COMMENT '주소 인덱스',
+	`uidx` INT(11) NOT NULL COMMENT '유저 인덱스',
+	`post` VARCHAR(15) NOT NULL COMMENT '우편번호',
+	`si` VARCHAR(50) NOT NULL COMMENT '시',
+	`gu` VARCHAR(50) NOT NULL COMMENT '구',
+	`dong` VARCHAR(50) NOT NULL COMMENT '동',
+	`detail` VARCHAR(50) NULL DEFAULT NULL COMMENT '상세주소',
+	INDEX `uidx` (`uidx`) USING BTREE,
+	CONSTRAINT `uidx` FOREIGN KEY (`uidx`) REFERENCES `t_user` (`uidx`) ON UPDATE CASCADE ON DELETE CASCADE
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+
+
+
+drop table if exists t_bookinfo cascade;
+CREATE TABLE `t_bookinfo` (
+	`title` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8_general_ci',
+	`publisher` VARCHAR(50) NULL COLLATE 'utf8_general_ci',
+	`contents` MEDIUMTEXT NULL COLLATE 'utf8_general_ci',
+	`thumbnail` VARCHAR(1000) NULL COLLATE 'utf8_general_ci',
+	`isbn` VARCHAR(13) NOT NULL COLLATE 'utf8_general_ci',
+	`datetime` DATE NOT NULL,
+	`authors` VARCHAR(200) NULL COLLATE 'utf8_general_ci',
+	`translators` VARCHAR(200) NULL COLLATE 'utf8_general_ci',
+	`point` INT(11) NOT NULL DEFAULT '0',
+	`price` INT(11) NOT NULL DEFAULT '0',
+	`sale_price` INT(11) NOT NULL DEFAULT '0',
+	PRIMARY KEY (`isbn`) USING BTREE,
+	FULLTEXT INDEX `bookinfo_title` (`title`),
+	FULLTEXT INDEX `bookinfo_publisher` (`publisher`),
+	FULLTEXT INDEX `bookinfo_authors` (`authors`)
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+drop table if exists t_store cascade;
+CREATE TABLE `t_store` (
+	`sidx` INT(11) NOT NULL AUTO_INCREMENT COMMENT '기본키',
+	`id` VARCHAR(20) NOT NULL DEFAULT '0' COMMENT '지점관리자' COLLATE 'utf8_general_ci',
+	`pwd` VARCHAR(20) NOT NULL COMMENT '비밀번호' COLLATE 'utf8_general_ci',
+	`name` VARCHAR(20) NOT NULL COMMENT '이름' COLLATE 'utf8_general_ci',
+	`phone` VARCHAR(15) NOT NULL COMMENT '연락처' COLLATE 'utf8_general_ci',
+	`point` INT(11) NOT NULL DEFAULT '500' COMMENT '현재포인트',
+	`img` VARCHAR(10000) NULL COLLATE 'utf8_general_ci',
+	`sdate` DATETIME NOT NULL DEFAULT current_timestamp() COMMENT '가입날짜',
+	`edate` DATETIME NULL COMMENT '탈퇴날짜',
+	`isyn` CHAR(1) NOT NULL DEFAULT Y COMMENT '탈퇴유무 N:탈퇴' COLLATE 'utf8_general_ci',
+	`birth` CHAR(8) NOT NULL COLLATE 'utf8_general_ci',
+	PRIMARY KEY (`sidx`) USING BTREE,
+	UNIQUE INDEX `sid` (`id`) USING BTREE
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=23
+;
+
+
+drop table if exists t_store_book cascade;
+CREATE TABLE `t_store_book` (
+	`sbidx` INT(11) NOT NULL,
+	`sidx` INT(11) NOT NULL,
+	`isbn` VARCHAR(13) NOT NULL COLLATE 'utf8_general_ci',
+	`idx` INT(11) NOT NULL COMMENT '같은책에대한 인식번호',
+	`sdate` DATETIME NOT NULL DEFAULT current_timestamp() COMMENT '등록날짜',
+	`lostdate` DATETIME NULL COMMENT '분실날짜',
+	`lostuidx` INT(11) NULL,
+	`status` CHAR(1) NOT NULL DEFAULT S COMMENT '품목상태 입점S 분실L 대여중O' COLLATE 'utf8_general_ci',
+	PRIMARY KEY (`sbidx`) USING BTREE,
+	INDEX `t_store_book_un` (`sidx`, `isbn`, `idx`) USING BTREE,
+	INDEX `t_store_book_fk2` (`lostuidx`) USING BTREE,
+	CONSTRAINT `t_store_book_fk1` FOREIGN KEY (`sidx`) REFERENCES `comic`.`t_store` (`sidx`) ON UPDATE RESTRICT ON DELETE RESTRICT,
+	CONSTRAINT `t_store_book_fk2` FOREIGN KEY (`lostuidx`) REFERENCES `comic`.`t_user` (`uidx`) ON UPDATE RESTRICT ON DELETE RESTRICT
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+drop table if exists t_user_store cascade;
+CREATE TABLE `t_user_store` (
+	`usidx` INT(11) NOT NULL,
+	`uidx` INT(11) NOT NULL,
+	`sbidx` INT(11) NOT NULL,
+	`borrowtime` DATETIME NOT NULL DEFAULT current_timestamp() COMMENT '대여날짜',
+	`returntime` DATETIME NULL COMMENT '반납/분실날짜',
+	PRIMARY KEY (`usidx`) USING BTREE,
+	INDEX `t_user_store_fk1` (`uidx`) USING BTREE,
+	INDEX `t_user_store_fk2` (`sbidx`) USING BTREE,
+	CONSTRAINT `t_user_store_fk1` FOREIGN KEY (`uidx`) REFERENCES `comic`.`t_user` (`uidx`) ON UPDATE RESTRICT ON DELETE RESTRICT,
+	CONSTRAINT `t_user_store_fk2` FOREIGN KEY (`sbidx`) REFERENCES `comic`.`t_store_book` (`sbidx`) ON UPDATE RESTRICT ON DELETE RESTRICT
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+drop table if exists t_user_bookmark cascade;
+CREATE TABLE `t_user_bookmark` (
+	`ubidx` INT(11) NOT NULL,
+	`uidx` INT(11) NOT NULL,
+	`isbn` VARCHAR(13) NOT NULL COLLATE 'utf8_general_ci',
+	`sdate` DATETIME NOT NULL,
+	PRIMARY KEY (`ubidx`) USING BTREE,
+	INDEX `t_user_bookmark` (`uidx`) USING BTREE,
+	CONSTRAINT `t_user_bookmark` FOREIGN KEY (`uidx`) REFERENCES `comic`.`t_user` (`uidx`) ON UPDATE RESTRICT ON DELETE RESTRICT
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+
+
 set foreign_key_checks = 1;
 
 INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id001', 'pwd00001', 'name1', '01011112222', '2000-12-11');
@@ -57,3 +156,9 @@ INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id002', 'pwd00002', 'name2'
 INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id003', 'pwd00003', 'name3', '01011112222', '2000-12-13');
 INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id004', 'pwd00004', 'name4', '01011112222', '2000-12-14');
 INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id005', 'pwd00005', 'name5', '01011112222', '2000-12-15');
+
+INSERT INTO t_store(id,pwd,name,phone,point,img,sdate,edate,birth,isyn) VALUES("ididid1", "pwdpwd1", "name1", "phone1", 0, "img1", "20001212", null, "20000101", "n");
+INSERT INTO t_store(id,pwd,name,phone,point,img,sdate,edate,birth,isyn) VALUES("ididid2", "pwdpwd2", "name2", "phone2", 0, "img2", "20001212", null, "20000101", "n");
+INSERT INTO t_store(id,pwd,name,phone,point,img,sdate,edate,birth,isyn) VALUES("ididid3", "pwdpwd3", "name3", "phone3", 0, "img3", "20001212", null, "20000101", "n");
+INSERT INTO t_store(id,pwd,name,phone,point,img,sdate,edate,birth,isyn) VALUES("ididid4", "pwdpwd4", "name4", "phone4", 0, "img4", "20001212", null, "20000101", "n");
+INSERT INTO t_store(id,pwd,name,phone,point,img,sdate,edate,birth,isyn) VALUES("ididid1", "pwdpwd5", "name5", "phone5", 0, "img5", "20001212", null, "20000101", "n");

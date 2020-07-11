@@ -1,0 +1,45 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="com.project.comic.store.StoreDao">
+    <select id="getStore" resultType="com.project.comic.store.StoreDTO" parameterType="java.lang.String">
+    select * from t_store where id=#{id}
+    </select>
+    
+    <select id="loginStore" resultType="com.project.comic.store.StoreDTO" parameterType="hashmap">
+    SELECT * FROM t_store WHERE id=#{id} AND pwd=#{pwd}
+    </select>
+    
+    <select id="getStoreAll" resultType="com.project.comic.store.StoreDTO" >
+    select * from t_store;
+    </select>
+    
+    <insert id="addStore" parameterType="com.project.comic.store.StoreDTO">
+    insert into t_store(id,pwd,name,phone,birth)
+    values(#{id},#{pwd},#{name},#{phone},#{birth})
+    </insert>
+    
+    <delete id="deleteStore" parameterType="java.lang.String">
+    delete from t_store where id=#{id}
+    </delete>
+    
+    <delete id="deleteStoreAll">
+    delete from t_store;
+    </delete>
+
+    <update id="updateStore" parameterType="com.project.comic.store.StoreDTO">
+    update t_store set pwd=#{pwd},
+                      name=#{name}, phone=#{phone}
+                      where id=#{id}
+    </update>
+    
+    <update id="updateStorePoint" parameterType="com.project.comic.store.StoreDTO">
+    update t_store set point=#{point} where id=#{id}
+    </update>
+    
+    <select id="checkStore" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select COUNT(id) from t_store where id=#{id}
+    </select>
+    
+</mapper>
