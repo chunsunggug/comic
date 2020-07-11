@@ -66,6 +66,8 @@ public class UserService {
 
 	public List findPwd(HashMap findPwdinfo) {
 		return userDao.findPwd(findPwdinfo);
+		
+		
 	}
 	
 }

@@ -151,18 +151,30 @@ public class UserController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/findPwd.do",method = RequestMethod.POST)
-	public ModelAndView FindPwd(@RequestParam HashMap findIdinfo) {
-		System.out.println("user Controller\n"+findIdinfo.get("name")+"\n"+findIdinfo.get("phone"));
+	public ModelAndView FindPwd(@RequestParam HashMap findPwdinfo,HttpServletRequest req) {
+		System.out.println("user Controller\n"+findPwdinfo.get("name")+"\n"+findPwdinfo.get("phone"));
 		ModelAndView mv = new ModelAndView();
+		
+		List result =  userService.findPwd(findPwdinfo);
+		String id = "";
+		String pwd = "";
+		if(result.size()>1) {
+			for(int i=0;i<result.size();i++) {
+				UserDTO userDTO = new UserDTO();
+				userDTO = (UserDTO) result.get(i);
+				id += userDTO.getId()+" ";
+			}
+			HttpSession session = req.getSession();
+       	 
+            session.setAttribute("id",id);
+			mv.addObject("id",id.trim());
+			url="user/findpwdForm";
+		}else {
+			mv.addObject("msg","가입된 계정이 없습니다. 회원가입 후 진행해주세요.");
+			mv.addObject("gourl","index");
+			url="/comic/user/login";
+		}
 		mv.setViewName(url);
-		List result =  userService.findPwd(findIdinfo);
-		
-		System.out.println("result ="+result.get(0));
-		
-		String resultId="";
-		int rcnt=0;
-
-		
 		return mv;
     }
 	

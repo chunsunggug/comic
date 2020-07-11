@@ -51,7 +51,7 @@
     select id from t_user where name=#{name} and birth=#{birth}
     </select>
     
-     <select id="findPwd" parameterType="hashmap" resultType="hashmap" >
-    select id,pwd from t_user where name=#{name} and phone=#{phone}
+     <select id="findPwd" parameterType="hashmap" resultType="com.project.comic.user.UserDTO" >
+    select * from t_user where name=#{name} and phone=#{phone}
     </select>
 </mapper>
