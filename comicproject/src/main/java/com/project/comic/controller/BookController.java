@@ -55,6 +55,6 @@ public class BookController {
 	// 점주의 도서관리 페이지 이동
 	@RequestMapping(value="/listbook.do")
 	public String listBook() {
-		return "book/listbook";
+		return "book/bookmanage";
 	}
 }
