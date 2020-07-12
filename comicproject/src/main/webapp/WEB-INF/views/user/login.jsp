@@ -4,5 +4,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <script>
 window.alert('${msg}');
-location.href='${gourl}'; /* 메인으로 돌아가기 */
+location.replace('${gourl}'); /* 메인으로 돌아가기 */
 </script>

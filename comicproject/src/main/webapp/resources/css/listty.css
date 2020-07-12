@@ -2678,7 +2678,7 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-primary {
-  color: #2196f3;
+  color: #fff;
   border-color: #2196f3;
 }
 
@@ -12446,9 +12446,9 @@ p {
 }
 
 .nav-menuzord-transparent .btn-wrapper .btn:hover {
-  border-color: #2196f3;
-  color: #2196f3;
-  background-color: transparent;
+  border-color: #fff;
+  color: #fff;
+  background-color: #2196f3;
 }
 
 .nav-menuzord-transparent.navbar-sticky .menuzord .showhide {
@@ -12465,13 +12465,13 @@ p {
 
 @media (min-width: 992px) {
   .nav-menuzord-transparent.navbar-sticky .menuzord-menu > li > a {
-    color: #222;
+    color: #fff;
   }
 }
 
 .nav-menuzord-transparent.navbar-sticky .btn-wrapper .btn {
-  border-color: #2196f3;
-  color: #2196f3;
+  border-color: #fff;
+  color: #fff;
 }
 
 .nav-menuzord-transparent.navbar-sticky .btn-wrapper .btn:hover {

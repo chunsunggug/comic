@@ -116,6 +116,67 @@ public class UserController {
     	
     }
 	
+
+	@ResponseBody
+	@RequestMapping(value = "/findId.do",method = RequestMethod.POST)
+	public String FindId(@RequestParam HashMap findIdinfo) {
+		System.out.println("user Controller\n"+findIdinfo.get("name")+"\n"+findIdinfo.get("birth"));
+		List result =  userService.findId(findIdinfo);
+		String resultId="";
+		int rcnt=0;
+
+		
+		if(result.size()<1) {
+			return "0";
+		}else {
+			String resultreturn="";
+			for(int i =0;i<result.size();i++) {
+				resultId = result.get(i).toString().substring(4,result.get(i).toString().length()-1);
+				rcnt = resultId.indexOf("@");
+				if(rcnt<5) {
+					resultId = resultId.substring(0,rcnt/2)+"******"+resultId.substring(rcnt-1);
+					resultreturn+=resultId+" ";
+				}else {
+					resultId = resultId.substring(0,3)+"******"+resultId.substring(rcnt-1);
+					resultreturn+=resultId+" ";
+				}
+				
+			}
+			
+			System.out.println("resultreturn:"+resultreturn);
+			
+	    	return resultreturn.trim();
+		}
+    }
+	
+	@ResponseBody
+	@RequestMapping(value = "/findPwd.do",method = RequestMethod.POST)
+	public ModelAndView FindPwd(@RequestParam HashMap findPwdinfo,HttpServletRequest req) {
+		System.out.println("user Controller\n"+findPwdinfo.get("name")+"\n"+findPwdinfo.get("phone"));
+		ModelAndView mv = new ModelAndView();
+		
+		List result =  userService.findPwd(findPwdinfo);
+		String id = "";
+		String pwd = "";
+		if(result.size()>1) {
+			for(int i=0;i<result.size();i++) {
+				UserDTO userDTO = new UserDTO();
+				userDTO = (UserDTO) result.get(i);
+				id += userDTO.getId()+" ";
+			}
+			HttpSession session = req.getSession();
+       	 
+            session.setAttribute("id",id);
+			mv.addObject("id",id.trim());
+			url="user/findpwdForm";
+		}else {
+			mv.addObject("msg","가입된 계정이 없습니다. 회원가입 후 진행해주세요.");
+			mv.addObject("gourl","index");
+			url="/comic/user/login";
+		}
+		mv.setViewName(url);
+		return mv;
+    }
 	
 	private HashMap<String,String> addrSet(String addrDto,String idDto) {
 		String[] addr = addrDto.split(" "); 

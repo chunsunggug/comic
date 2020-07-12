@@ -1,0 +1,49 @@
+@charset "UTF-8";
+body{
+	margin:0px auto;
+	width:680px;
+}
+header{
+	width:680px;
+}
+header div{
+	text-align: right;
+}
+header h1{
+	font-size: 50px;
+	color:skyblue;
+	text-align: center;
+	text-shadow: 5px 5px 5px darkblue;
+}
+
+header nav{
+	border-top: 3px double darkblue;
+	border-bottom: 3px double darkblue;
+	background: skyblue;
+}
+header nav li{
+	list-style-type: none;
+	display: inline;
+	margin-left: 45px;
+}
+section{
+	width:680px;
+}
+#mainImg{
+	width: 300px;
+	float: left;
+}
+#mainImg img{
+	width:300px;
+}
+#mainList{
+	margin: 10px;
+	float: left;
+}
+footer{
+	width:680px;
+	clear: both;
+}
+footer div{
+	text-align: center;
+}

@@ -1,5 +1,7 @@
 package com.project.comic.user;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,4 +59,15 @@ public class UserService {
 			return 0;
 		}
 	}
+	
+	public List findId(Map findIdinfo) {
+		return userDao.findId(findIdinfo);
+	}
+
+	public List findPwd(HashMap findPwdinfo) {
+		return userDao.findPwd(findPwdinfo);
+		
+		
+	}
+	
 }
