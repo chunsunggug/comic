@@ -21,6 +21,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.project.comic.user.UserDao;
 import com.project.comic.user.UserService;
 import com.project.comic.user.UserVO;
+import com.project.comic.mail.MailDTO;
+import com.project.comic.mail.UserMailSendService;
 import com.project.comic.user.UserDTO;
 
 @Controller
@@ -33,6 +35,11 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private UserMailSendService mailsender;
+
+
 	
 	@Transactional
 	@RequestMapping(value = "/signup.do",method = RequestMethod.POST)
@@ -159,22 +166,31 @@ public class UserController {
 		List result =  userService.findPwd(findPwdinfo);
 		String id = "";
 		String pwd = "";
+		String name = "";
 		System.out.println("user Controller resultSize\n"+result.size());
 		if(result.size()<1) {
 			mv.addObject("msg","가입된 계정이 없습니다. 회원가입 후 진행해주세요.");
 			mv.addObject("gourl","index.do");
 			url="user/login";
-			
-				
 		}else {
 			for(int i=0;i<result.size();i++) {
 				UserDTO userDTO = new UserDTO();
 				userDTO = (UserDTO) result.get(i);
-				id += userDTO.getId()+" ";
+				id = userDTO.getId();
+				pwd = userDTO.getPwd();
+				name = userDTO.getName();
 			}
+			
+			System.out.println(id+":"+pwd+":"+name );
+
+			
+			mailsender.mailSendWithUserKey(name,id, pwd, req);
+
+
+			
+			
 			HttpSession session = req.getSession();
-       	 
-            session.setAttribute("id",id);
+       	 	session.setAttribute("id",id);
 			mv.addObject("id",id.trim());
 			url="user/findpwdForm";
 			

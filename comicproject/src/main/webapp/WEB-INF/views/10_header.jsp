@@ -214,6 +214,8 @@
 							aria-hidden="true">&times;</button>
 					</div>
 					<div class="modal-body">
+						
+						
 						<form action="/comic/findPwd.do" method="post" name="findIdAjax">
 							<div class="form-group">
 							<span>이름</span>

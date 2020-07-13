@@ -1,7 +1,7 @@
 package com.project.comic.mail;
 
 public class MailDTO {
-	
+	//추후 메일 관련 메서드 생성 시 내용
 	private String senderName;    //발신자 이름
     private String senderMail;    //발신자 이메일 주소
     private String receiveMail;    //수신자 이메일 주소
@@ -42,7 +42,7 @@ public class MailDTO {
     
     @Override
     public String toString() {
-        return "EmailDTO [senderName=" + senderName + ", senderMail=" + senderMail + ", receiveMail=" + receiveMail
+        return "MailDTO [senderName=" + senderName + ", senderMail=" + senderMail + ", receiveMail=" + receiveMail
                 + ", subject=" + subject + ", message=" + message + "]";
     }
 }
