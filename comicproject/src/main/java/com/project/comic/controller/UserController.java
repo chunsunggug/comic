@@ -66,7 +66,6 @@ public class UserController {
     	HashMap<String, String> mapLogin = new HashMap<String, String>();
     	mapLogin.put("id",req.getParameter("id"));
     	mapLogin.put("pwd",req.getParameter("pwd"));
-    	
     		
     	ModelAndView mv = new ModelAndView();
         
@@ -83,7 +82,9 @@ public class UserController {
              
              
              session.setMaxInactiveInterval(60*10); //기본 로그인 유지 시간 60초*10
-        	url="index";
+             System.out.println(uvo.toString());
+         	
+             url="index";
         }catch (Exception e) {
         	e.printStackTrace();
         	url = "user/login";
@@ -191,9 +192,5 @@ public class UserController {
 		}
 		mapAddr.put("uid",idDto);
 		return mapAddr;
-		
-		
-		
-		
 	}
 }
