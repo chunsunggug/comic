@@ -497,9 +497,8 @@ function onlyNumberInput2( Ev )
 					</a>
 					
  					
- 					
  					<c:choose>
-					<c:when test="${isyn eq 'T'.charAt(0) and type eq 'C'.charAt(0)}">
+					<c:when test="${isyn eq 'Y'.charAt(0) and type eq 'C'.charAt(0)}">
 					<div class="float-right btn-wrapper" style="margin-top: 40px;">
 					<span style="color: blue" class="navlogininfo">${name}(${id})님 환영합니다. || </span>    
 					<span style="color: blue" class="navlogininfo">현재 잔여 포인트 : ${point } || </span>

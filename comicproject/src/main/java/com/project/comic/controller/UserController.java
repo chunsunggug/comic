@@ -159,7 +159,14 @@ public class UserController {
 		List result =  userService.findPwd(findPwdinfo);
 		String id = "";
 		String pwd = "";
-		if(result.size()>1) {
+		System.out.println("user Controller resultSize\n"+result.size());
+		if(result.size()<1) {
+			mv.addObject("msg","가입된 계정이 없습니다. 회원가입 후 진행해주세요.");
+			mv.addObject("gourl","index.do");
+			url="user/login";
+			
+				
+		}else {
 			for(int i=0;i<result.size();i++) {
 				UserDTO userDTO = new UserDTO();
 				userDTO = (UserDTO) result.get(i);
@@ -170,10 +177,8 @@ public class UserController {
             session.setAttribute("id",id);
 			mv.addObject("id",id.trim());
 			url="user/findpwdForm";
-		}else {
-			mv.addObject("msg","가입된 계정이 없습니다. 회원가입 후 진행해주세요.");
-			mv.addObject("gourl","index");
-			url="/comic/user/login";
+			
+		
 		}
 		mv.setViewName(url);
 		return mv;

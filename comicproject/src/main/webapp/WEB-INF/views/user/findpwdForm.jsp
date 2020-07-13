@@ -2,7 +2,7 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="../00_head.jsp"></jsp:include>
 <jsp:include page="../10_header.jsp"></jsp:include>
-<h1>${id}</h1>
+<jsp:include page="findpwd.jsp"></jsp:include>
 <jsp:include page="../30_footer.jsp"></jsp:include>
 
 

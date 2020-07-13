@@ -73,6 +73,12 @@
 			<version>1.4.7</version>
 		</dependency>
 
+		<!-- spring support -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
 
 		<!-- lombok -->
 		<dependency>
