@@ -555,8 +555,8 @@
 							<div class="float-right btn-wrapper" style="margin-top: 40px;">
 								<span style="color: blue" class="navlogininfo">${name}(${id})님
 									환영합니다. || </span> <span style="color: blue" class="navlogininfo">현재
-									잔여 포인트 : ${point } || </span> <span style="color: blue"
-									class="navlogininfo">마이페이지 || </span> <a
+									잔여 포인트 : ${point } || </span> <a href="/comic/myInfo.do"><span style="color: blue"
+									class="navlogininfo">마이페이지 || </span></a> <a
 									href="/comic/signout.do"><span style="color: blue">로그아웃</span></a>
 							</div>
 						</c:when>

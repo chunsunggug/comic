@@ -15,4 +15,5 @@ public interface UserDao {
 	public UserVO loginUser(Map login);
 	public List findId(Map findIdinfo);
 	public List findPwd(Map findPwdinfo);
+	public UserVO myInfo(String id);
 }

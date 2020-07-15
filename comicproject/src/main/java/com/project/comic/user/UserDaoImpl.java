@@ -71,4 +71,9 @@ public class UserDaoImpl implements UserDao {
 	public List findPwd(Map findPwdinfo) {
 		return sqlMap.selectList("findPwd",findPwdinfo);
 	}
+
+	@Override
+	public UserVO myInfo(String id) {
+		return sqlMap.selectOne("myInfo",id);
+	}
 }
