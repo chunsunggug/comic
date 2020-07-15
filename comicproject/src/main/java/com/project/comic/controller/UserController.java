@@ -79,6 +79,8 @@ public class UserController {
     	try {
         	uvo = userService.logingUser(mapLogin);
         	 
+        	System.out.println(uvo.toString());
+        	
         	HttpSession session = req.getSession();
         	 
              session.setAttribute("id",uvo.getId());
