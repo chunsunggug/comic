@@ -51,12 +51,11 @@
 						</div>
 
 						<p class="text-center">
-							
-							<a id="kakao-login-btn"></a> 
-							<br>
-							<a
-								href="/comic/index.do">logout</a>
-					
+
+							<a id="kakao-login-btn"
+								href="https://kauth.kakao.com/oauth/authorize?client_id=118237743806f276d679025f706c0e3c&&redirect_uri=http://comic.iptime.org/comic/index.do&&response_type=code">
+								카카오톡 로그인</a> <br> <a href="http://developers.kakao.com/logout">logout</a>
+
 
 
 							<button type="submit" class="btn btn-primary">
@@ -68,10 +67,10 @@
 
 					<p class="text-center text-muted">
 						<a href="#" data-dismiss="modal" data-toggle="modal"
-							data-target="#reg-modal"><strong>회원가입</strong></a> <br>
-						<a href="#" data-dismiss="modal" data-toggle="modal"
-							data-target="#findid-modal">아이디찾기</a> <br>
-						<a href="#" data-dismiss="modal" data-toggle="modal"
+							data-target="#reg-modal"><strong>회원가입</strong></a> <br> <a
+							href="#" data-dismiss="modal" data-toggle="modal"
+							data-target="#findid-modal">아이디찾기</a> <br> <a href="#"
+							data-dismiss="modal" data-toggle="modal"
 							data-target="#findpwd-modal">비밀번호 찾기</a>
 					</p>
 
@@ -79,7 +78,7 @@
 			</div>
 		</div>
 	</div>
-
+	<!-- 
 		<script type='text/javascript'>
 								//<![CDATA[
 								// 사용할 앱의 JavaScript 키를 설정해 주세요.
@@ -88,15 +87,27 @@
 								Kakao.Auth.createLoginButton({
 									container : '#kakao-login-btn',
 									success : function(authObj) {
-										
-										alert(JSON.stringify(authObj));
+										console.log(JSON.stringify(authObj));
+										Kakao.API.request({
+											url:'/v2/user/me',
+											success:function(res){
+												console.log(res);
+												var id = res.id;
+												var email = res.kakao_account_email;
+												var name = res.properties.nickname;
+												var html = '<BR><h1>'+email+'</h1><BR>'+name;
+												$('body').append(html);
+											}
+										})
+										console.log(authObj);
+										var token = authObj.access_token;
 									},
 									fail : function(err) {
 										alert(JSON.stringify(err));
 									}
 								});
 								//]]>
-							</script>
+							</script> -->
 
 	<!-- register modal -->
 	<div class="modal fade" id="reg-modal" tabindex="-1" role="dialog"
@@ -219,10 +230,10 @@
 
 					<p class="text-center text-muted">
 						<a href="#" data-dismiss="modal" data-toggle="modal"
-							data-target="#reg-modal"><strong>회원가입</strong></a> <br>
-						<a href="#" data-dismiss="modal" data-toggle="modal"
-							data-target="#login-modal">로그인</a> <br>
-						<a href="#" data-dismiss="modal" data-toggle="modal"
+							data-target="#reg-modal"><strong>회원가입</strong></a> <br> <a
+							href="#" data-dismiss="modal" data-toggle="modal"
+							data-target="#login-modal">로그인</a> <br> <a href="#"
+							data-dismiss="modal" data-toggle="modal"
 							data-target="#findpwd-modal">비밀번호 찾기</a>
 					</p>
 
@@ -292,10 +303,10 @@
 
 					<p class="text-center text-muted">
 						<a href="#" data-dismiss="modal" data-toggle="modal"
-							data-target="#reg-modal"><strong>회원가입</strong></a> <br>
-						<a href="#" data-dismiss="modal" data-toggle="modal"
-							data-target="#login-modal">로그인</a> <br>
-						<a href="#" data-dismiss="modal" data-toggle="modal"
+							data-target="#reg-modal"><strong>회원가입</strong></a> <br> <a
+							href="#" data-dismiss="modal" data-toggle="modal"
+							data-target="#login-modal">로그인</a> <br> <a href="#"
+							data-dismiss="modal" data-toggle="modal"
 							data-target="#findpwd-modal">비밀번호 찾기</a>
 					</p>
 
@@ -555,11 +566,21 @@
 							<div class="float-right btn-wrapper" style="margin-top: 40px;">
 								<span style="color: blue" class="navlogininfo">${name}(${id})님
 									환영합니다. || </span> <span style="color: blue" class="navlogininfo">현재
-									잔여 포인트 : ${point } || </span> <a href="/comic/myInfo.do"><span style="color: blue"
-									class="navlogininfo">마이페이지 || </span></a> <a
+									잔여 포인트 : ${point } || </span> <a href="/comic/myInfo.do"><span
+									style="color: blue" class="navlogininfo">마이페이지 || </span></a> <a
 									href="/comic/signout.do"><span style="color: blue">로그아웃</span></a>
 							</div>
 						</c:when>
+						<c:when test="${isyn eq 'Y'.charAt(0) and type eq 'S'.charAt(0)}">
+							<div class="float-right btn-wrapper" style="margin-top: 40px;">
+								<span style="color: blue" class="navlogininfo">${name}(${id})님
+									환영합니다. || </span> <span style="color: blue" class="navlogininfo">현재
+									잔여 포인트 : ${point } || </span> <a href="/comic/myInfo.do"><span
+									style="color: blue" class="navlogininfo">마이페이지 || </span></a> <a
+									href="/comic/signout.do"><span style="color: blue">로그아웃</span></a>
+							</div>
+						</c:when>
+
 						<c:otherwise>
 							<div class="float-right btn-wrapper">
 								<a class="btn btn-outline-primary" href="#" data-toggle="modal"

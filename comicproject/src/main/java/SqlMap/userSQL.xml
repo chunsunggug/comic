@@ -54,6 +54,7 @@
      <select id="findPwd" parameterType="hashmap" resultType="com.project.comic.user.UserDTO" >
     select * from t_user where name=#{name} and phone=#{phone}
     </select>
+    
     <select id="myInfo" parameterType="String" resultType="com.project.comic.user.UserVO" >
     SELECT * FROM v_login WHERE id=#{id}
     </select>
