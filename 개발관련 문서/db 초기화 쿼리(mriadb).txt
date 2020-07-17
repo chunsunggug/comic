@@ -45,8 +45,8 @@ ENGINE=InnoDB
 
 
 
-drop table if exists t_bookinfo cascade;
-CREATE TABLE `t_bookinfo` (
+drop table if exists t_bookinfo cascade;CREATE TABLE `t_bookinfo` (
+	`bidx` INT(11) NOT NULL DEFAULT '0',
 	`title` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8_general_ci',
 	`publisher` VARCHAR(50) NULL COLLATE 'utf8_general_ci',
 	`contents` MEDIUMTEXT NULL COLLATE 'utf8_general_ci',
@@ -60,7 +60,7 @@ CREATE TABLE `t_bookinfo` (
 	`sale_price` INT(11) NOT NULL DEFAULT '0',
 	`tot` INT(11) NOT NULL DEFAULT '0',
 	`cnt` INT(11) NOT NULL DEFAULT '0',
-	PRIMARY KEY (`isbn`) USING BTREE,
+	PRIMARY KEY (`bidx`) USING BTREE,
 	FULLTEXT INDEX `bookinfo_title` (`title`),
 	FULLTEXT INDEX `bookinfo_publisher` (`publisher`),
 	FULLTEXT INDEX `bookinfo_authors` (`authors`)
@@ -68,6 +68,7 @@ CREATE TABLE `t_bookinfo` (
 COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 ;
+
 
 
 drop table if exists t_store cascade;
