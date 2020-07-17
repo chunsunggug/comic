@@ -58,6 +58,8 @@ CREATE TABLE `t_bookinfo` (
 	`point` INT(11) NOT NULL DEFAULT '0',
 	`price` INT(11) NOT NULL DEFAULT '0',
 	`sale_price` INT(11) NOT NULL DEFAULT '0',
+	`tot` INT(11) NOT NULL DEFAULT '0',
+	`cnt` INT(11) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`isbn`) USING BTREE,
 	FULLTEXT INDEX `bookinfo_title` (`title`),
 	FULLTEXT INDEX `bookinfo_publisher` (`publisher`),
@@ -66,6 +68,7 @@ CREATE TABLE `t_bookinfo` (
 COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 ;
+
 
 drop table if exists t_store cascade;
 CREATE TABLE `t_store` (
