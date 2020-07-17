@@ -37,7 +37,7 @@ public class UserService {
 	public UserVO logingUser(Map mapLogin) {
 		
 	     System.out.println("id: "+mapLogin.get("id"));
-	     System.out.println("id: "+mapLogin.get("pwd"));
+	     System.out.println("pwd: "+mapLogin.get("pwd"));
          UserVO getUser = userDao.loginUser(mapLogin); 
          
          return getUser;		
@@ -66,8 +66,8 @@ public class UserService {
 
 	public List findPwd(HashMap findPwdinfo) {
 		return userDao.findPwd(findPwdinfo);
-		
-		
 	}
-	
+	public UserVO myInfo(String id) {
+		return userDao.myInfo(id);
+	}
 }
