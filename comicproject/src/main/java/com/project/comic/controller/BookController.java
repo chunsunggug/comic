@@ -52,9 +52,4 @@ public class BookController {
 		return json_meta_documents.toJSONString();
 	}
 	
-	// 점주의 도서관리 페이지 이동
-	@RequestMapping(value="/listbook.do")
-	public String listBook() {
-		return "book/bookmanage";
-	}
 }
