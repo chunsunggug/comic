@@ -20,7 +20,6 @@ public class StoreBookManagerService implements IBookManager{
 	@Override
 	public void get() {
 		
-		
 	}
 
 }
