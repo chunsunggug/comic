@@ -70,7 +70,8 @@ public class UserController {
 		HashMap<String, String> mapLogin = new HashMap<String, String>();
 		mapLogin.put("id", req.getParameter("id"));
 		mapLogin.put("pwd", req.getParameter("pwd"));
-
+		System.out.println(req.getParameter("id"));
+		System.out.println(req.getParameter("pwd"));
 		ModelAndView mv = new ModelAndView();
 
 		try {

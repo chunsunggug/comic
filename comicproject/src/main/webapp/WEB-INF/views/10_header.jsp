@@ -333,13 +333,13 @@
 							var extraAddr = ''; // 참고항목 변수
 
 							//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다. 신주소 주석처리
-							/* if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+							 if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
 								addr = data.roadAddress;
 							} else { // 사용자가 지번 주소를 선택했을 경우(J)
 								addr = data.jibunAddress;
-							} */
+							} 
 
-							addr = data.jibunAddress; //지번으로 사용예정
+							
 							// 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
 							if (data.userSelectedType === 'R') {
 								// 법정동명이 있을 경우 추가한다. (법정리는 제외)
@@ -369,6 +369,7 @@
 							// 우편번호와 주소 정보를 해당 필드에 넣는다.
 							document.getElementById('addrf').value = data.zonecode;
 							document.getElementById("addrf").value = addr;
+							addr = data.jibunAddress; //지번으로 사용예정
 							document.getElementById("addr").value = data.zonecode
 									+ " " + addr;
 							// 커서를 상세주소 필드로 이동한다.
@@ -604,7 +605,7 @@
 								<li><a href="index-3.html">Home City</a></li>
 								<li><a href="index-4.html">Home Automobile</a></li>
 							</ul></li>
-						<li class=""><a href="javascript:0">Listing</a>
+						<li class=""><a href="javascript:0">STORE</a>
 							<div class="megamenu">
 								<div class="megamenu-row">
 									<div class="col4">
@@ -689,7 +690,7 @@
 									</div>
 								</div>
 							</div></li>
-						<li class=""><a href="javascript:0">Pages</a>
+						<li class=""><a href="javascript:0">BOOK</a>
 							<ul class="dropdown">
 								<li><a href="contact-us.html">Contact Us</a></li>
 								<li><a href="terms-of-services.html">Terms and
@@ -700,8 +701,8 @@
 								<li><a href="comming-soon.html">Coming Soon</a></li>
 								<li><a href="404.html">404 Page</a></li>
 							</ul></li>
-						<li class=""><a href="blog.html">Blog</a></li>
-						<li class=""><a href="javascript:0">Admin</a>
+						<li class=""><a href="blog.html">NOTICEBOARD</a></li>
+						<li class=""><a href="javascript:0">CUSTOMER SERVICE</a>
 							<ul class="dropdown">
 								<li><a href="javascript:0">User Admin</a>
 									<ul class="dropdown">
