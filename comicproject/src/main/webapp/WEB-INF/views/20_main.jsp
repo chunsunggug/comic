@@ -63,8 +63,8 @@
 <section class="pt-md-10 sec-pb-70 pt-8 pb-6 bg-light">
 	<div class="container">
 		<div class="section-title">
-			<h2>What are You Interested in?</h2>
-      <p>Explore and connect with great local businesses</p>
+			<h2>오늘의 추천 만화</h2>
+      <p>최근 대여가 늘어난 작품</p>
 		</div>
 		<div class="row">
 			<div class="col-md-4 col-lg-3 col-xs-12">
