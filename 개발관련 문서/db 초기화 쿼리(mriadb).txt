@@ -1,12 +1,5 @@
 set foreign_key_checks = 0;
 
-
-CREATE VIEW v_login AS
-SELECT u.uidx AS uidx,u.addr AS addr,u.id AS id,u.name AS name,u.phone AS phone,u.birth AS birth,u.point AS POINT
-	,a.post AS post,a.si AS si,a.gu AS gu,a.dong AS dong,a.detail AS detail,u.type AS type,u.isYn,u.pwd AS pwd
-	FROM t_user u,t_user_addr a
-	WHERE u.uidx = a.uidx;
-
 DROP TABLE if exists T_USER cascade;
 CREATE TABLE `t_user` (
 	`uidx` INT(11) NOT NULL AUTO_INCREMENT COMMENT '기본키',
@@ -41,7 +34,7 @@ CREATE TABLE `t_user_addr` (
 	`si` VARCHAR(50) NOT NULL COMMENT '시',
 	`gu` VARCHAR(50) NOT NULL COMMENT '구',
 	`dong` VARCHAR(50) NOT NULL COMMENT '동',
-	`detail` VARCHAR(50) NULL DEFAULT NULL COMMENT '상세주소',
+	`detail` VARCHAR(255) NULL DEFAULT NULL COMMENT '상세주소',
 	INDEX `uidx` (`uidx`) USING BTREE,
 	CONSTRAINT `uidx` FOREIGN KEY (`uidx`) REFERENCES `t_user` (`uidx`) ON UPDATE CASCADE ON DELETE CASCADE
 )
@@ -52,8 +45,8 @@ ENGINE=InnoDB
 
 
 
-drop table if exists t_bookinfo cascade;
-CREATE TABLE `t_bookinfo` (
+drop table if exists t_bookinfo cascade;CREATE TABLE `t_bookinfo` (
+	`bidx` INT(11) NOT NULL DEFAULT '0',
 	`title` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8_general_ci',
 	`publisher` VARCHAR(50) NULL COLLATE 'utf8_general_ci',
 	`contents` MEDIUMTEXT NULL COLLATE 'utf8_general_ci',
@@ -65,7 +58,9 @@ CREATE TABLE `t_bookinfo` (
 	`point` INT(11) NOT NULL DEFAULT '0',
 	`price` INT(11) NOT NULL DEFAULT '0',
 	`sale_price` INT(11) NOT NULL DEFAULT '0',
-	PRIMARY KEY (`isbn`) USING BTREE,
+	`tot` INT(11) NOT NULL DEFAULT '0',
+	`cnt` INT(11) NOT NULL DEFAULT '0',
+	PRIMARY KEY (`bidx`) USING BTREE,
 	FULLTEXT INDEX `bookinfo_title` (`title`),
 	FULLTEXT INDEX `bookinfo_publisher` (`publisher`),
 	FULLTEXT INDEX `bookinfo_authors` (`authors`)
@@ -73,6 +68,8 @@ CREATE TABLE `t_bookinfo` (
 COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 ;
+
+
 
 drop table if exists t_store cascade;
 CREATE TABLE `t_store` (
@@ -85,7 +82,7 @@ CREATE TABLE `t_store` (
 	`img` VARCHAR(10000) NULL COLLATE 'utf8_general_ci',
 	`sdate` DATETIME NOT NULL DEFAULT current_timestamp() COMMENT '가입날짜',
 	`edate` DATETIME NULL COMMENT '탈퇴날짜',
-	`isyn` CHAR(1) NOT NULL DEFAULT Y COMMENT '탈퇴유무 N:탈퇴' COLLATE 'utf8_general_ci',
+	`isyn` CHAR(1) NOT NULL DEFAULT 'Y' COMMENT '탈퇴유무 N:탈퇴' COLLATE 'utf8_general_ci',
 	`birth` CHAR(8) NOT NULL COLLATE 'utf8_general_ci',
 	PRIMARY KEY (`sidx`) USING BTREE,
 	UNIQUE INDEX `sid` (`id`) USING BTREE
@@ -105,7 +102,7 @@ CREATE TABLE `t_store_book` (
 	`sdate` DATETIME NOT NULL DEFAULT current_timestamp() COMMENT '등록날짜',
 	`lostdate` DATETIME NULL COMMENT '분실날짜',
 	`lostuidx` INT(11) NULL,
-	`status` CHAR(1) NOT NULL DEFAULT S COMMENT '품목상태 입점S 분실L 대여중O' COLLATE 'utf8_general_ci',
+	`status` CHAR(1) NOT NULL DEFAULT 'S' COMMENT '품목상태 입점S 분실L 대여중O' COLLATE 'utf8_general_ci',
 	PRIMARY KEY (`sbidx`) USING BTREE,
 	INDEX `t_store_book_un` (`sidx`, `isbn`, `idx`) USING BTREE,
 	INDEX `t_store_book_fk2` (`lostuidx`) USING BTREE,
@@ -147,7 +144,11 @@ COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 ;
 
-
+CREATE VIEW v_login AS
+SELECT u.uidx AS uidx,u.addr AS addr,u.id AS id,u.name AS name,u.phone AS phone,u.birth AS birth,u.point AS POINT
+	,a.post AS post,a.si AS si,a.gu AS gu,a.dong AS dong,a.detail AS detail,u.type AS type,u.isYn,u.pwd AS pwd
+	FROM t_user u,t_user_addr a
+	WHERE u.uidx = a.uidx;
 
 set foreign_key_checks = 1;
 
