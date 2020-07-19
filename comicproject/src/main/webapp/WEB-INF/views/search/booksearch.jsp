@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<script>
 
-</script>
 <section>
 	<div class="container">
 		<div class="row text-center align-items-center justify-content-center"
@@ -16,7 +14,6 @@
 					<div class="form-group col-md-5 col-lg-4">
 						<div class="input-group mb-2">
 							<div class="input-group-prepend">
-								<!--<div class="input-group-text">Find</div>-->
 								<select class="input-group-text" name="target">
 									<option selected="selected" value="title">책 제목</option>
 									<option value="person">저자</option>
@@ -72,3 +69,5 @@
 
 </section>
 </body>
+
+<script src="/comic/resources/js/search/booksearch.js" ></script>

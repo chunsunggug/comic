@@ -129,8 +129,6 @@
 <script src="/comic/resources/js/map.js"></script>
 <script src="/comic/resources/js/listty.js"></script>
 
-<!-- book search js -->
-<script src="/comic/resources/js/book/booksearch.js" ></script>
 
 </body>
 </html>

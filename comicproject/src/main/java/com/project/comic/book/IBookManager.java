@@ -1,8 +1,8 @@
 package com.project.comic.book;
 
 public interface IBookManager {
-	public void add();
-	public void delete();
-	public void update();
-	public void get();
+	public void add(BookDTO bookdto);
+	public void delete(BookDTO bookdto);
+	public void update(BookDTO bookdto);
+	public void get(Object object);
 }

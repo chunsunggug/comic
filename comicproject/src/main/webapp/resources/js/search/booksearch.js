@@ -2,7 +2,7 @@
 function show_contents() {
 
 	$.ajax({
-		url : "/comic/book/searchmore.do",
+		url : "/comic/searchmore.do",
 		dataType: "json",
 		success : function(json_object) {
 			var container = document.getElementById("contents_container");
@@ -11,14 +11,18 @@ function show_contents() {
 			var meta = json_object.meta;
 			
 			for(var i=0; i < contents.length; i++){
-				console.log('isbn check : '+contents[i].isbn);
+				
 				var div = document.createElement("div");
 				div.setAttribute("class", "col-6 col-md-3 col-lg-2");
-				Console.log("isbn check : "+contents[i].isbn);
+				
 				var img = document.createElement("img");
 				img.setAttribute("class", "img-thumbnail img-responsive" );
-				img.setAttribute("src", contents[i].thumbnail );
-
+				
+				if( contents[i].thumbnail != "")
+					img.setAttribute("src", contents[i].thumbnail );
+				else
+					img.setAttribute("src", "http://localhost:8080/comic/resources/img/book/unknown_cover.png" );
+				
 				var h5 = document.createElement("h5");
 				h5.innerHTML = contents[i].title;
 
