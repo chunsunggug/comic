@@ -2,29 +2,27 @@ set foreign_key_checks = 0;
 
 DROP TABLE if exists T_USER cascade;
 CREATE TABLE `t_user` (
-	`uidx` INT(11) NOT NULL AUTO_INCREMENT COMMENT '기본키',
-	`id` VARCHAR(20) NOT NULL COLLATE 'utf8_general_ci',
-	`pwd` VARCHAR(20) NOT NULL COLLATE 'utf8_general_ci',
-	`name` VARCHAR(20) NOT NULL COLLATE 'utf8_general_ci',
-	`phone` VARCHAR(15) NOT NULL COLLATE 'utf8_general_ci',
-	`birth` CHAR(10) NOT NULL COLLATE 'utf8_general_ci',
-	`point` INT(11) NOT NULL DEFAULT '500',
-	`sdate` DATETIME NOT NULL DEFAULT current_timestamp(),
-	`edate` DATETIME NULL,
-	`type` CHAR(1) NOT NULL DEFAULT 'C' COLLATE 'utf8_general_ci',
-	`isYn` CHAR(1) NOT NULL DEFAULT 'Y' COLLATE 'utf8_general_ci',
-	PRIMARY KEY (`uidx`) USING BTREE,
-	UNIQUE INDEX `id` (`id`) USING BTREE,
-	CONSTRAINT chk_pwd CHECK ( CHAR_LENGTH(pwd) BETWEEN 8 AND 20 ),
-	CONSTRAINT chk_id CHECK ( CHAR_LENGTH(id) >= 5),
-	CONSTRAINT chk_name CHECK (CHAR_LENGTH(NAME) >= 2),
-	CONSTRAINT chk_phone CHECK ( CHAR_LENGTH(phone) >= 8),
-	CONSTRAINT chk_point CHECK ( POINT >= 0 )
-)
-COMMENT='유저 테이블'
-COLLATE='utf8_general_ci'
-ENGINE=InnoDB
-;
+  `uidx` int(11) NOT NULL AUTO_INCREMENT COMMENT '기본키',
+  `id` varchar(20) NOT NULL,
+  `pwd` varchar(20) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `phone` varchar(15) NOT NULL,
+  `birth` char(10) NOT NULL,
+  `point` int(11) NOT NULL DEFAULT 500,
+  `sdate` datetime NOT NULL DEFAULT current_timestamp(),
+  `edate` datetime DEFAULT NULL,
+  `type` char(1) NOT NULL DEFAULT 'C',
+  `isYn` char(1) NOT NULL DEFAULT 'Y',
+  `addr` varchar(255) NOT NULL,
+  PRIMARY KEY (`uidx`) USING BTREE,
+  UNIQUE KEY `id` (`id`) USING BTREE,
+  CONSTRAINT `chk_pwd` CHECK (char_length(`pwd`) between 8 and 20),
+  CONSTRAINT `chk_id` CHECK (char_length(`id`) >= 5),
+  CONSTRAINT `chk_name` CHECK (char_length(`name`) >= 2),
+  CONSTRAINT `chk_phone` CHECK (char_length(`phone`) >= 8),
+  CONSTRAINT `chk_point` CHECK (`point` >= 0)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='유저 테이블';
+
 
 DROP TABLE if exists T_USER_ADDR cascade;
 CREATE TABLE `t_user_addr` (
