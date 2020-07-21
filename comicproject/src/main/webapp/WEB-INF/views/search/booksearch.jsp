@@ -9,7 +9,7 @@
 			<!-- Search Box -->
 			<div class="search-box-2">
 				<form class="form-row justify-content-center" method="GET"
-					action="#">
+					action="/comic/search.do">
 
 					<div class="form-group col-md-5 col-lg-4">
 						<div class="input-group mb-2">
