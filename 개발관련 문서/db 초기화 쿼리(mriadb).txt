@@ -102,7 +102,7 @@ CREATE TABLE `t_store_book` (
 	`lostdate` DATETIME NULL COMMENT '분실날짜',
 	`lostuidx` INT(11) NULL COMMENT '잃어버린사람',
 	`status` CHAR(1) NOT NULL DEFAULT 'S' COMMENT '품목상태 입점S 분실L 대여중O' COLLATE 'utf8_general_ci',
-	`fee` INT(11) NOT NULL DEFAULT '0',
+	`point` INT(11) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`sbidx`) USING BTREE,
 	INDEX `t_store_book_un` (`sidx`, `isbn`, `idx`) USING BTREE,
 	INDEX `t_store_book_fk2` (`lostuidx`) USING BTREE,
