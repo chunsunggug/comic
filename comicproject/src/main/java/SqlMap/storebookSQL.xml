@@ -1,0 +1,41 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.comic.storebook.StoreBookDaoImpl">
+	<select id="getStoreBookBySbidx"
+		resultType="com.project.comic.storebook.StoreBookDTO"
+		parameterType="java.lang.String">
+		select * from t_store_book where sbidx=#{sbidx}
+	</select>
+
+	<select id="getStoreBookBySidxIsbnIdx"
+		resultType="com.project.comic.storebook.StoreBookDTO"
+		parameterType="java.util.Map">
+		select * from t_store_book where sidx=#{sidx} and isbn=#{isbn} and idx=#{idx}
+	</select>
+
+	<select id="getStoreBookCount"
+		parameterType="com.project.comic.storebook.StoreBookDTO" resultType="int">
+		select count(*) from t_store_book where sidx=#{sidx} and isbn=#{isbn}
+	</select>
+	
+	<select id="getStoreBookAllCount"
+	resultType="int">
+		select count(sbidx) from t_store_book where sidx=#{sidx}
+	</select>
+
+	<insert id="addStoreBook"
+		parameterType="com.project.comic.storebook.StoreBookDTO">
+		insert into t_store_book(sbidx,sidx,isbn,idx,point)
+		values(#{sbidx},#{sidx},#{isbn},#{idx},#{point})
+	</insert>
+	
+	<select id="getForPageJoinData"
+		parameterType="hashMap"
+		resultType="com.project.comic.storebook.StoreBookDTO">
+		select sbidx, isbn, point, sdate, status from t_store_book where sidx=#{sidx}
+		limit #{start}, #{size}
+	</select>
+	
+</mapper>
