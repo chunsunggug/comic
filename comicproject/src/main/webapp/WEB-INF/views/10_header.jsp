@@ -57,7 +57,8 @@
 
 							<a id="kakao-login-btn"
 								href="https://kauth.kakao.com/oauth/authorize?client_id=118237743806f276d679025f706c0e3c&&redirect_uri=http://localhost:8080/comic/kakaologin.do&&response_type=code">
-								카카오톡 로그인</a> <br> <a href="http://developers.kakao.com/logout">logout</a>
+								카카오톡 로그인</a> <br> 
+								<a href="https://kauth.kakao.com/oauth/logout?client_id=118237743806f276d679025f706c0e3c&&&logout_redirect_uri=http://localhost:8080/comic/index.do">logout</a>
 
 
 

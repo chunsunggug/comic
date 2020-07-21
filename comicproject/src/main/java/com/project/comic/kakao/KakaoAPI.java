@@ -14,6 +14,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
  
@@ -149,5 +150,34 @@ public class KakaoAPI {
 	    System.out.println("check now is kakao api in");
 	    return userInfo;
 	}
+	  public String Logout(String autorize_code) {
+	        final String RequestUrl = "https://kauth.kakao.com/oauth/logout?client_id=118237743806f276d679025f706c0e3c&logout_redirect_uri=http://localhost:8080/comic/index.do";
+	 
+	        try {
+		        URL url = new URL(RequestUrl);
+		        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		        conn.setRequestMethod("GET");
+		        
+		        //    요청에 필요한 Header에 포함될 내용
+		        conn.setRequestProperty("Authorization", "Bearer " + autorize_code);
+		        
+		        int responseCode = conn.getResponseCode();
+		        System.out.println("responseCode : " + responseCode);
+		        
+		        return "success";
+		   	 	        
+		    } catch (Exception e) {
+		        // TODO Auto-generated catch block
+		        e.printStackTrace();
+		        return "fail";
+		   	    
+		    }
+	 
+	 
+	    }
+
+
+	
+	
 	
 }

@@ -109,6 +109,16 @@ public class UserController {
 
 		ModelAndView mv = new ModelAndView();
 		HttpSession session = req.getSession();
+		
+		if(session.getAttribute("token")!=null) {
+			KakaoAPI kapi = new KakaoAPI();
+			String check = kapi.Logout(session.getAttribute("token").toString());
+			System.out.println("user controller : "+check);
+		}
+		
+
+		
+		
 		session.invalidate();
 
 		mv.setViewName(url);
@@ -235,6 +245,7 @@ public class UserController {
 		session.setAttribute("point", 500);
 		session.setAttribute("type", "C");
 		session.setAttribute("isyn", "Y");
+		session.setAttribute("token",AccessToken);
 		System.out.println("여긴 유저 컨트롤러임 : "+userInfo.toString());
 		
 		
