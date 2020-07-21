@@ -91,26 +91,27 @@ ENGINE=InnoDB
 AUTO_INCREMENT=23
 ;
 
-
+1,1111,1111,1111
 drop table if exists t_store_book cascade;
 CREATE TABLE `t_store_book` (
 	`sbidx` INT(11) NOT NULL,
 	`sidx` INT(11) NOT NULL,
 	`isbn` VARCHAR(13) NOT NULL COLLATE 'utf8_general_ci',
-	`idx` INT(11) NOT NULL COMMENT '같은책에대한 인식번호',
+	`idx` INT(3) NOT NULL COMMENT '같은책에대한 인식번호',
 	`sdate` DATETIME NOT NULL DEFAULT current_timestamp() COMMENT '등록날짜',
 	`lostdate` DATETIME NULL COMMENT '분실날짜',
 	`lostuidx` INT(11) NULL COMMENT '잃어버린사람',
 	`status` CHAR(1) NOT NULL DEFAULT 'S' COMMENT '품목상태 입점S 분실L 대여중O' COLLATE 'utf8_general_ci',
+	`fee` INT(11) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`sbidx`) USING BTREE,
 	INDEX `t_store_book_un` (`sidx`, `isbn`, `idx`) USING BTREE,
 	INDEX `t_store_book_fk2` (`lostuidx`) USING BTREE,
-	CONSTRAINT `t_store_book_fk1` FOREIGN KEY (`sidx`) REFERENCES `comic`.`t_store` (`sidx`) ON UPDATE RESTRICT ON DELETE RESTRICT,
 	CONSTRAINT `t_store_book_fk2` FOREIGN KEY (`lostuidx`) REFERENCES `comic`.`t_user` (`uidx`) ON UPDATE RESTRICT ON DELETE RESTRICT
 )
 COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 ;
+
 
 
 drop table if exists t_user_store cascade;
@@ -152,11 +153,11 @@ SELECT u.uidx AS uidx,u.addr AS addr,u.id AS id,u.name AS name,u.phone AS phone,
 
 set foreign_key_checks = 1;
 
-INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id001', 'pwd00001', 'name1', '01011112222', '2000-12-11');
-INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id002', 'pwd00002', 'name2', '01011112222', '2000-12-12');
-INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id003', 'pwd00003', 'name3', '01011112222', '2000-12-13');
-INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id004', 'pwd00004', 'name4', '01011112222', '2000-12-14');
-INSERT INTO t_user(id,pwd,name,phone, birth) VALUES('id005', 'pwd00005', 'name5', '01011112222', '2000-12-15');
+INSERT INTO t_user(id,pwd,name,phone, birth, addr) VALUES('id001', 'pwd00001', 'name1', '01011112222', '2000-12-11',1);
+INSERT INTO t_user(id,pwd,name,phone, birth, addr) VALUES('id002', 'pwd00002', 'name2', '01011112222', '2000-12-12',1);
+INSERT INTO t_user(id,pwd,name,phone, birth, addr) VALUES('id003', 'pwd00003', 'name3', '01011112222', '2000-12-13',1);
+INSERT INTO t_user(id,pwd,name,phone, birth, addr) VALUES('id004', 'pwd00004', 'name4', '01011112222', '2000-12-14',1);
+INSERT INTO t_user(id,pwd,name,phone, birth, addr) VALUES('id005', 'pwd00005', 'name5', '01011112222', '2000-12-15',1);
 
 INSERT INTO t_store(id,pwd,name,phone,point,img,sdate,edate,birth,isyn) VALUES("ididid1", "pwdpwd1", "name1", "phone1", 0, "img1", "20001212", null, "20000101", "n");
 INSERT INTO t_store(id,pwd,name,phone,point,img,sdate,edate,birth,isyn) VALUES("ididid2", "pwdpwd2", "name2", "phone2", 0, "img2", "20001212", null, "20000101", "n");

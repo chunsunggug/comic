@@ -9,14 +9,15 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.google.gson.Gson;
+
 public class Utility {
 	private static JSONParser jsonParser = new JSONParser();
+	private static Gson gson = new Gson();
 	
 	public static String decodeString(String str) {
 		try {
 			String param = URLDecoder.decode( str, "utf-8");
-			if( param.length() < 13 ) param = param.substring(0,10);
-			else param = param.substring(0, 13);
 			
 			return param;
 		} catch (UnsupportedEncodingException e) {
@@ -47,5 +48,9 @@ public class Utility {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public static String objectToJson(Object object) {
+		return gson.toJson(object);
 	}
 }
