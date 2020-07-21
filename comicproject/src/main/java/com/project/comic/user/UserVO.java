@@ -17,8 +17,8 @@ public class UserVO {
 	private String gu;
 	private String dong;
 	private String detail;
-	private char type;
-	private char isYn;
+	private String type;
+	private String isYn;
 	
 	public UserVO() {}
 	public UserVO(String id, String pwd) {
@@ -27,7 +27,7 @@ public class UserVO {
 	}
 
 	public UserVO(int uidx,String addr, String id, String name, String phone, String birth, int point, String post,
-			String si, String gu, String dong, String detail,char type,char isYn) {
+			String si, String gu, String dong, String detail,String type,String isYn) {
 		super();
 		this.uidx = uidx;
 		this.addr = addr;
