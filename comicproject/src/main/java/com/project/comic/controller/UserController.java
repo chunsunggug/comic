@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.project.comic.user.UserDao;
 import com.project.comic.user.UserService;
 import com.project.comic.user.UserVO;
+import com.project.comic.kakao.KakaoAPI;
 import com.project.comic.mail.MailDTO;
 import com.project.comic.mail.UserMailSendService;
 import com.project.comic.user.UserDTO;
@@ -81,6 +82,7 @@ public class UserController {
 
 			HttpSession session = req.getSession();
 
+			session.setAttribute("idx", uvo.getUidx());
 			session.setAttribute("id", uvo.getId());
 			session.setAttribute("name", uvo.getName());
 			session.setAttribute("point", uvo.getPoint());
@@ -118,6 +120,8 @@ public class UserController {
 	public String IdCheck(@RequestParam String id) {
 		int count = userService.checkUserId(id);
 		System.out.println("user Controller\n" + id + "\n" + count);
+		
+		
 		return Integer.toString(count);
 
 	}
@@ -179,8 +183,12 @@ public class UserController {
 
 			System.out.println(id + ":" + pwd + ":" + name);
 
-			mailsender.mailSendWithUserKey(name, id, pwd, req);
-
+			boolean mailresult = mailsender.mailSendWithUserKey(name, id, pwd, req);
+			if(mailresult) {
+				System.out.println("메일 발송 성공");
+			}else {
+				System.out.println("메일 발송 실패");
+			}
 			HttpSession session = req.getSession();
 			session.setAttribute("id", id);
 			mv.addObject("id", id.trim());
@@ -209,6 +217,32 @@ public class UserController {
 		return mv;
 	}
 
+	
+	@RequestMapping(value = "/kakaologin.do", method = RequestMethod.GET)
+	public String KaKaoLogin(@RequestParam("code") String code,HttpServletRequest req,HttpServletResponse rsp) throws UnsupportedEncodingException{
+		System.out.println("code 값 : "+code);
+		req.setCharacterEncoding("utf-8");
+		rsp.setCharacterEncoding("utf-8");
+		rsp.setContentType("text/html; charset=utf-8");
+		KakaoAPI kapi = new KakaoAPI();
+		String AccessToken = kapi.getAccessToken(code);
+		HashMap userInfo =  kapi.getUserInfo(AccessToken);
+
+		HttpSession session = req.getSession();
+
+		session.setAttribute("id", userInfo.get("id"));//userInfo.get("id")
+		session.setAttribute("name",userInfo.get("name"));//userInfo.get("name")
+		session.setAttribute("point", 500);
+		session.setAttribute("type", "C");
+		session.setAttribute("isyn", "Y");
+		System.out.println("여긴 유저 컨트롤러임 : "+userInfo.toString());
+		
+		
+		return "index";
+	}
+
+	
+	
 	private HashMap<String, String> addrSet(String addrDto, String idDto) {
 		String[] addr = addrDto.split(" ");
 		String detail = ""; // addr[0] = post / addr[1] = si / addr[2] = gu / addr[3] = dong /

@@ -3,12 +3,15 @@
 	pageEncoding="UTF-8"%>
 <%
 	request.setCharacterEncoding("utf-8");
+	response.setCharacterEncoding("utf-8");
 %>
 <c:set var="id" value="${id }" scope="session" />
 <c:set var="name" value="${name }" scope="session" />
 <c:set var="point" value="${point }" scope="session" />
 <c:set var="type" value="${type }" scope="session" />
 <c:set var="isyn" value="${isyn }" scope="session" />
+
+
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
 <body id="body" class="up-scroll">
@@ -53,7 +56,7 @@
 						<p class="text-center">
 
 							<a id="kakao-login-btn"
-								href="https://kauth.kakao.com/oauth/authorize?client_id=118237743806f276d679025f706c0e3c&&redirect_uri=http://comic.iptime.org/comic/index.do&&response_type=code">
+								href="https://kauth.kakao.com/oauth/authorize?client_id=118237743806f276d679025f706c0e3c&&redirect_uri=http://localhost:8080/comic/kakaologin.do&&response_type=code">
 								카카오톡 로그인</a> <br> <a href="http://developers.kakao.com/logout">logout</a>
 
 
@@ -563,7 +566,7 @@
 
 
 					<c:choose>
-						<c:when test="${isyn eq 'Y'.charAt(0) and type eq 'C'.charAt(0)}">
+						<c:when test="${isyn eq 'Y' and (type eq 'C' or type eq 'S')}">
 							<div class="float-right btn-wrapper" style="margin-top: 40px;">
 								<span style="color: blue" class="navlogininfo">${name}(${id})님
 									환영합니다. || </span> <span style="color: blue" class="navlogininfo">현재
@@ -572,16 +575,7 @@
 									href="/comic/signout.do"><span style="color: blue">로그아웃</span></a>
 							</div>
 						</c:when>
-						<c:when test="${isyn eq 'Y'.charAt(0) and type eq 'S'.charAt(0)}">
-							<div class="float-right btn-wrapper" style="margin-top: 40px;">
-								<span style="color: blue" class="navlogininfo">${name}(${id})님
-									환영합니다. || </span> <span style="color: blue" class="navlogininfo">현재
-									잔여 포인트 : ${point } || </span> <a href="/comic/myInfo.do"><span
-									style="color: blue" class="navlogininfo">마이페이지 || </span></a> <a
-									href="/comic/signout.do"><span style="color: blue">로그아웃</span></a>
-							</div>
-						</c:when>
-
+				
 						<c:otherwise>
 							<div class="float-right btn-wrapper">
 								<a class="btn btn-outline-primary" href="#" data-toggle="modal"
