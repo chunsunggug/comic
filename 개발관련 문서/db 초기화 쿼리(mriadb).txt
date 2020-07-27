@@ -91,21 +91,27 @@ ENGINE=InnoDB
 AUTO_INCREMENT=23
 ;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 38145cb34ecac9e43849f30c9a97e2597bd60f10
 drop table if exists t_store_book cascade;
 CREATE TABLE `t_store_book` (
-	`sbidx` varchar(19) NOT NULL,
+	`sbidx` VARCHAR(19) NOT NULL,
 	`sidx` INT(11) NOT NULL,
+<<<<<<< HEAD
 	`isbn` VARCHAR(50) NOT NULL COLLATE 'utf8_general_ci',
+=======
+	`isbn` VARCHAR(24) NOT NULL,
+>>>>>>> 38145cb34ecac9e43849f30c9a97e2597bd60f10
 	`idx` INT(3) NOT NULL COMMENT '같은책에대한 인식번호',
 	`sdate` DATE NOT NULL DEFAULT current_timestamp() COMMENT '등록날짜',
-	`lostdate` DATETIME NULL COMMENT '분실날짜',
-	`lostuidx` INT(11) NULL COMMENT '잃어버린사람',
-	`status` CHAR(1) NOT NULL DEFAULT 'S' COMMENT '품목상태 입점S 분실L 대여중O' COLLATE 'utf8_general_ci',
-	`point` INT(11) NOT NULL DEFAULT '0',
+	`lostdate` DATETIME NULL DEFAULT NULL COMMENT '분실날짜',
+	`lostuidx` INT(11) NULL DEFAULT NULL COMMENT '잃어버린사람',
+	`status` CHAR(1) NOT NULL DEFAULT 'S' COMMENT '품목상태 입점S 분실L 대여중O',
+	`point` INT(11) NOT NULL DEFAULT 0,
 	PRIMARY KEY (`sbidx`) USING BTREE,
-	INDEX `t_store_book_un` (`sidx`, `isbn`, `idx`) USING BTREE,
-	INDEX `t_store_book_fk2` (`lostuidx`) USING BTREE,
-	CONSTRAINT `t_store_book_fk2` FOREIGN KEY (`lostuidx`) REFERENCES `comic`.`t_user` (`uidx`) ON UPDATE RESTRICT ON DELETE RESTRICT
+	INDEX `t_store_book_un` (`sidx`, `isbn`, `idx`) USING BTREE
 )
 COLLATE='utf8_general_ci'
 ENGINE=InnoDB
@@ -119,16 +125,16 @@ CREATE TABLE `t_user_store` (
 	`uidx` INT(11) NOT NULL,
 	`sbidx` INT(11) NOT NULL,
 	`borrowtime` DATETIME NOT NULL DEFAULT current_timestamp() COMMENT '대여날짜',
-	`returntime` DATETIME NULL COMMENT '반납/분실날짜',
+	`returntime` DATETIME NULL DEFAULT NULL COMMENT '반납/분실날짜',
+	`returnedtime` DATETIME NULL DEFAULT NULL COMMENT '반납일',
 	PRIMARY KEY (`usidx`) USING BTREE,
 	INDEX `t_user_store_fk1` (`uidx`) USING BTREE,
-	INDEX `t_user_store_fk2` (`sbidx`) USING BTREE,
-	CONSTRAINT `t_user_store_fk1` FOREIGN KEY (`uidx`) REFERENCES `comic`.`t_user` (`uidx`) ON UPDATE RESTRICT ON DELETE RESTRICT,
-	CONSTRAINT `t_user_store_fk2` FOREIGN KEY (`sbidx`) REFERENCES `comic`.`t_store_book` (`sbidx`) ON UPDATE RESTRICT ON DELETE RESTRICT
+	CONSTRAINT `t_user_store_fk1` FOREIGN KEY (`uidx`) REFERENCES `t_user` (`uidx`)
 )
 COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 ;
+
 
 drop table if exists t_user_bookmark cascade;
 CREATE TABLE `t_user_bookmark` (

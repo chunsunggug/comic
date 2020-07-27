@@ -34,7 +34,8 @@
 	<select id="getForPageJoinData"
 		parameterType="hashMap"
 		resultType="com.project.comic.storebook.StoreBookDTO">
-		select sbidx, isbn, point, sdate, status from t_store_book where sidx=#{sidx}
+		select sbidx, isbn, point, sdate, status 
+		from t_store_book where sidx=#{sidx}
 		limit #{start}, #{size}
 	</select>
 	

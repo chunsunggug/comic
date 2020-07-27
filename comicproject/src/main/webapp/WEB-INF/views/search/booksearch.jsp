@@ -15,16 +15,14 @@
 						<div class="input-group mb-2">
 							<div class="input-group-prepend">
 								<select class="input-group-text" name="sort">
-									<option selected="selected" value="INPUT_DATE">등록날짜순</option>
-									<option value="PUBLISH_PREDATE">출판예정일순</option>
-									<option value="INDEX_TITLE">제목순</option>
-									<option value="INDEX_PUBLISHER">출판사순</option>
+									<option selected="selected" value="accuracy">정확도순</option>
+									<option value="recency">최신순</option>
 								</select>
 								</div>
 								<div class="input-group-prepend">
 								<select class="input-group-text" name="target">
 									<option selected="selected" value="title">책 제목</option>
-									<option value="author">저자</option>
+									<option value="person">저자</option>
 									<option value="publisher">출판사</option>
 									<option value="isbn">ISBN</option>
 								</select>
