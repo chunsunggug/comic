@@ -55,11 +55,11 @@
 
 						<p class="text-center">
 
-							<a id="kakao-login-btn"
+<!-- 							<a id="kakao-login-btn"
 								href="https://kauth.kakao.com/oauth/authorize?client_id=118237743806f276d679025f706c0e3c&&redirect_uri=http://localhost:8080/comic/kakaologin.do&&response_type=code">
 								카카오톡 로그인</a> <br> 
 								<a href="https://kauth.kakao.com/oauth/logout?client_id=118237743806f276d679025f706c0e3c&&&logout_redirect_uri=http://localhost:8080/comic/index.do">logout</a>
-
+ -->
 
 
 							<button type="submit" class="btn btn-primary">
@@ -567,7 +567,7 @@
 
 
 					<c:choose>
-						<c:when test="${isyn eq 'Y' and (type eq 'C' or type eq 'S')}">
+						<c:when test="${isyn eq 'Y' and type eq 'C'}">
 							<div class="float-right btn-wrapper" style="margin-top: 40px;">
 								<span style="color: blue" class="navlogininfo">${name}(${id})님
 									환영합니다. || </span> <span style="color: blue" class="navlogininfo">현재
@@ -576,14 +576,25 @@
 									href="/comic/signout.do"><span style="color: blue">로그아웃</span></a>
 							</div>
 						</c:when>
-				
+					<c:when test="${isyn eq 'Y' and type eq 'S'}">
+							<div class="float-right btn-wrapper" style="margin-top: 40px;">
+								<span style="color: blue" class="navlogininfo">${name}(${id})님
+									환영합니다. || </span> <span style="color: blue" class="navlogininfo">현재
+									잔여 포인트 : ${point } || </span> <a href="/comic/myInfo.do"><span
+									style="color: blue" class="navlogininfo">마이페이지 || </span></a> 
+									<a href="/comic/store/listbook.do"><span
+									style="color: blue" class="navlogininfo">도서관리 || </span></a> 
+									
+									<a href="/comic/signout.do"><span style="color: blue">로그아웃</span></a>
+							</div>
+						</c:when>
 						<c:otherwise>
 							<div class="float-right btn-wrapper">
 								<a class="btn btn-outline-primary" href="#" data-toggle="modal"
-									data-target="#login-modal" style="margin-left: 5px;"><span
-									id="sign">로그인</span> </a> <a class="btn btn-outline-primary"
-									href="#" data-toggle="modal" data-target="#reg-modal"
-									style="margin: 0 5px;"><span id="signup">회원가입</span> </a>
+									data-target="#login-modal" style="margin-left: 5px;">
+									<span
+									id="sign">로그인</span> </a> 
+									<a class="btn btn-outline-primary" href="#" data-toggle="modal" data-target="#reg-modal" style="margin: 0 5px;"><span id="signup">회원가입</span> </a>
 							</div>
 						</c:otherwise>
 					</c:choose>

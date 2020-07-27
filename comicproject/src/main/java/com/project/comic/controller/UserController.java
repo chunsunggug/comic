@@ -64,17 +64,16 @@ public class UserController {
 	@RequestMapping(value = "/signin.do", method = RequestMethod.POST)
 	public ModelAndView Login(UserVO uvo, HttpServletRequest req, HttpServletResponse rsp)
 			throws UnsupportedEncodingException {
+		ModelAndView mv = new ModelAndView();
 		req.setCharacterEncoding("utf-8");
 		rsp.setCharacterEncoding("utf-8");
 		rsp.setContentType("text/html; charset=utf-8");
-
 		HashMap<String, String> mapLogin = new HashMap<String, String>();
 		mapLogin.put("id", req.getParameter("id"));
 		mapLogin.put("pwd", req.getParameter("pwd"));
 		System.out.println(req.getParameter("id"));
 		System.out.println(req.getParameter("pwd"));
-		ModelAndView mv = new ModelAndView();
-
+		url = "user/login";
 		try {
 			uvo = userService.logingUser(mapLogin);
 
@@ -91,15 +90,13 @@ public class UserController {
 
 			session.setMaxInactiveInterval(60 * 10); // 기본 로그인 유지 시간 60초*10
 			System.out.println(uvo.toString());
-
-			url = "index";
+			mv.addObject("msg", "로그인이 정상적으로 완료되었습니다.");
 		} catch (Exception e) {
 			e.printStackTrace();
-			url = "user/login";
 			mv.addObject("msg", "ID(Email형식) 또는 비밀번호를 확인해주세요.");
-			mv.addObject("gourl", "index.do");
+			
 		}
-
+		mv.addObject("gourl", "index.do");
 		mv.setViewName(url);
 		return mv;
 	}
@@ -115,14 +112,16 @@ public class UserController {
 			String check = kapi.Logout(session.getAttribute("token").toString());
 			System.out.println("user controller : "+check);
 		}
-		
-
-		
-		
 		session.invalidate();
-
+		mv.addObject("msg", "로그아웃이 완료되었습니다.");
+		mv.addObject("gourl", "index.do");
+		
+		url = "user/login";
 		mv.setViewName(url);
 		return mv;
+		
+		
+		
 	}
 
 	@ResponseBody
@@ -212,10 +211,11 @@ public class UserController {
 	@RequestMapping(value = "/myInfo.do", method = RequestMethod.GET)
 	public ModelAndView MyInfo(HttpSession session) {
 		System.out.println("user controller check");
+		ModelAndView mv = new ModelAndView();
+		int idx = (int) session.getAttribute("idx");
 		String id = (String) session.getAttribute("id");
 		UserVO uvo = (UserVO) userService.myInfo(id);
-		ModelAndView mv = new ModelAndView();
-		if (uvo == null) {
+		if (idx < 1) {
 			url = "errorPage";
 		} else {
 			url = "user/myInfoForm";

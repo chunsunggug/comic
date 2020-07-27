@@ -25,7 +25,16 @@
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources directory -->
 	<!-- mvc:resources mapping="/res/**" location="/comic/resources/" / -->
-
+	
+	<mvc:interceptors>
+		<bean id="webContentInterceptor"
+			class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+			<property name="cacheSeconds" value="0" />
+			<property name="useExpiresHeader" value="false" />
+			<property name="useCacheControlHeader" value="true" />
+			<property name="useCacheControlNoStore" value="true" />
+		</bean>
+	</mvc:interceptors>
 
 	<!-- configs -->
 	<bean
@@ -81,17 +90,23 @@
 	</bean>
 
 	<!-- json @ResponseBody @RequestBody 객체를 json으로 바꿔서 주고받기 -->
-	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-        <property name="messageConverters">
-            <list>
-                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
-                <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
-                <bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter"/>
-                <bean class="org.springframework.http.converter.FormHttpMessageConverter"/>
-                <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
-            </list>
-        </property>
-    </bean>
+	<bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<bean
+					class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+				<bean
+					class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
+				<bean
+					class="org.springframework.http.converter.xml.SourceHttpMessageConverter" />
+				<bean
+					class="org.springframework.http.converter.FormHttpMessageConverter" />
+				<bean
+					class="org.springframework.http.converter.StringHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
 
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
@@ -106,6 +121,6 @@
 		base-package="com.project.comic,com.project.comic.user,com.project.comic.controller,
 									com.project.comic.book,com.project.comic.store,com.project.comic.mail,
 									com.project.comic.storebook" />
-									
-	<!-- mybatis:scan base-package="com.project.comic.storebook"/-->
+
+	<!-- mybatis:scan base-package="com.project.comic.storebook"/ -->
 </beans:beans>
