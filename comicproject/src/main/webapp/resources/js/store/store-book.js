@@ -6,7 +6,6 @@ var point = document.getElementById("add-point");
 var tot = document.getElementById("add-tot");
 var img = document.getElementById("add-img");
 var add_btn = document.getElementById("add-btn");
-var save_isbn;
 
 isbn.oninput = loadBookData;
 add_btn.onclick = addBookData;
@@ -23,23 +22,21 @@ function loadBookData(){
 			dataType : "json",
 			success : function(bookdata){
 
-				if(bookdata == null){ 
+				if( bookdata.total == 0 ){ 
 					alert("없는 isbn번호입니다");
 					return;
+				}else if( bookdata.total == 1 ){
+					title.value = bookdata.items[0].title;
+					authors.value = bookdata.items[0].author;
+					publisher.value = bookdata.items[0].publisher;
+
+					point.disabled = false;
+					tot.disabled = false;
+
+					point.value = 0;
+
+					img.setAttribute("src", bookdata.items[0].image);
 				}
-				
-				save_isbn = bookdata.isbn;
-				
-				title.value = bookdata.title;
-				authors.value = bookdata.authors;
-				publisher.value = bookdata.publisher;
-
-				point.disabled = false;
-				tot.disabled = false;
-
-				point.value = 0;
-
-				img.setAttribute("src", bookdata.thumbnail);
 			}
 		});
 
@@ -56,10 +53,9 @@ function addBookData(){
 		if(con == false) return;
 	}
 
-	var save_isbn_split = save_isbn.split(' ');
-	if( save_isbn_split[0].length == 10 || save_isbn_split[1].length == 13 ){
+	if( isbn.value.length == 10 || isbn.value.length == 13 ){
 		
-		var param = {"point" : point.value, "isbn" : save_isbn };
+		var param = {"point" : point.value, "isbn" : isbn.value };
 		
 		$.ajax({
 			type: 'post',

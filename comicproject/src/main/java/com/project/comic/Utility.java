@@ -1,4 +1,5 @@
-package com.project.comic.util;
+package com.project.comic;
+
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -39,7 +40,7 @@ public class Utility {
 		return json;
 	}
 	
-	public static Object JSONParse(String str) {
+	public static JSONObject JSONParse(String str) {
 		try {
 			JSONObject returnV = (JSONObject)jsonParser.parse(str);
 			return returnV;

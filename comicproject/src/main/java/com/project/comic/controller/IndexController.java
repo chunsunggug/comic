@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.comic.book.BookDTO;
 import com.project.comic.store.StoreDao;
 import com.project.comic.user.UserDao;
 
@@ -32,5 +33,6 @@ public class IndexController {
 
 		return mv;
 	}	
+	
 	
 }

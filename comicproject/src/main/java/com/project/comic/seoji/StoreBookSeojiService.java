@@ -1,37 +1,88 @@
-package com.project.comic.storebook;
+package com.project.comic.seoji;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.project.comic.book.ISequenceSearch;
-import com.project.comic.controller.BookSearchController;
+import com.project.comic.storebook.IStoreBookDao;
+import com.project.comic.storebook.IStoreBookService;
 
 @Service
-public class StoreBookService {
+public class StoreBookSeojiService implements IStoreBookService{
 
 	@Autowired
 	@Qualifier("impl")
 	private IStoreBookDao storeBookDao;
+
+	@Override
+	public boolean add(Object object) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean update(Object object) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean remove(Object object) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Object getByISBN(String isbn) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object getByPK(String pk) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List getPageList(int cp, int listsize, int sidx) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getBookCountAll(String sidx) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getBookCount(String sidx, String isbn) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
-	@Autowired
-	private ISequenceSearch kakaoBookSequenceSearch;
-	
+	/*
 	@Transactional
 	public int add(StoreBookDTO dto) {
 		
-		int count = storeBookDao.getCount(dto);
-		dto.setIdx( ++count );	
+		// dto 에 isbn이 제대로 들어있는지 검증
+		JSONObject val_result = Utility.JSONParse( getBookByIsbn(dto.getIsbn()) );
+		if( !((long)val_result.get("total") == 1) ) return 0;
+		// 검증 완료
+		
+		JSONObject item = (JSONObject)((JSONArray)val_result.get("items")).get(0);
 
-		dto.setSbidx(makePKFromDTO(dto));
+		// db에 저장되어있는 형태로 isbn 값 수정
+		dto.setIsbn((String)item.get("isbn"));
+		
+		int count = storeBookDao.getCount(dto);
+		dto.setIdx( ++count );
+
+		dto.setSbidx( makePKFromDTO(dto) );
+		System.out.println("sbidx : " + dto.getSbidx());
 		
 		// isbn 받아서 책 목록에 등록
 		int result = storeBookDao.add(dto);
@@ -41,28 +92,19 @@ public class StoreBookService {
 	}
 	
 	// 도서 추가 시 isbn칸에 isbn쓰면 자동으로 책데이터 불러오는데 사용하는 용도
-	public JSONObject getBookByIsbn(String isbn) {
-		JSONObject json_group = new JSONObject();
-		JSONObject json_query = new JSONObject();
+	public String getBookByIsbn(String isbn) {
+		NaverQueryModel md = new NaverQueryModel();
+		md.setDisplay(1);
+		md.setStart(1);
+		md.setDetail("d_isbn");
+		md.setQuery(isbn);
 		
-		// isbn이 10자리, 13자리 2개 나눠서 가능한한 13자리로 받도록한다
-		String[] isbn1013 = isbn.split(" ");
-		if( isbn1013.length == 1) isbn = isbn1013[0];
-		else
-			isbn = isbn1013[1];
+		String result = (String)naverPageSearch.getPageData(md);
 		
-		json_query.put("query", isbn );
-		json_query.put("target", "isbn");
-		json_group.put(BookSearchController.ATTR_PARAM, json_query);
-		
-		JSONObject value_set = (JSONObject)kakaoBookSequenceSearch.nextSearch(json_group);
-
-		JSONArray documents = (JSONArray)value_set.get( BookSearchController.ATTR_DOCUMENTS );
-
-		if(documents.size() == 0)
-			return null;
-		
-		return (JSONObject)documents.get(0);
+		if( result != null )
+			return result;
+			
+		return null;
 	}
 
 	// 페이지별 목록 리스트
@@ -82,16 +124,14 @@ public class StoreBookService {
 	public int getBookCount(int sidx){
 		return storeBookDao.getStoreBookAllCount(sidx);
 	}
+	
 	// dto에 있는 속성들을 이용해서 기본키를 만들어낸다
  	private String makePKFromDTO(StoreBookDTO dto) {
-		String[] isbnsplit = dto.getIsbn().split(" ");
-		String pre =  String.format("%03d", dto.getSidx());
+		String isbn = dto.getIsbn();
+		String pre =  String.format( "%03d", dto.getSidx());
 		String middle, post;
 		
-		if(isbnsplit.length == 1) middle = isbnsplit[0];
-		else
-			middle = isbnsplit[1];
-		
+		middle = isbn.substring( isbn.length() - 13, isbn.length() );
 		post = String.format("%03d", dto.getIdx());
 		
 		return pre + middle + post;
@@ -116,7 +156,7 @@ public class StoreBookService {
 	}
 
 	private List getJoinDTO(List<StoreBookDTO> storeBookDto){
-		List arr = new ArrayList<StoreBookKakaoDTO>();
+		/*List arr = new ArrayList<StoreBookKakaoDTO>();
 		
 		for(int i=0; i < storeBookDto.size(); i++ ) {
 			StoreBookDTO dto = storeBookDto.get(i);
@@ -128,5 +168,6 @@ public class StoreBookService {
 			arr.add(toDto);
 		}
 		return arr;
-	}
+		return null;
+	}*/
 }

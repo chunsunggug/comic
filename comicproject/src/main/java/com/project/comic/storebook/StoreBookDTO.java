@@ -28,4 +28,12 @@ public class StoreBookDTO {
 		this.status = status;
 		this.point = point;
 	}
+	
+	/*public String getSbidx() {
+		String sidx = String.format("%03d", this.sidx);
+		String isbn = this.isbn.substring(this.isbn.length() - 14, 13);
+		String idx = String.format("%03d", this.idx);
+		
+		return sidx + isbn + idx;
+	}*/
 }

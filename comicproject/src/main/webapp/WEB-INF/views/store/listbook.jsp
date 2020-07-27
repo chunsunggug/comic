@@ -2,10 +2,14 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <section>
-	<div style="height: 200px"></div>
+	<div style="height: 200px;margin-bottom: 10px"></div>
 	<div class="container-fluid text-right">
 		<button class="btn btn-primary" data-toggle="modal" type="button"
-			style="margin-bottom: 10px" data-target="#add-book-modal">도서추가</button>
+			data-target="#add-book-modal">도서추가</button>
+			
+		<button class="btn btn-primary" data-toggle="modal" type="button"
+			data-target="#updel-book-modal">도서수정</button>
+			
 	</div>
 	<div class="container-fluid text-center">
 		<table class="table table-bordered">
@@ -25,9 +29,9 @@
 				<c:forEach var="item" items="${listitem}">
 				<tr>
 					<th style="vertical-align:middle">${item.sbidx}</th>
-					<th style="vertical-align:middle"><img class="img-responsive" src="${item.thumbnail}" /></th>
+					<th style="vertical-align:middle"><img class="img-responsive" src="${item.image}" /></th>
 					<th style="vertical-align:middle">${item.title}</th>
-					<th style="vertical-align:middle">${item.authors}</th>
+					<th style="vertical-align:middle">${item.author}</th>
 					<th style="vertical-align:middle">${item.genre}</th>
 					<th style="vertical-align:middle">${item.point}</th>
 					<th style="vertical-align:middle">${item.sdate}</th>
@@ -85,6 +89,26 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- 도사 수정/삭제 모달 -->
+	<div class="modal fade" id="updel-book-modal" tabindex="-1" role="dialog"
+		aria-labelledby="updel-book-modal-label" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">도서 수정/삭제하기</div>
+				<div class="modal-body">
+					<div class="container-fluid">
+						
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="update-btn">삭제하기</button>
+					<button type="button" class="btn btn-primary" id="delete-btn">수정하기</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>
 
-<script src="/comic/resources/js/store/store-book.js"></script>
+<script src="/comic/resources/js/store/store-book.js?v=<%=System.currentTimeMillis() %>"></script>

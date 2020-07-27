@@ -14,11 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.project.comic.book.ISequenceSearch;
-import com.project.comic.page.PageMaker;
+import com.project.comic.Utility;
+import com.project.comic.seoji.StoreBookSeojiService;
 import com.project.comic.storebook.StoreBookDTO;
-import com.project.comic.storebook.StoreBookService;
-import com.project.comic.util.Utility;
 
 @Controller
 @RequestMapping(value="/store")
@@ -30,30 +28,23 @@ public class StoreController {
 	private final int PAGE_LIST_SIZE = 10;
 	private final int PAGE_SIZE = 10;
 	
-	
 	@Autowired
-	ISequenceSearch kakaoBookSequenceSearch;
-	
-	@Autowired
-	StoreBookService storeBookService; 
+	StoreBookSeojiService storeBookService; 
 
+	private final int LISTSIZE = 15;
 	
 	// 점주의 도서관리 페이지 이동
 	@RequestMapping(value="/listbook.do")
 	public ModelAndView listBook(HttpSession session,
 			@RequestParam(value="cp", defaultValue="1")int cp) {
-		//int sidx = Integer.parseInt( (String)session.getAttribute(SIDX) ); 	// sidx 받아와서
-		int sidx = 1; 	// sidx 받아와서
 		
-		List listitem = storeBookService.getPageList(cp, PAGE_LIST_SIZE, sidx);
-		String pagestr = PageMaker.makePage("/comic/store/listbook.do", storeBookService.getBookCount(sidx),
-								PAGE_LIST_SIZE, PAGE_SIZE, cp);
+		// test 상황 sidx : 1
+		List listitem = storeBookService.getPageList(cp, LISTSIZE, 1);
 		
 		ModelAndView mv = new ModelAndView();
 		
-		mv.addObject("pagestr", pagestr);
-		mv.addObject("listitem",listitem);
 		mv.setViewName("store/bookmanage");
+		mv.addObject("listitem", listitem);
 		
 		return mv;
 	}
@@ -68,12 +59,12 @@ public class StoreController {
 		// 끝에 이상하게 =문자가 같이 넘어온다 잘라주자
 		param = param.replaceAll("=", "");
 		
-		// isbn에 맞는 카카오 document 양식으로 된 json 문자열
-		JSONObject result = storeBookService.getBookByIsbn(param);
-	
-		if( result == null)
-			return null;
-		return result.toJSONString();
+		String result = "";//storeBookService.getBookByIsbn(param);
+		
+		if(result != null)
+			return result;
+		
+		return null;
 	}
 	
 	// 추가하기 버튼 누루면 디비를 거쳐 추가하는 곳
@@ -82,7 +73,7 @@ public class StoreController {
 	@ResponseBody
 	public String registerStoreBookData(@RequestBody String param, HttpSession session) {
 		
-		JSONObject json_param = (JSONObject)Utility.JSONParse(param);
+		JSONObject json_param = (JSONObject)Utility.JSONParse( param );
 		StoreBookDTO dto = new StoreBookDTO();
 		
 		dto.setPoint( Integer.parseInt((String)json_param.get("point")) );
@@ -90,9 +81,9 @@ public class StoreController {
 		dto.setSidx(1);  // test 용 uidx 1
 		//dto.setSidx( Integer.parseInt((String)session.getAttribute(SIDX)) );
 		
-		if( storeBookService.add(dto) == 1 )
-			return "1";
-		else
+		//if( storeBookService.add(dto) == 1 )
+		//	return "1";
+		//else
 			return "0";
 	}
 }
