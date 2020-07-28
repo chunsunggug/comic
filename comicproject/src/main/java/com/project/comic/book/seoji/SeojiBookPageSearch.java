@@ -3,26 +3,28 @@ package com.project.comic.book.seoji;
 import org.springframework.stereotype.Component;
 
 import com.project.comic.book.IBookConnector;
-import com.project.comic.book.ISequenceSearch;
+import com.project.comic.book.IPageSearch;
 import com.project.comic.book.NotSupportedQueryModel;
 
 @Component
-public class SeojiSequenceSearch implements ISequenceSearch {
-
+public class SeojiBookPageSearch implements IPageSearch {
+	
 	@Override
-	public Object nextSearch(Object model) {
+	public Object getPageData( int page_num, int page_size, Object model ) {
 		if( model instanceof SeojiQueryModel )
 		{
 			IBookConnector conn = new SeojiBookConnector();
 			SeojiQueryModel md = (SeojiQueryModel)model;
-			String result;
 			
-			md.setPage_no( md.getPage_no() + 1 );
+			md.setPage_no(page_num);
+			md.setPage_size(page_size);
 			
-			result = conn.setModel(model).connect();
-
+			String result = conn.setModel(model).connect();			
+			
 			return result;
-		}else
+			
+		}
+		else
 			throw new NotSupportedQueryModel();
 	}
 

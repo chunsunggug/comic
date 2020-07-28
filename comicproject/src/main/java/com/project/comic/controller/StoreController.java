@@ -1,10 +1,10 @@
 package com.project.comic.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.comic.Utility;
+import com.project.comic.page.PageMaker;
+import com.project.comic.storebook.IStoreBookService;
 import com.project.comic.storebook.StoreBookDTO;
-import com.project.comic.storebook.StoreBookService;
 
 @Controller
 @RequestMapping(value="/store")
@@ -29,9 +30,7 @@ public class StoreController {
 	private final int PAGE_SIZE = 10;
 	
 	@Autowired
-	StoreBookService storeBookService; 
-
-	private final int LISTSIZE = 15;
+	IStoreBookService storeBookService; 
 	
 	// 점주의 도서관리 페이지 이동
 	@RequestMapping(value="/listbook.do")
@@ -39,12 +38,16 @@ public class StoreController {
 			@RequestParam(value="cp", defaultValue="1")int cp) {
 		
 		// test 상황 sidx : 1
-		List listitem = storeBookService.getPageList(cp, LISTSIZE, 1);
+		int sidx = 1;
+		List listitem = storeBookService.getPageList(cp, PAGE_LIST_SIZE, 1);
+		int total = storeBookService.getBooksCountAll(sidx);
+		String pagestr = PageMaker.makePage("/store/listbook.do", total, PAGE_LIST_SIZE, PAGE_SIZE, cp);
 		
 		ModelAndView mv = new ModelAndView();
 		
 		mv.setViewName("store/bookmanage");
-		mv.addObject("listitem", listitem);
+		mv.addObject( "listitem", listitem );
+		mv.addObject("pagestr", pagestr);
 		
 		return mv;
 	}
@@ -59,7 +62,7 @@ public class StoreController {
 		// 끝에 이상하게 =문자가 같이 넘어온다 잘라주자
 		param = param.replaceAll("=", "");
 		
-		String result = "";//storeBookService.getBookByIsbn(param);
+		String result = (String)storeBookService.loadBookDataByISBN(param);
 		
 		if(result != null)
 			return result;
@@ -71,19 +74,26 @@ public class StoreController {
 	@RequestMapping(value="/register.do", produces = "application/text; charset=UTF-8",
 					method = RequestMethod.POST)
 	@ResponseBody
-	public String registerStoreBookData(@RequestBody String param, HttpSession session) {
+	public String registerStoreBookData(@RequestParam Map param, HttpSession session) {
 		
-		JSONObject json_param = (JSONObject)Utility.JSONParse( param );
 		StoreBookDTO dto = new StoreBookDTO();
+		String isbn = (String)param.get("isbn");
 		
-		dto.setPoint( Integer.parseInt((String)json_param.get("point")) );
-		dto.setIsbn( (String)json_param.get("isbn") );
-		dto.setSidx(1);  // test 용 uidx 1
-		//dto.setSidx( Integer.parseInt((String)session.getAttribute(SIDX)) );
+		if( isbn.length() == 10 ) dto.setIsbn10( isbn );
+		else if( isbn.length() == 13 ) dto.setIsbn13( isbn );
 		
-		//if( storeBookService.add(dto) == 1 )
-		//	return "1";
-		//else
-			return "0";
+		//dto.setSidx((int)json_book.get("sidx"));
+		dto.setSidx( 1 ); // test : 1
+		dto.setPoint( Integer.parseInt((String)param.get("point")) );
+		dto.setCategory( (String)param.get("category") );
+		dto.setTotal( Integer.parseInt((String)param.get("total")) );
+		dto.setCnt( dto.getTotal() );
+
+		boolean result = storeBookService.add(dto);
+		
+		if( result )
+			return "1";
+		
+		return "0";
 	}
 }

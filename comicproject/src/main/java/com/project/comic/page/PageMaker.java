@@ -25,7 +25,6 @@ public class PageMaker {
 			
 			
 			for(int i=userGroup*pageSize+1;i<=userGroup*pageSize+pageSize;i++){
-				
 				sb.append("<li ");
 				if( i == cp )
 					sb.append("class='active'");
@@ -37,7 +36,7 @@ public class PageMaker {
 				sb.append(i);
 				sb.append("</a></li>");
 				//&nbsp;&nbsp;<a href="pageTest.jsp?cp=<%=i%>"><%=i%></a>&nbsp;&nbsp;
-				if(i==totalPage)break;
+				if(i>=totalPage)break;
 			}
 			
 			// 오른쪽 화살표

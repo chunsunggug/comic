@@ -14,7 +14,7 @@ import com.project.comic.book.ISequenceSearch;
 public class SeojiBookSearchService implements IBookSearchService {
 
 	@Autowired
-	private ISequenceSearch seojiSequenceSearch;
+	private ISequenceSearch seojiBookSequenceSearch;
 
 	private final int PAGE_SIZE = 12;
 	
@@ -25,7 +25,7 @@ public class SeojiBookSearchService implements IBookSearchService {
 		model.setPage_no( 0 );
 		model.setPage_size(PAGE_SIZE);
 		
-		String page_data = (String)seojiSequenceSearch.nextSearch(model);
+		String page_data = (String)seojiBookSequenceSearch.nextSearch(model);
 
 		session.setAttribute( "query_model", model );
 		
@@ -35,7 +35,7 @@ public class SeojiBookSearchService implements IBookSearchService {
 	@Override
 	public String bookSearchMore( HttpSession session) {
 		SeojiQueryModel model = (SeojiQueryModel)session.getAttribute("query_model");
-		String page_data = (String)seojiSequenceSearch.nextSearch(model);
+		String page_data = (String)seojiBookSequenceSearch.nextSearch(model);
 		
 		session.setAttribute( "query_model", model );
 		

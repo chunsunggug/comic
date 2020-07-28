@@ -22,31 +22,17 @@ public class StoreBookDaoImpl implements IStoreBookDao {
 	}
 
 	@Override
-	public StoreBookDTO get(String sbidx) {
-		return sqlMap.selectOne("getStoreBookBySbidx", sbidx);
-	}
-	
-	@Override
-	public StoreBookDTO get(String isbn, int idx,int sidx) {
-		Map map = new HashMap();
-		map.put("isbn", isbn);
-		map.put("idx", idx);
-		map.put("sidx", sidx);
-		return sqlMap.selectOne("getStoreBookByIsbnIdx", map);
+	public int exist(Map param) {
+		return sqlMap.selectOne("existIsbn", param);
 	}
 
 	@Override
-	public int getCount(StoreBookDTO object) {
-		return sqlMap.selectOne("getStoreBookCount", object);
+	public List getPageList(Map param) {
+		return sqlMap.selectList( "getPageList", param );
 	}
 
 	@Override
-	public int getStoreBookAllCount(int sidx) {
-		return sqlMap.selectOne("getStoreBookAllCount", sidx);
-	}
-
-	@Override
-	public List getForPageJoinData(Map map) {
-		return sqlMap.selectList("getForPageJoinData", map);
+	public int getBooksCountAll(int sidx) {
+		return sqlMap.selectOne("getBooksCountAll" ,sidx);
 	}
 }
