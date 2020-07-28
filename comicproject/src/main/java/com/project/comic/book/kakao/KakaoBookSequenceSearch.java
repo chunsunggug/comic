@@ -1,10 +1,10 @@
-package com.project.comic.kakao;
+package com.project.comic.book.kakao;
 
 import org.springframework.stereotype.Component;
 
-import com.project.comic.NotSupportedQueryModel;
 import com.project.comic.book.IBookConnector;
 import com.project.comic.book.ISequenceSearch;
+import com.project.comic.book.NotSupportedQueryModel;
 
 @Component
 public class KakaoBookSequenceSearch implements ISequenceSearch {

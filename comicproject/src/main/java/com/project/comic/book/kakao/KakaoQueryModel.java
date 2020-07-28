@@ -1,4 +1,4 @@
-package com.project.comic.kakao;
+package com.project.comic.book.kakao;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

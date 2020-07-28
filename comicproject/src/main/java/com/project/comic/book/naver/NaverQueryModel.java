@@ -1,4 +1,4 @@
-package com.project.comic.naver;
+package com.project.comic.book.naver;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Map;

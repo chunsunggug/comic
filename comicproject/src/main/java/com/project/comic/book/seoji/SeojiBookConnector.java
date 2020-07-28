@@ -1,4 +1,4 @@
-package com.project.comic.seoji;
+package com.project.comic.book.seoji;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

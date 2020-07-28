@@ -1,4 +1,4 @@
-package com.project.comic.naver;
+package com.project.comic.book.naver;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -7,8 +7,8 @@ import java.net.URL;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import com.project.comic.NotSupportedQueryModel;
 import com.project.comic.book.IPageSearch;
+import com.project.comic.book.NotSupportedQueryModel;
 
 
 @Component

@@ -1,4 +1,4 @@
-package com.project.comic.seoji;
+package com.project.comic.storebook;
 
 import java.util.List;
 
@@ -6,11 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.project.comic.storebook.IStoreBookDao;
-import com.project.comic.storebook.IStoreBookService;
-
 @Service
-public class StoreBookSeojiService implements IStoreBookService{
+public class StoreBookService implements IStoreBookService{
 
 	@Autowired
 	@Qualifier("impl")
@@ -35,7 +32,7 @@ public class StoreBookSeojiService implements IStoreBookService{
 	}
 
 	@Override
-	public Object getByISBN(String isbn) {
+	public Object loadBookDataByISBN(String isbn) {
 		// TODO Auto-generated method stub
 		return null;
 	}

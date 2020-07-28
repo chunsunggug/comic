@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.comic.Utility;
-import com.project.comic.seoji.StoreBookSeojiService;
 import com.project.comic.storebook.StoreBookDTO;
+import com.project.comic.storebook.StoreBookService;
 
 @Controller
 @RequestMapping(value="/store")
@@ -29,7 +29,7 @@ public class StoreController {
 	private final int PAGE_SIZE = 10;
 	
 	@Autowired
-	StoreBookSeojiService storeBookService; 
+	StoreBookService storeBookService; 
 
 	private final int LISTSIZE = 15;
 	

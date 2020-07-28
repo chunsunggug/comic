@@ -1,10 +1,10 @@
-package com.project.comic.seoji;
+package com.project.comic.book.seoji;
 
 import org.springframework.stereotype.Component;
 
-import com.project.comic.NotSupportedQueryModel;
 import com.project.comic.book.IBookConnector;
 import com.project.comic.book.IPageSearch;
+import com.project.comic.book.NotSupportedQueryModel;
 
 @Component
 public class SeojiPageSearch implements IPageSearch {
