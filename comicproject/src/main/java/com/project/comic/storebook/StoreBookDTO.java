@@ -9,6 +9,7 @@ public class StoreBookDTO {
 	private String isbn13;
 	private String isbn10;
 	private String sdate;
+	private String udate;
 	private int point;
 	private String category;
 	private int total;
@@ -17,13 +18,14 @@ public class StoreBookDTO {
 	
 	public StoreBookDTO(){}
 	
-	public StoreBookDTO(int sbidx, int sidx, String isbn13, String isbn10, String sdate,
+	public StoreBookDTO(int sbidx, int sidx, String isbn13, String isbn10, String sdate, String udate,
 					 int point,String category, int total, int cnt, int losttot){
 		this.sbidx = sbidx;
 		this.sidx = sidx;
 		this.isbn13 = isbn13;
 		this.isbn10 = isbn10;
 		this.sdate = sdate;
+		this.udate = udate;
 		this.point = point;
 		this.category = category;
 		this.total = total;

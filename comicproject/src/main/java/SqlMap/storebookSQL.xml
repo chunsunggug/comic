@@ -11,9 +11,12 @@
 	
 	<select id="existIsbn" parameterType="java.util.Map" resultType="int">
 		select count(*) from t_store_book where sidx=#{sidx} and 
-		(isbn13=#{isbn13} or isbn10=#{isbn10})
+		(isbn13=#{isbn} or isbn10=#{isbn})
 	</select>
-
+	
+	<select id="existSbidx" parameterType="int" resultType="int">
+		select count(*) from t_store_book where sbidx=#{sbidx}
+	</select>
 	
 	<select id="getPageList" parameterType="java.util.Map"
 	resultType="com.project.comic.storebook.StoreBookDTO">
@@ -25,5 +28,27 @@
 	resultType="int" >
 		select count(*) from t_store_book where sidx=#{sdix}
 	</select>
+	
+	<select id="getBook" parameterType="java.util.Map"
+	resultType="com.project.comic.storebook.StoreBookDTO" >
+		select * from t_store_book where sidx=#{sidx} and
+		(isbn13=#{isbn} or isbn10=#{isbn})
+	</select>
+	
+	<update id="updateBook" parameterType="com.project.comic.storebook.StoreBookDTO">
+		update t_store_book set category=#{category},
+														point=#{point},
+														total=#{total},
+														udate=now()
+												where isbn13=#{isbn13} or isbn10=#{isbn10}
+	</update>
+	
+	<delete id="deleteBook" parameterType="java.util.Map">
+		delete from t_store_book where sidx=#{sidx} and (isbn13=#{isbn} or isbn10=#{isbn})
+	</delete>
+
+	<delete id="deleteSbidx" parameterType="int">
+		delete from t_store_book where sbidx=#{sbidx}
+	</delete>
 		
 </mapper>

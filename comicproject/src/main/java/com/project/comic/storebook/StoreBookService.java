@@ -87,10 +87,16 @@ public class StoreBookService implements IStoreBookService{
 		KakaoQueryModel md = new KakaoQueryModel();
 		md.setQuery(isbn);
 		md.setPage(0);
-		String result = (String)kakaoBookSequenceSearch.nextSearch(md);
+		String result = (String)kakaoBookSequenceSearch.nextSearch(md);		
 		
 		System.out.println(result);
 		return result;
+	}
+	
+	@Override
+	public StoreBookDTO getBook(int sidx, String isbn) {
+		StoreBookDTO dto = storeBookDao.getBook(sidx, isbn);
+		return dto;
 	}
 
 
@@ -101,14 +107,8 @@ public class StoreBookService implements IStoreBookService{
 		// 가져온 DTO에서 ISBN13을 카카오검색을 이용한 조인으로 뷰에서 보여줄 데이터VO 리스트로 만들어준다
 		// 리스트 결과를 return한다
 		
-		Map param = new HashMap();
-
-		param.put( "listsize", listsize );
-		param.put( "sidx", sidx );
-		param.put( "start", (cp - 1) * listsize );
-		
 		// StoreBookDTO로 DB에서 가져오는 과정
-		List<StoreBookDTO> storebook_result = storeBookDao.getPageList( param );
+		List<StoreBookDTO> storebook_result = storeBookDao.getPageList( cp, listsize, sidx );
 		List list_result = new ArrayList<StoreBookVO>();
 		
 		// 가져온 DTO를 이용하여 카카오 검색을 통해 VO로 수정
@@ -140,17 +140,77 @@ public class StoreBookService implements IStoreBookService{
 		
 		return list_result;
 	}
+	
+	@Override
+	public int getBooksCountAll(int sidx) {
+		return storeBookDao.getBooksCountAll(sidx);
+	}
 
-	private boolean checkExistBookInDB(int sidx, String isbn) {
-		Map param = new HashMap();
-		param.put("sidx", sidx);
+	@Override
+	public boolean update(Object object) {
+		if( !(object instanceof StoreBookDTO) )
+			throw new NotSupportedClass();
 		
-		if( isbn.length() == 13 )
-			param.put("isbn13", isbn);
+		// 받은 변수를 dto로 형변환 후 isbn으로 점포에 저장이 되어있는지 검사
+		// 있으면 데이터 가져와서 수정할 데이터(total,point,category) set해준 후 수정
+		
+		StoreBookDTO dto = (StoreBookDTO)object;
+		String isbn = "";
+		
+		if( dto.getIsbn10() != null )
+			isbn = dto.getIsbn10();
 		else
-			param.put("isbn10", isbn);
+			isbn = dto.getIsbn13();
 		
-		int exist_result = storeBookDao.exist( param );
+		// 이미 등록한건지 검사
+		if( !checkExistBookInDB(dto.getSidx(), isbn) )
+			return false;
+		
+		// 수정할 항목만 수정
+		StoreBookDTO update_dto = storeBookDao.getBook( dto.getSidx(), isbn );
+		update_dto.setCategory( dto.getCategory() );
+		update_dto.setPoint( dto.getPoint() );
+		update_dto.setTotal( dto.getTotal() );
+		
+		int result = storeBookDao.updateBook(update_dto);
+		
+		System.out.println("수정 된 로우 : " + result);
+		
+		if( result != 1 )
+			return false;
+		
+		return true;
+	}
+	
+	@Override
+	public boolean delete(int sidx, String isbn) {
+		if( !checkExistBookInDB(sidx, isbn) )
+			return false;
+		
+		int result = storeBookDao.deleteBook(sidx, isbn);
+		
+		if( result != 1 )
+			return false;
+
+		return true;
+	}
+	
+	@Override
+	public boolean delete(int sbidx) {
+		if( !checkExistBookInDB(sbidx) )
+			return false;
+		
+		int result = storeBookDao.deleteBook(sbidx);
+		System.out.println("result : " + result);
+		if( result != 1 )
+			return false;
+
+		return true;
+	}
+	
+	private boolean checkExistBookInDB(int sidx, String isbn) {
+		
+		int exist_result = storeBookDao.exist( sidx, isbn );
 		
 		if( exist_result != 0 ) {
 			System.out.println("이미 등록된 책입니다");
@@ -161,9 +221,15 @@ public class StoreBookService implements IStoreBookService{
 	}
 
 	
-	@Override
-	public int getBooksCountAll(int sidx) {
-		return storeBookDao.getBooksCountAll(sidx);
+	private boolean checkExistBookInDB(int sbidx) {
+		
+		int exist_result = storeBookDao.exist( sbidx );
+		System.out.println("exist_result : " + exist_result);
+		if( exist_result != 0 ) {
+			System.out.println("이미 등록된 책입니다");
+			return true;
+		}
+		
+		return false;
 	}
-	
 }
