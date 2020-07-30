@@ -73,8 +73,7 @@
                 </div>
             </div>
 
-            <!-- *** ADVANTAGES HOMEPAGE ***
- _________________________________________________________ -->
+            <!-- *** ADVANTAGES HOMEPAGE *** -->
             <div id="advantages">
 
                 <div class="container">

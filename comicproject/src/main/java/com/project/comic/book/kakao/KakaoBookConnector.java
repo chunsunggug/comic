@@ -31,7 +31,7 @@ public class KakaoBookConnector implements IBookConnector{
 		HttpURLConnection con;
 		String request_url = KAKAO_BOOK_SEARCH_URL + "?" + model.toURLParam();
 
-		System.out.println(request_url);
+		System.out.println("카카오 request url : " + request_url);
 		
 		try {
 			url = new URL(request_url);						// throw

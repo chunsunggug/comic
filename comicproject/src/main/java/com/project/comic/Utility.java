@@ -40,7 +40,7 @@ public class Utility {
 		return json;
 	}
 	
-	public static JSONObject JSONParse(String str) {
+	public static Object JSONParse(String str) {
 		try {
 			JSONObject returnV = (JSONObject)jsonParser.parse(str);
 			return returnV;

@@ -13,7 +13,8 @@ function show_contents() {
 			for(var i=0; i < contents.length; i++){
 				
 				var div = document.createElement("div");
-				div.setAttribute("class", "col-6 col-md-3 col-lg-2");
+				div.setAttribute("class", "col-xs-6 col-sm-3 col-md-2");
+				div.setAttribute("style", "height:220px;");
 				
 				var a = document.createElement("a");
 				a.setAttribute( "href", "https://www.naver.com");
@@ -24,10 +25,12 @@ function show_contents() {
 				if( contents[i].thumbnail != "")
 					img.setAttribute("src", contents[i].thumbnail );
 				else
-					img.setAttribute("src", "http://localhost:8080/comic/resources/img/book/unknown_cover.png" );
+					img.setAttribute("src", "/comic/resources/img/book/unknown_cover.png" );
 				
 				var h5 = document.createElement("h5");
 				h5.innerHTML = contents[i].title;
+				h5.setAttribute("style","overflow:auto; " +
+										"text-overflow:ellipsis;");
 
 				a.appendChild(img);
 				a.appendChild(h5);

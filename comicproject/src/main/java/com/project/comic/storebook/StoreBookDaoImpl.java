@@ -22,31 +22,54 @@ public class StoreBookDaoImpl implements IStoreBookDao {
 	}
 
 	@Override
-	public StoreBookDTO get(String sbidx) {
-		return sqlMap.selectOne("getStoreBookBySbidx", sbidx);
+	public int getBookCount(int sidx, String isbn) {
+		Map param = new HashMap();
+		
+		param.put( "sidx", sidx );
+		param.put( "isbn", isbn );
+		
+		return sqlMap.selectOne( "getBookCount", param );
 	}
 	
 	@Override
-	public StoreBookDTO get(String isbn, int idx,int sidx) {
-		Map map = new HashMap();
-		map.put("isbn", isbn);
-		map.put("idx", idx);
-		map.put("sidx", sidx);
-		return sqlMap.selectOne("getStoreBookByIsbnIdx", map);
+	public List getPageList(int cp, int listsize, int sidx) {
+		Map param = new HashMap();
+
+		param.put( "listsize", listsize );
+		param.put( "sidx", sidx );
+		param.put( "start", (cp - 1) * listsize );
+		
+		return sqlMap.selectList( "getPageList", param );
 	}
 
 	@Override
-	public int getCount(StoreBookDTO object) {
-		return sqlMap.selectOne("getStoreBookCount", object);
+	public int getBooksCountAll(int sidx) {
+		return sqlMap.selectOne("getBooksCountAll" ,sidx);
 	}
 
 	@Override
-	public int getStoreBookAllCount(int sidx) {
-		return sqlMap.selectOne("getStoreBookAllCount", sidx);
+	public StoreBookDTO getBook(String sbidx) {		
+		return sqlMap.selectOne( "getBook", sbidx );
 	}
 
 	@Override
-	public List getForPageJoinData(Map map) {
-		return sqlMap.selectList("getForPageJoinData", map);
+	public int updateBook(StoreBookDTO dto) {
+		return sqlMap.update( "updateBook", dto );
 	}
+
+	@Override
+	public int deleteBook(String sbidx) {
+		return sqlMap.delete( "deleteBook", sbidx );
+	}
+
+	@Override
+	public int getBookMaximumIdx(int sidx, String isbn) {
+		Map param = new HashMap();
+
+		param.put( "sidx", sidx );
+		param.put( "isbn", isbn );
+		
+		return sqlMap.selectOne( "getBookMaximumIdx", param );
+	}
+	
 }

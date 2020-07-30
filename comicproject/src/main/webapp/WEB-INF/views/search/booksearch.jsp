@@ -47,7 +47,7 @@
 		<div id="contents_container" class="row">
 
 			<c:forEach var="content" items="${documents}">
-				<div class="col-6 col-md-3 col-lg-2">
+				<div class="col-xs-6 col-sm-3 col-md-2" style="height:220px;" >
 					<a href="https://www.naver.com"> <c:choose>
 							<c:when test="${content.thumbnail == ''}">
 								<img class="img-thumbnail img-responsive"
@@ -58,7 +58,8 @@
 									src="${content.thumbnail}" />
 							</c:otherwise>
 						</c:choose>
-						<h5>${content.title}</h5>
+						<br>
+						<h5 style="overflow:auto; text-overflow:ellipsis;">${content.title}</h5>
 					</a>
 				</div>
 			</c:forEach>
