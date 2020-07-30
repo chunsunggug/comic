@@ -4,22 +4,21 @@ import lombok.Data;
 
 @Data
 public class StoreBookDTO {
-	private int sbidx;
+	private String sbidx;
 	private int sidx;
 	private String isbn13;
 	private String isbn10;
+	private int idx;
 	private String sdate;
 	private String udate;
 	private int point;
 	private String category;
-	private int total;
-	private int cnt;
-	private int losttot;
+	private String status;
 	
 	public StoreBookDTO(){}
 	
-	public StoreBookDTO(int sbidx, int sidx, String isbn13, String isbn10, String sdate, String udate,
-					 int point,String category, int total, int cnt, int losttot){
+	public StoreBookDTO(String sbidx, int sidx, String isbn13, String isbn10, int idx, String sdate, String udate,
+					 int point,String category, int total, int cnt, int losttot, String status){
 		this.sbidx = sbidx;
 		this.sidx = sidx;
 		this.isbn13 = isbn13;
@@ -28,9 +27,13 @@ public class StoreBookDTO {
 		this.udate = udate;
 		this.point = point;
 		this.category = category;
-		this.total = total;
-		this.cnt = cnt;
-		this.losttot = losttot;
+		this.idx = idx;
+		this.status = status;
+	}
+	
+	public String makeSbidx() {
+		String made = String.format( "%03d", sidx ) + isbn13 + String.format( "%03d", idx );
+		return made;
 	}
 	
 	/*public String getSbidx() {

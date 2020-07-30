@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,7 +45,7 @@ public class StoreController {
 		int sidx = 1;
 		List listitem = storeBookService.getPageList(cp, PAGE_LIST_SIZE, 1);
 		int total = storeBookService.getBooksCountAll(sidx);
-		String pagestr = PageMaker.makePage("/store/listbook.do", total, PAGE_LIST_SIZE, PAGE_SIZE, cp);
+		String pagestr = PageMaker.makePage("/comic/store/listbook.do", total, PAGE_LIST_SIZE, PAGE_SIZE, cp);
 		
 		ModelAndView mv = new ModelAndView();
 		
@@ -59,28 +60,19 @@ public class StoreController {
 	@RequestMapping(value="/loadbookdata.do", produces = "application/text; charset=UTF-8",
 					method = RequestMethod.POST)
 	@ResponseBody
-	public String getBookByISBN(@RequestBody String param, HttpSession session) {
-		param = Utility.decodeString(param);
-
-		// 끝에 이상하게 =문자가 같이 넘어온다 잘라주자
-		param = param.replaceAll("=", "");
+	public String getBookDataByISBN(@RequestParam Map param, HttpSession session) {
+		
 		int sidx = 1; // session.getAttribute("sidx");
-		String isbn = param;
+		String result = "";
 		
-		// 카카오에서 isbn으로 검색해서 뷰에서 보여줄 데이터 가져오기
-		String result = (String)storeBookService.loadBookDataByISBN(isbn);
-		
-		// 만약 점포에 이미 이 책이 있으면 그 정보 가져오기
-		StoreBookDTO dto = storeBookService.getBook(sidx,isbn);
-		if( dto != null ) {
-			JSONObject json_result = (JSONObject)Utility.JSONParse(result);
-			json_result.put( "point", dto.getPoint() );
-			json_result.put( "total", dto.getTotal() );
-			json_result.put( "category", dto.getCategory() );
-			result = json_result.toJSONString();
-		}
-		
-		if(result != null)
+		if( !param.get("isbn").equals("") ) 
+			result = (String)storeBookService.
+					loadBookDataFromSearchServer((String)param.get("isbn"));
+		else if( !param.get("pk").equals("") )
+			result = (String)storeBookService.
+					loadBookDataForModal((String)param.get("pk"));
+				
+		if(result != null) 
 			return result;
 		
 		return null;
@@ -92,9 +84,10 @@ public class StoreController {
 	@ResponseBody
 	public String registerStoreBookData(@RequestParam Map param, HttpSession session) {
 		
-		StoreBookDTO dto = getDTOFromParam(param, session);
+		StoreBookDTO dto = getDTOFromParam( param, session );
 
-		boolean result = storeBookService.add(dto);
+		boolean result = storeBookService.add( dto,
+						Integer.parseInt((String)param.get("total")) );
 		
 		if( result )
 			return "1";
@@ -109,7 +102,7 @@ public class StoreController {
 		// 받아온 수정할 데이터를 dto에 정리
 		// 서비스로 dto를 보내 update 진행
 		// return 값에 따라 성공 실패 결과 return
-
+		System.out.println(param);
 		StoreBookDTO dto = getDTOFromParam( param, session );
 		
 		if( storeBookService.update(dto) )
@@ -122,25 +115,12 @@ public class StoreController {
 			method = RequestMethod.POST )
 	@ResponseBody
 	public String deleteStoreBookData(@RequestParam Map param, HttpSession session) {
-		// sbidx가 오는지 isbn이 오는지 검사
-		// sbidx라면 서비스에서 sbidx로 삭제
-		// isbn이면 서비스에서 sidx와 isbn으로 삭제
 		
 		// sbidx로 삭제
 		if( param.containsKey("sbidx") ) {
-			int sbidx = Integer.parseInt( (String)param.get("sbidx") );
-			System.out.println("sbidx : " + sbidx);
+			String sbidx = (String)param.get("sbidx");
+			
 			if( storeBookService.delete(sbidx) )
-				return "1";
-		}
-		
-		// isbn으로 삭제
-		if( param.containsKey("isbn") ) {
-			int sidx = 1; //session.getAttribute("sidx");
-			
-			String isbn = (String)param.get("isbn");
-			
-			if( storeBookService.delete(sidx, isbn) )
 				return "1";
 		}
 		
@@ -149,18 +129,26 @@ public class StoreController {
 	
 	private StoreBookDTO getDTOFromParam( Map param, HttpSession session ) {
 		StoreBookDTO dto = new StoreBookDTO();
-		String isbn = (String)param.get("isbn");
 		
-		if( isbn.length() == 10 ) dto.setIsbn10( isbn );
-		else if( isbn.length() == 13 ) dto.setIsbn13( isbn );
-		
-		dto.setPoint( Integer.parseInt((String)param.get("point")) );
 		// dto.setSidx( session.getAttribute("sidx") );
-		dto.setSidx( 1 ); // test : 1
+		dto.setSidx( 1 ); // test : 1		
+		
+		if( param.containsKey("isbn") ) {
+			String isbn = (String)param.get("isbn");
+			
+			if( isbn.length() == 10 ) dto.setIsbn10( isbn );
+			else if( isbn.length() == 13 ) dto.setIsbn13( isbn );
+		}
+		
+		if( param.containsKey("pk") )
+			dto.setSbidx( (String)param.get("pk") );
+		
+		if( param.containsKey("status") )
+			dto.setStatus( (String)param.get("status") );
+		
 		dto.setPoint( Integer.parseInt((String)param.get("point")) );
 		dto.setCategory( (String)param.get("category") );
-		dto.setTotal( Integer.parseInt((String)param.get("total")) );
-		dto.setCnt( dto.getTotal() );
+		
 		
 		return dto;
 	}

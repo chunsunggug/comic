@@ -5,8 +5,9 @@
 	<div style="height: 200px;margin-bottom: 10px"></div>
 	<div class="container-fluid text-right">
 		<button class="btn btn-primary" data-toggle="modal" type="button"
-			data-target="#add-book-modal" >추가/수정</button>
-			
+			data-target="#add-book-modal" >추가</button>
+		<button class="btn btn-primary" data-toggle="modal" type="button"
+			data-target="#update-book-modal" >수정/삭제</button>	
 	</div>
 	<div class="container-fluid text-center">
 		<table class="table table-bordered">
@@ -33,7 +34,7 @@
 					<th style="vertical-align:middle">${item.point}</th>
 					<th style="vertical-align:middle">${item.sdate}</th>
 					<th style="vertical-align:middle">
-					<button class="btn btn-danger" onclick="deleteItem(${item.sbidx})">삭제</button>
+					<button class="btn btn-danger" onclick="deleteItem('${item.sbidx}')">삭제</button>
 					</th>
 				</tr>
 				</c:forEach>
@@ -52,7 +53,7 @@
 		aria-labelledby="add-book-modal-label" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form name="form_book">
+				<form name="add_form_book">
 					<div class="modal-header" id="modal-header">도서 추가/삭제</div>
 					<div class="modal-body">
 						<div class="container-fluid">
@@ -86,7 +87,7 @@
 											</select></li>
 											<li><input name="isbn" class="col-xs-12 col-sm-12"
 												type="number" placeholder="ISBN13 or ISBN10"
-												oninput="loadBookData(window.form_book)" /></li>
+												oninput="loadBookData(window.add_form_book)" /></li>
 										</ul>
 									</div>
 								</div>
@@ -94,9 +95,65 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-					<button type="button" class="btn btn-danger" onclick="deleteBookData(window.form_book)">삭제</button>
-						<button type="button" class="btn btn-primary" onclick="addBookData(window.form_book)">등록하기</button>
-						<button type="button" class="btn btn-primary" onclick="updateBookData(window.form_book)">수정</button>
+						<button type="button" class="btn btn-primary" onclick="addBookData(window.add_form_book)">등록하기</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 도서수정/삭제 모달 -->
+	<div class="modal fade" id="update-book-modal" tabindex="-1" role="dialog"
+		aria-labelledby="update-book-modal-label" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form name="update_form_book">
+					<div class="modal-header" id="modal-header">도서 수정/삭제</div>
+					<div class="modal-body">
+						<div class="container-fluid">
+							<div class="row">
+								<div id="update-left" class="col-sm-4 col-xs-12">
+									<img name="thumbnail" class="img-responsive" style="margin: auto;"
+										src="/comic/resources/img/book/unknown_cover.png" />
+								</div>
+								<div id="update-right" class="col-sm-8 col-xs-12">
+									<div class="row">
+										<ul class="list-unstyled col-12">
+											<li><input name="title" class="col-xs-12 col-sm-12"
+												type="text" disabled="disabled" placeholder="책 제목" /></li>
+											<li><input name="authors" class="col-xs-12 col-sm-12"
+												type="text" disabled="disabled" placeholder="저자" /></li>
+											<li><input name="publisher"
+												class="col-xs-12 col-sm-12" type="text" disabled="disabled"
+												placeholder="출판사" /></li>
+											<li><label>대여료</label></li>
+											<li><input name="point" class="col-xs-12 col-sm-12"
+												type="number" min="0" disabled="disabled" placeholder="대여료" />
+											<li><select name="category" class="col-xs-12 col-sm-12"
+												disabled="disabled" placeholder="카테고리">
+													<option value="">==카테고리==</option>
+													<option value="만화">만화</option>
+													<option value="소설">소설</option>
+											</select></li>
+											<li><select name="status" class="col-xs-12 col-sm-12"
+												disabled="disabled" placeholder="상태">
+													<option value="">==상태==</option>
+													<option value="S">입고</option>
+													<option value="L">분실</option>
+											</select></li>
+											<li><input id="pk" name="pk" class="col-xs-12 col-sm-12"
+												type="number" placeholder="관리번호"
+												oninput="loadBookData(window.update_form_book)" /></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" onclick="deleteItem($('#pk')[0].value)">삭제</button>
+						<button type="button" class="btn btn-primary" onclick="updateBookData(window.update_form_book)">수정하기</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 					</div>
 				</form>

@@ -5,17 +5,16 @@
 <mapper namespace="com.project.comic.storebook.StoreBookDaoImpl">
 	<insert id="addStoreBook"
 		parameterType="com.project.comic.storebook.StoreBookDTO">
-		insert into t_store_book(sidx,isbn13,isbn10,point,category,total,cnt)
-		values(#{sidx},#{isbn13},#{isbn10},#{point},#{category},#{total},#{cnt})
+		insert into t_store_book(sbidx,sidx,isbn13,isbn10,idx,point,category)
+		values(#{sbidx},#{sidx},#{isbn13},#{isbn10},#{idx},#{point},#{category})
 	</insert>
 	
-	<select id="existIsbn" parameterType="java.util.Map" resultType="int">
-		select count(*) from t_store_book where sidx=#{sidx} and 
-		(isbn13=#{isbn} or isbn10=#{isbn})
+	<select id="getBookCount" parameterType="java.util.Map" resultType="int" >
+		select count(*) from t_store_book where sidx=#{sidx} and (isbn13=#{isbn} or isbn10=#{isbn})
 	</select>
 	
-	<select id="existSbidx" parameterType="int" resultType="int">
-		select count(*) from t_store_book where sbidx=#{sbidx}
+	<select id="getBookMaximumIdx" parameterType="java.util.Map" resultType="int">
+		select max(idx) from t_store_book where sidx=#{sidx} and (isbn13=#{isbn} or isbn10=#{isbn})
 	</select>
 	
 	<select id="getPageList" parameterType="java.util.Map"
@@ -26,28 +25,23 @@
 	
 	<select id="getBooksCountAll" parameterType="int"
 	resultType="int" >
-		select count(*) from t_store_book where sidx=#{sdix}
-	</select>
+		select count(*) from t_store_book where sidx=#{sidx}
+	</select>	
 	
-	<select id="getBook" parameterType="java.util.Map"
+	<select id="getBook" parameterType="java.lang.String"
 	resultType="com.project.comic.storebook.StoreBookDTO" >
-		select * from t_store_book where sidx=#{sidx} and
-		(isbn13=#{isbn} or isbn10=#{isbn})
+		select * from t_store_book where sbidx=#{sbidx}
 	</select>
-	
+
 	<update id="updateBook" parameterType="com.project.comic.storebook.StoreBookDTO">
 		update t_store_book set category=#{category},
 														point=#{point},
-														total=#{total},
+														status=#{status},
 														udate=now()
-												where isbn13=#{isbn13} or isbn10=#{isbn10}
+												where sbidx=#{sbidx}
 	</update>
-	
-	<delete id="deleteBook" parameterType="java.util.Map">
-		delete from t_store_book where sidx=#{sidx} and (isbn13=#{isbn} or isbn10=#{isbn})
-	</delete>
 
-	<delete id="deleteSbidx" parameterType="int">
+	<delete id="deleteBook" parameterType="java.lang.String">
 		delete from t_store_book where sbidx=#{sbidx}
 	</delete>
 		

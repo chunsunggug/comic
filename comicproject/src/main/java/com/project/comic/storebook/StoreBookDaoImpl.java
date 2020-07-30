@@ -22,20 +22,15 @@ public class StoreBookDaoImpl implements IStoreBookDao {
 	}
 
 	@Override
-	public int exist(int sidx, String isbn) {
+	public int getBookCount(int sidx, String isbn) {
 		Map param = new HashMap();
 		
-		param.put("sidx", sidx);		
-		param.put("isbn", isbn);
+		param.put( "sidx", sidx );
+		param.put( "isbn", isbn );
 		
-		return sqlMap.selectOne("existIsbn", param);
+		return sqlMap.selectOne( "getBookCount", param );
 	}
 	
-	@Override
-	public int exist(int sbidx) {		
-		return sqlMap.selectOne("existSbidx", sbidx);
-	}
-
 	@Override
 	public List getPageList(int cp, int listsize, int sidx) {
 		Map param = new HashMap();
@@ -53,13 +48,8 @@ public class StoreBookDaoImpl implements IStoreBookDao {
 	}
 
 	@Override
-	public StoreBookDTO getBook(int sidx, String isbn) {
-		Map param = new HashMap();
-		
-		param.put("sidx", sidx);
-		param.put("isbn", isbn);
-		
-		return sqlMap.selectOne( "getBook", param );
+	public StoreBookDTO getBook(String sbidx) {		
+		return sqlMap.selectOne( "getBook", sbidx );
 	}
 
 	@Override
@@ -68,18 +58,18 @@ public class StoreBookDaoImpl implements IStoreBookDao {
 	}
 
 	@Override
-	public int deleteBook(int sidx, String isbn) {
-		Map param = new HashMap();
-		
-		param.put("sidx", sidx);
-		param.put("isbn", isbn);
-	
-		return sqlMap.delete( "deleteBook", param );
+	public int deleteBook(String sbidx) {
+		return sqlMap.delete( "deleteBook", sbidx );
 	}
-	
+
 	@Override
-	public int deleteBook(int sbidx) {
-		return sqlMap.delete( "deleteSbidx", sbidx );
+	public int getBookMaximumIdx(int sidx, String isbn) {
+		Map param = new HashMap();
+
+		param.put( "sidx", sidx );
+		param.put( "isbn", isbn );
+		
+		return sqlMap.selectOne( "getBookMaximumIdx", param );
 	}
 	
 }
