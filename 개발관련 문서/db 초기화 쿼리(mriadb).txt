@@ -91,31 +91,26 @@ ENGINE=InnoDB
 AUTO_INCREMENT=23
 ;
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 38145cb34ecac9e43849f30c9a97e2597bd60f10
 drop table if exists t_store_book cascade;
 CREATE TABLE `t_store_book` (
-	`sbidx` VARCHAR(19) NOT NULL,
-	`sidx` INT(11) NOT NULL,
-<<<<<<< HEAD
-	`isbn` VARCHAR(50) NOT NULL COLLATE 'utf8_general_ci',
-=======
-	`isbn` VARCHAR(24) NOT NULL,
->>>>>>> 38145cb34ecac9e43849f30c9a97e2597bd60f10
-	`idx` INT(3) NOT NULL COMMENT '같은책에대한 인식번호',
+	`sbidx` VARCHAR(50) NOT NULL COLLATE 'utf8_general_ci',
+	`sidx` INT(11) NOT NULL COMMENT '점포번호',
+	`isbn13` VARCHAR(50) NOT NULL COLLATE 'utf8_general_ci',
+	`isbn10` VARCHAR(50) NOT NULL COLLATE 'utf8_general_ci',
+	`idx` INT(11) NOT NULL COMMENT '분류번호',
 	`sdate` DATE NOT NULL DEFAULT current_timestamp() COMMENT '등록날짜',
-	`lostdate` DATETIME NULL DEFAULT NULL COMMENT '분실날짜',
-	`lostuidx` INT(11) NULL DEFAULT NULL COMMENT '잃어버린사람',
-	`status` CHAR(1) NOT NULL DEFAULT 'S' COMMENT '품목상태 입점S 분실L 대여중O',
-	`point` INT(11) NOT NULL DEFAULT 0,
+	`point` INT(11) NOT NULL DEFAULT '0',
+	`category` VARCHAR(50) NULL COLLATE 'utf8_general_ci',
+	`udate` DATE NOT NULL DEFAULT current_timestamp() COMMENT '최근수정날짜',
+	`status` VARCHAR(5) NOT NULL DEFAULT 'S' COLLATE 'utf8_general_ci',
 	PRIMARY KEY (`sbidx`) USING BTREE,
-	INDEX `t_store_book_un` (`sidx`, `isbn`, `idx`) USING BTREE
+	UNIQUE INDEX `t_store_book_un` (`sidx`, `isbn13`, `isbn10`, `idx`) USING BTREE
 )
 COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 ;
+
 
 
 
