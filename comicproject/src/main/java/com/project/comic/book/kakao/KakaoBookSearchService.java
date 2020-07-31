@@ -27,13 +27,15 @@ public class KakaoBookSearchService implements IBookSearchService {
 		
 		String result = (String)kakaoBookSequenceSearch.nextSearch( model );
 		
-		JSONObject json_result = (JSONObject)Utility.JSONParse(result);
-		JSONArray json_documents = (JSONArray)json_result.get("documents");
-		JSONObject json_meta = (JSONObject)json_result.get("meta");
-		
-		session.setAttribute("query_model", model);
-		session.setAttribute("meta", json_meta);
-		session.setAttribute("documents", json_documents);
+		if( result != null ) {
+			JSONObject json_result = (JSONObject)Utility.JSONParse(result);
+			JSONArray json_documents = (JSONArray)json_result.get("documents");
+			JSONObject json_meta = (JSONObject)json_result.get("meta");
+
+			session.setAttribute("query_model", model);
+			session.setAttribute("meta", json_meta);
+			session.setAttribute("documents", json_documents);
+		}
 		
 		return result;
 	}

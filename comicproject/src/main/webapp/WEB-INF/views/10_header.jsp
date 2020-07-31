@@ -554,7 +554,7 @@
 					</select>
 					<div class="input-group">
 						<input type="text" class="form-control" placeholder="찾는 책이 있나요?"
-							name="query"> <span class="input-group-btn">
+							name="query" required> <span class="input-group-btn">
 
 							<button type="submit" class="btn btn-primary">
 								<i class="fa fa-search"></i>

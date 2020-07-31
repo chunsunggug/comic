@@ -49,7 +49,8 @@ public class StoreController {
 		
 		ModelAndView mv = new ModelAndView();
 		
-		mv.setViewName("store/bookmanage");
+		mv.setViewName("index");
+		mv.addObject("page","store/listbook.jsp");
 		mv.addObject( "listitem", listitem );
 		mv.addObject("pagestr", pagestr);
 		mv.addObject("include", "booksearch.jsp");

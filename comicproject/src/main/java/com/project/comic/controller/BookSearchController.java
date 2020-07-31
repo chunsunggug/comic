@@ -24,10 +24,14 @@ public class BookSearchController {
 	public String bookSearch(@RequestParam( required=false ) Map map_param, HttpSession session, HttpServletRequest request) {
 		
 		String result = kakaoBookSearchService.bookSearch( map_param, session );
-		System.out.println(result);
-		request.setAttribute( "books", result );
-
-		return "search/booksearchpage";
+		
+		if( result != null ) {
+			System.out.println(result);
+			request.setAttribute( "books", result );
+		}
+		request.setAttribute( "page", "search/booksearch.jsp" );
+		
+		return "index";
 	}
 
 	// 검색페이지에서 더보기를 누룬 경우
@@ -38,6 +42,13 @@ public class BookSearchController {
 		String result = kakaoBookSearchService.bookSearchMore( session );
 
 		return result;
-	}	
+	}
+	
+	// 목록을 누루면 들어오는 상세페이지
+	@RequestMapping(value="/itemdetail.do")
+	public String bookDetail(@RequestParam Map param) {
+		
+		return "";
+	}
 
 }
