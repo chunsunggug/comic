@@ -14,7 +14,7 @@ function show_contents() {
 				
 				var div = document.createElement("div");
 				div.setAttribute("class", "col-xs-6 col-sm-3 col-md-2");
-				div.setAttribute("style", "height:220px;");
+				div.setAttribute("style", "height:220px; margin-bottom:5px; ");
 				
 				var a = document.createElement("a");
 				a.setAttribute( "href", "https://www.naver.com");
@@ -29,8 +29,9 @@ function show_contents() {
 				
 				var h5 = document.createElement("h5");
 				h5.innerHTML = contents[i].title;
-				h5.setAttribute("style","overflow:auto; " +
-										"text-overflow:ellipsis;");
+				h5.setAttribute("style","overflow:hidden;" +
+										"text-overflow:ellipsis;" +
+										"height:30px;");
 
 				a.appendChild(img);
 				a.appendChild(h5);

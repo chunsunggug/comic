@@ -52,6 +52,7 @@ public class StoreController {
 		mv.setViewName("store/bookmanage");
 		mv.addObject( "listitem", listitem );
 		mv.addObject("pagestr", pagestr);
+		mv.addObject("include", "booksearch.jsp");
 		
 		return mv;
 	}

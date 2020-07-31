@@ -3,51 +3,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <section>
-	<div class="container">
-		<div class="row text-center align-items-center justify-content-center"
-			style="height: 300px;">
-			<!-- Search Box -->
-			<div class="search-box-2">
-				<form class="form-row justify-content-center" method="GET"
-					action="/comic/search.do">
-
-					<div class="form-group col-md-5 col-lg-4">
-						<div class="input-group mb-2">
-							<div class="input-group-prepend">
-								<select class="input-group-text" name="sort">
-									<option selected="selected" value="accuracy">정확도순</option>
-									<option value="recency">최신순</option>
-								</select>
-								</div>
-								<div class="input-group-prepend">
-								<select class="input-group-text" name="target">
-									<option selected="selected" value="title">책 제목</option>
-									<option value="person">저자</option>
-									<option value="publisher">출판사</option>
-									<option value="isbn">ISBN</option>
-								</select>
-							</div>
-							<input type="text" class="form-control" name="query" placeholder="찾는 책이 있나요?" required>
-						</div>
-					</div>
-
-
-					<div class="form-group col-md-3 col-lg-2">
-						<button type="submit" class="btn btn-block btn-primary">
-							검색 <i class="fa fa-search" aria-hidden="true"></i>
-						</button>
-					</div>
-
-				</form>
-			</div>
-		</div>
-	</div>
 
 	<div class="container">
 		<div id="contents_container" class="row">
 
 			<c:forEach var="content" items="${documents}">
-				<div class="col-xs-6 col-sm-3 col-md-2" style="height:220px;" >
+				<div class="col-xs-6 col-sm-3 col-md-2" style="height:220px; margin-bottom:5px; " >
 					<a href="https://www.naver.com"> <c:choose>
 							<c:when test="${content.thumbnail == ''}">
 								<img class="img-thumbnail img-responsive"
@@ -59,7 +20,7 @@
 							</c:otherwise>
 						</c:choose>
 						<br>
-						<h5 style="overflow:auto; text-overflow:ellipsis;">${content.title}</h5>
+						<h5 style="overflow:hidden;text-overflow:ellipsis;height:30px;">${content.title}</h5>
 					</a>
 				</div>
 			</c:forEach>
