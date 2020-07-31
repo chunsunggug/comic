@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.project.comic.book.IBookSearchService;
 
 @Controller
-public class BookSearchController {
+public class BookController {
 
 	@Autowired
 	private IBookSearchService kakaoBookSearchService;
@@ -45,7 +45,7 @@ public class BookSearchController {
 	}
 	
 	// 목록을 누루면 들어오는 상세페이지
-	@RequestMapping(value="/itemdetail.do")
+	@RequestMapping(value="/bookdetail.do")
 	public String bookDetail(@RequestParam Map param) {
 		
 		return "";

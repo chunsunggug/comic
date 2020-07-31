@@ -114,6 +114,7 @@ ENGINE=InnoDB
 
 
 
+
 drop table if exists t_user_store cascade;
 CREATE TABLE `t_user_store` (
 	`usidx` INT(11) NOT NULL,
