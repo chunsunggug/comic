@@ -62,7 +62,7 @@ function openApiAddr() {
 			// 우편번호와 주소 정보를 해당 필드에 넣는다.
 			document.getElementById('addrf').value = data.zonecode;
 			document.getElementById("addrf").value = addr;
-			addr = data.jibunAddress; // 지번으로 사용예정
+			addr = data.autoJibunAddress; // 지번으로 사용예정
 			document.getElementById("addr").value = data.zonecode + " " + addr;
 			// 커서를 상세주소 필드로 이동한다.
 			document.getElementById("addrd").focus();
@@ -191,19 +191,11 @@ function checkId() {
 		});
 	}
 }
+function removeCheck() {
 
-/*date check max today*/
-var today = new Date();
-var yyyy = today.getFullYear();
-var dd = today.getDate();
-var mm = today.getMonth() + 1; // January is 0!
-if (dd < 10) {
-	dd = '0' + dd
+	 if (confirm("탈퇴 후 계정 삭제 시 복구가 불가할 수 있습니다.\n정말 탈퇴하시겠습니까?") == true){    //확인
+		 location.replace('/comic/userOut.do'); /* 메인으로 돌아가기 */
+	 }else{   //취소
+	     return false;
+	 }
 }
-if (mm < 10) {
-	mm = '0' + mm
-}
-
-today = yyyy + '-' + mm + '-' + dd;
-document.getElementById('birth').setAttribute("max", today);
-document.getElementById('findIdbirth').setAttribute("max", today);

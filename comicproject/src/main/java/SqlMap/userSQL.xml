@@ -4,7 +4,7 @@
         
         <!-- select id => class 내의 스테이트먼트 파람 -->
 <mapper namespace="com.project.comic.user.UserDao">
-    <select id="getUser" resultType="com.project.comic.user.UserVO" parameterType="java.lang.String">
+    <select id="getUser" resultType="com.project.comic.user.UserDTO" parameterType="java.lang.String">
     select * from t_user where id=#{id}
     </select>
     
@@ -21,17 +21,20 @@
     values(#{id},#{pwd},#{name},#{addr},#{phone},#{birth})
     </insert>
     
-    <delete id="deleteUser" parameterType="java.lang.String">
-    delete from t_user where id=#{id}
-    </delete>
+    <update id="deleteUser" parameterType="int">
+    update t_user set isYn="N",edate=now() where uidx=#{uidx}
+    </update>
+    
+    <update id="deleteCancleUser" parameterType="String">
+    update t_user set isYn="Y",edate=null where id=#{id}
+    </update>
     
     <delete id="deleteUserAll">
     delete from t_user;
     </delete>
 
     <update id="updateUser" parameterType="com.project.comic.user.UserDTO">
-    update t_user set pwd=#{pwd},
-                      name=#{name}, phone=#{phone}
+    update t_user set pwd=#{pwd},phone=#{phone}
                       where id=#{id}
     </update>
     

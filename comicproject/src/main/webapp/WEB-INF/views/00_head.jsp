@@ -26,11 +26,6 @@ response.setDateHeader("Expires",0);
     <meta name="keywords" content="">
 
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100' rel='stylesheet' type='text/css'>
-<!-- 다른테마 선적용
-<link href="/comic/resources/css/listty.css" rel="stylesheet">
-<link href="/comic/resources/css/listty.rtl.css" rel="stylesheet">
-<link href="/comic/resources/css/listty-color1.css" rel="stylesheet">
--->
 
 
  

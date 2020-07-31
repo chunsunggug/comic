@@ -4,7 +4,6 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	response.setCharacterEncoding("utf-8");
-
 	response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Pragma", "no-cache");
 	response.setDateHeader("Expires", 0);
@@ -14,7 +13,7 @@
 <script
 	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
-<c:set var="idx" value="${idx }" scope="session" />
+<c:set var="uidx" value="${uidx }" scope="session" />
 <c:set var="id" value="${id }" scope="session" />
 <c:set var="name" value="${name }" scope="session" />
 <c:set var="point" value="${point }" scope="session" />
@@ -274,7 +273,7 @@
 
 
 						<form action="/comic/findPwd.do" method="post" name="findIdAjax">
-							<div class="form-gr	oup">
+							<div class="form-group">
 								<span>이름</span> <input type="text" class="form-control"
 									name="name" id="findPwdname" placeholder="이름 입력" required>
 							</div>
@@ -354,7 +353,36 @@
 				<ul class="nav navbar-nav navbar-left">
 					<li class="active"><a href="index.html">Home</a></li>
 
-
+					<li class="dropdown yamm-fw"><a href="#"
+						class="dropdown-toggle" data-toggle="dropdown"
+						data-hover="dropdown" data-delay="200">STORE <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li>
+								<div class="yamm-content">
+									<div class="row">
+										<div class="col-sm-3">
+											<h5>지역별</h5>
+											<ul>
+												<li><a href="category.html">T-shirts</a></li>
+												<li><a href="category.html">Shirts</a></li>
+												<li><a href="category.html">Pants</a></li>
+												<li><a href="category.html">Accessories</a></li>
+											</ul>
+										</div>
+										<div class="col-sm-3">
+											<h5>소장 도서별</h5>
+											<ul>
+												<li><a href="category.html">Trainers</a></li>
+												<li><a href="category.html">Sandals</a></li>
+												<li><a href="category.html">Hiking shoes</a></li>
+												<li><a href="category.html">Casual</a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul></li>
+			
 					<li class="dropdown yamm-fw"><a href="#"
 						class="dropdown-toggle" data-toggle="dropdown"
 						data-hover="dropdown" data-delay="200">BOOK <b class="caret"></b></a>
@@ -420,18 +448,6 @@
 												<li><a href="category.html">Sandals</a></li>
 												<li><a href="category.html">Hiking shoes</a></li>
 											</ul>
-										</div>
-										<div class="col-sm-3">
-											<div class="banner">
-												<a href="#"> <img src="img/banner.jpg"
-													class="img img-responsive" alt="">
-												</a>
-											</div>
-											<div class="banner">
-												<a href="#"> <img src="img/banner2.jpg"
-													class="img img-responsive" alt="">
-												</a>
-											</div>
 										</div>
 									</div>
 								</div>
@@ -557,3 +573,21 @@
 	<!-- /#navbar -->
 
 	<!-- *** NAVBAR END *** -->
+	
+	<script type="text/javascript">
+	/*date check max today*/
+	var today = new Date();
+	var yyyy = today.getFullYear();
+	var dd = today.getDate();
+	var mm = today.getMonth() + 1; // January is 0!
+	if (dd < 10) {
+		dd = '0' + dd
+	}
+	if (mm < 10) {
+		mm = '0' + mm
+	}
+
+	today = yyyy + '-' + mm + '-' + dd;
+	document.getElementById('birth').setAttribute("max", today);
+	document.getElementById('findIdbirth').setAttribute("max", today);
+	</script>
