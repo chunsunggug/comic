@@ -8,12 +8,16 @@ function show_contents() {
 			var container = document.getElementById("contents_container");
 			var more_button = document.getElementById("btn_more_load");
 			var contents = json_object.documents;
-			var meta = json_object.meta;
+			var is_end = json_object.meta.is_end;
 			
 			for(var i=0; i < contents.length; i++){
 				
 				var div = document.createElement("div");
-				div.setAttribute("class", "col-6 col-md-3 col-lg-2");
+				div.setAttribute("class", "col-xs-6 col-sm-3 col-md-2");
+				div.setAttribute("style", "height:220px; margin-bottom:5px; ");
+				
+				var a = document.createElement("a");
+				a.setAttribute( "href", "https://www.naver.com");
 				
 				var img = document.createElement("img");
 				img.setAttribute("class", "img-thumbnail img-responsive" );
@@ -21,18 +25,22 @@ function show_contents() {
 				if( contents[i].thumbnail != "")
 					img.setAttribute("src", contents[i].thumbnail );
 				else
-					img.setAttribute("src", "http://localhost:8080/comic/resources/img/book/unknown_cover.png" );
+					img.setAttribute("src", "/comic/resources/img/book/unknown_cover.png" );
 				
 				var h5 = document.createElement("h5");
 				h5.innerHTML = contents[i].title;
+				h5.setAttribute("style","overflow:hidden;" +
+										"text-overflow:ellipsis;" +
+										"height:30px;");
 
-				div.appendChild(img);
-				div.appendChild(h5);
-
+				a.appendChild(img);
+				a.appendChild(h5);
+				div.appendChild(a);
+				
 				container.appendChild(div);
 			}
 			
-			if( meta.is_end ) more_button.classList.add("sr-only");
+			if( is_end ) more_button.classList.add("sr-only");
 		}
 	})
 }

@@ -1,4 +1,5 @@
-package com.project.comic.util;
+package com.project.comic;
+
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

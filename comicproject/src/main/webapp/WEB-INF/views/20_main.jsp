@@ -2,6 +2,53 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 
+    <div class="main-wrapper">
+
+
+<!-- ====================================
+———	BANNER SECTION (TRAVEL)
+===================================== -->
+<section class="banner" style="background-image: url('/comic/resources/img/background/banner-img1.jpg');">
+  <div class="container">
+    <div class="row text-center align-items-center justify-content-center" style="height:624px;">
+      <div class="col-12">
+        <!-- Banner Info -->
+        <div class="banner-info">
+          <h1 class="text-uppercase text-white mb-4">
+            	집에서 편하게 빌려보자!
+          </h1>
+          <p class="lead text-white">
+            현재는 관악구 봉천동 일대 지역만 서비스 가능합니다.
+          </p>
+        </div>
+
+        <!-- Search Box -->
+        <div class="search-box-2">
+          <form class="form-row justify-content-center" method="GET" action="/comic/search.do">
+
+            <div class="form-group col-md-5 col-lg-4">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  
+                <!--<div class="input-group-text">Find</div>-->
+                <div class="input-group-prepend">
+								<select class="input-group-text" name="sort">
+									<option selected="selected" value="accuracy">정확도순</option>
+									<option value="recency">최신순</option>
+								</select>
+								</div>
+								<div class="input-group-prepend">
+								<select class="input-group-text" name="target">
+									<option selected="selected" value="title">책 제목</option>
+									<option value="person">저자</option>
+									<option value="publisher">출판사</option>
+									<option value="isbn">ISBN</option>
+								</select>
+                
+                </div>
+                  <input type="text" name="query" class="form-control" placeholder="찾는 책이 있나요?" required/>
+              </div>
+
     <main id="all">
 	
         <div id="content">
@@ -26,8 +73,7 @@
                 </div>
             </div>
 
-            <!-- *** ADVANTAGES HOMEPAGE ***
- _________________________________________________________ -->
+            <!-- *** ADVANTAGES HOMEPAGE *** -->
             <div id="advantages">
 
                 <div class="container">
