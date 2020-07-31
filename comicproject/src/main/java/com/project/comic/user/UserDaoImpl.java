@@ -21,13 +21,14 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public UserDTO getUser(String id) {
-		UserDTO userDTO = sqlMap.selectOne("getUser", id);
+		UserDTO userDTO = (UserDTO) sqlMap.selectOne("getUser", id);
 		return userDTO;
 	}
 
 	@Override
-	public int deleteUser(String id) {
-		return sqlMap.delete("deleteUser");
+	public int deleteUser(int uidx) {
+		System.out.println("dao impl id : "+uidx);
+		return sqlMap.update("deleteUser",uidx);
 	}
 
 	@Override
@@ -76,4 +77,10 @@ public class UserDaoImpl implements UserDao {
 	public UserVO myInfo(String id) {
 		return sqlMap.selectOne("myInfo",id);
 	}
+
+	@Override
+	public int deleteCancleUser(String id) {
+		return sqlMap.update("deleteCancleUser", id);
+	}
+
 }

@@ -6,127 +6,72 @@
         <div id="footer" data-animate="fadeInUp">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-3 col-sm-6">
+                    <div class="col-md-4 col-sm-6">
+                        <center>
                         <h4>Pages</h4>
-
+						</center>
+                        <center>
                         <ul>
-                            <li><a href="text.html">About us</a>
+                            <li><a href="/comic/index.do">HOME</a>
                             </li>
-                            <li><a href="text.html">Terms and conditions</a>
+                            <li><a href="/comic/index.do">STORE</a>
                             </li>
-                            <li><a href="faq.html">FAQ</a>
+                            <li><a href="/comic/index.do">BOOK</a>
                             </li>
-                            <li><a href="contact.html">Contact us</a>
+                            <li><a href="/comic/index.do">게시판</a>
+                            </li>
+                            <li><a href="/comic/index.do">고객센터</a>
                             </li>
                         </ul>
-
-                        <hr>
-
-                        <h4>User section</h4>
-
-                        <ul>
-                            <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
-                            </li>
-                            <li><a href="register.html">Regiter</a>
-                            </li>
-                        </ul>
-
+						</center>
                         <hr class="hidden-md hidden-lg hidden-sm">
 
                     </div>
                     <!-- /.col-md-3 -->
 
-                    <div class="col-md-3 col-sm-6">
+                    <div class="col-md-4 col-sm-6">
 
-                        <h4>Top categories</h4>
+                        <center><h4>Service Operator</h4></center>
 
-                        <h5>Men</h5>
-
+<center>
                         <ul>
-                            <li><a href="category.html">T-shirts</a>
+                            <li>상호 : 새싹</a>
                             </li>
-                            <li><a href="category.html">Shirts</a>
+                            <li>대표 : 천성국</a>
                             </li>
-                            <li><a href="category.html">Accessories</a>
+                            <li>개인정보보호책임자 : 천성국</a>
+                            </li>
+                            <li>사업자등록번호 : 262-21-01067</a>
+                            </li>
+                            <li>주소 : 서울시 관악구 구암길 106
+                            </li>
+                            <li>연락처 : 010-3906-3915
+                            </li>
+                            <li>fax : 0504-247-3915
                             </li>
                         </ul>
-
-                        <h5>Ladies</h5>
-                        <ul>
-                            <li><a href="category.html">T-shirts</a>
-                            </li>
-                            <li><a href="category.html">Skirts</a>
-                            </li>
-                            <li><a href="category.html">Pants</a>
-                            </li>
-                            <li><a href="category.html">Accessories</a>
-                            </li>
-                        </ul>
+</center>
 
                         <hr class="hidden-md hidden-lg">
 
                     </div>
                     <!-- /.col-md-3 -->
 
-                    <div class="col-md-3 col-sm-6">
+                    <div class="col-md-4 col-sm-6">
 
-                        <h4>Where to find us</h4>
+ <center>                       <h4>Store Address</h4></center>
 
-                        <p><strong>Obaju Ltd.</strong>
-                            <br>13/25 New Avenue
-                            <br>New Heaven
-                            <br>45Y 73J
-                            <br>England
-                            <br>
-                            <strong>Great Britain</strong>
-                        </p>
+           <center>             <p><strong>대한민국(South Korea)</strong>
+                            <br>서울특별시
+                            <br>관악구 성현동 35-8
+                            <br>지층 행복한 토라비
+                        </p></center>
 
-                        <a href="contact.html">Go to contact page</a>
 
                         <hr class="hidden-md hidden-lg">
 
                     </div>
                     <!-- /.col-md-3 -->
-
-
-
-                    <div class="col-md-3 col-sm-6">
-
-                        <h4>Get the news</h4>
-
-                        <p class="text-muted">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-
-                        <form>
-                            <div class="input-group">
-
-                                <input type="text" class="form-control">
-
-                                <span class="input-group-btn">
-
-			    <button class="btn btn-default" type="button">Subscribe!</button>
-
-			</span>
-
-                            </div>
-                            <!-- /input-group -->
-                        </form>
-
-                        <hr>
-
-                        <h4>Stay in touch</h4>
-
-                        <p class="social">
-                            <a href="#" class="facebook external" data-animate-hover="shake"><i class="fa fa-facebook"></i></a>
-                            <a href="#" class="twitter external" data-animate-hover="shake"><i class="fa fa-twitter"></i></a>
-                            <a href="#" class="instagram external" data-animate-hover="shake"><i class="fa fa-instagram"></i></a>
-                            <a href="#" class="gplus external" data-animate-hover="shake"><i class="fa fa-google-plus"></i></a>
-                            <a href="#" class="email external" data-animate-hover="shake"><i class="fa fa-envelope"></i></a>
-                        </p>
-
-
-                    </div>
-                    <!-- /.col-md-3 -->
-
                 </div>
                 <!-- /.row -->
 
@@ -145,11 +90,11 @@
         <div id="copyright">
             <div class="container">
                 <div class="col-md-6">
-                    <p class="pull-left">© 2015 Your name goes here.</p>
+                    <p class="pull-left">Copyright © Sprout Corp. All rights reserved.</p>
 
                 </div>
                 <div class="col-md-6">
-                    <p class="pull-right">Template by <a href="https://bootstraptemple.com">Bootstrap Temple</a>
+                    <p class="pull-right"><a href="#">이용약관</a> | <a>개인정보취급방침</a> | <a>위치기반서비스이용약관</a>
                          <!-- Please do not remove the backlink to us unless you have purchased the attribution-free license at https://bootstraptemple.com. It is part of the license conditions. Thanks for understanding :) -->
                     </p>
                 </div>
