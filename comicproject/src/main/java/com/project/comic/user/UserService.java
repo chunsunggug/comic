@@ -74,7 +74,7 @@ public class UserService {
 		return userDao.myInfo(id);
 	}
 //회원가입 정보 유효성 검사
-	public boolean CheckValude(UserDTO udto) {
+	public boolean CheckValued(UserDTO udto) {
 		boolean check = false;
 		System.out.println("유효성 검사 안 : "+udto.toString());
 		
@@ -99,7 +99,7 @@ public class UserService {
 		p = Pattern.compile(Birth);
 		m = p.matcher(udto.getBirth());
 		if (m.matches()) {	check = true;	}else {System.out.println("check birth : false");return false;}
-		
+		if (udto.getName().length()<1) {check=false; System.out.println("check name leng : false");} else check=true;
 		return check;
 
 	}

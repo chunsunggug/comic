@@ -4,7 +4,6 @@
 <%@ page session="true" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="uvo" value="${uvo }" scope="page" /> 
-<c:set var="udto" value="${udto }" scope="page" /> 
 
 
     <div class="main-wrapper">
@@ -84,7 +83,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="password_old">가입일</label>
-                                        <input type="text" class="form-control" id="password_old" value="가입일" readonly="readonly">
+                                        <input type="text" class="form-control" id="password_old" value="${uvo.sdate }" readonly="readonly">
                                     </div>
                                 </div>
                             </div>

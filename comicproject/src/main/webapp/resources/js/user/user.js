@@ -18,7 +18,7 @@ function onlyNumberInput2(Ev) {
 		Ev.preventDefault();
 }
 /*address api*/
-function openApiAddr() {
+function openApiAddr(check) {
 	new daum.Postcode({
 		oncomplete : function(data) {
 			// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
@@ -53,19 +53,39 @@ function openApiAddr() {
 					extraAddr = ' (' + extraAddr + ')';
 				}
 				// 조합된 참고항목을 해당 필드에 넣는다.
-				document.getElementById("addrd").value = extraAddr;
+				if(check=='kakao'){
+					document.getElementById("kakaoaddrd").value = extraAddr;
+				}else{
+					document.getElementById("addrd").value = extraAddr;
+				}
+				
 
 			} else {
-				document.getElementById("addrf").value = '';
+				if(check=='kakao'){
+					document.getElementById("kakaoaddrf").value = '';
+				}else{
+					document.getElementById("addrf").value = '';
+				}
+				
 			}
-
-			// 우편번호와 주소 정보를 해당 필드에 넣는다.
-			document.getElementById('addrf').value = data.zonecode;
-			document.getElementById("addrf").value = addr;
-			addr = data.autoJibunAddress; // 지번으로 사용예정
-			document.getElementById("addr").value = data.zonecode + " " + addr;
-			// 커서를 상세주소 필드로 이동한다.
-			document.getElementById("addrd").focus();
+			if(check=='kakao'){
+				// 우편번호와 주소 정보를 해당 필드에 넣는다.
+				document.getElementById('kakaoaddrf').value = data.zonecode;
+				document.getElementById("kakaoaddrf").value = addr;
+				addr = data.autoJibunAddress+data.jibunAddress; // 지번으로 사용예정
+				document.getElementById("kakaoaddr").value = data.zonecode + " " + addr;
+				// 커서를 상세주소 필드로 이동한다.
+				document.getElementById("kakaoaddrd").focus();
+			}else{
+				// 우편번호와 주소 정보를 해당 필드에 넣는다.
+				document.getElementById('addrf').value = data.zonecode;
+				document.getElementById("addrf").value = addr;
+				addr = data.autoJibunAddress+data.jibunAddress; // 지번으로 사용예정
+				document.getElementById("addr").value = data.zonecode + " " + addr;
+				// 커서를 상세주소 필드로 이동한다.
+				document.getElementById("addrd").focus();
+			}
+			
 		}
 	}).open();
 }

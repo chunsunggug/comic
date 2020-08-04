@@ -1,5 +1,6 @@
 package com.project.comic.user;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -81,6 +82,16 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public int deleteCancleUser(String id) {
 		return sqlMap.update("deleteCancleUser", id);
+	}
+
+	@Override
+	public int parserMail(Map mail) {
+		return sqlMap.update("mailCheck", mail);
+	}
+
+	@Override
+	public int MailConfirm(HashMap<String, String> mailInfo) {
+		return sqlMap.update("mailConfirm", mailInfo);
 	}
 
 }

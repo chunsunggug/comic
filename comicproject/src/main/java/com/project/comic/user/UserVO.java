@@ -19,6 +19,7 @@ public class UserVO {
 	private String detail;
 	private String type;
 	private String isYn;
+	private String sdate;
 	
 	public UserVO() {}
 	public UserVO(String id, String pwd) {
@@ -27,7 +28,7 @@ public class UserVO {
 	}
 
 	public UserVO(int uidx,String addr, String id, String name, String phone, String birth, int point, String post,
-			String si, String gu, String dong, String detail,String type,String isYn) {
+			String si, String gu, String dong, String detail,String type,String isYn,String sdate) {
 		super();
 		this.uidx = uidx;
 		this.addr = addr;
@@ -43,11 +44,11 @@ public class UserVO {
 		this.detail = detail;
 		this.type = type;
 		this.isYn = isYn;
-		
+		this.sdate = sdate;
 	}
 	@Override 
 	public String toString() {
-		return "UserVO[uidx="+uidx+",addr="+addr+",id="+id+",name="+name+",phone="+phone+",birth="+birth+",point="+point+",post="+post+",si="+si+",gu="+gu+",dong="+dong+",detail="+detail+",type="+type+",isYn="+isYn;
+		return "UserVO[uidx="+uidx+",addr="+addr+",id="+id+",name="+name+",phone="+phone+",birth="+birth+",point="+point+",post="+post+",si="+si+",gu="+gu+",dong="+dong+",detail="+detail+",type="+type+",isYn="+isYn+",sdate"+sdate;
 	}
 	
 }

@@ -1,5 +1,6 @@
 package com.project.comic.user;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,5 +18,6 @@ public interface UserDao {
 	public List findPwd(Map findPwdinfo);
 	public UserVO myInfo(String id);
 	public int deleteCancleUser(String id);
-	
+	public int parserMail(Map<String, String> mail);
+	public int MailConfirm(HashMap<String, String> mailInfo);
 }

@@ -35,7 +35,7 @@
 
 <center>
                         <ul>
-                            <li>상호 : 새싹</a>
+                            <li><b>상호 : 새싹</b></a>
                             </li>
                             <li>대표 : 천성국</a>
                             </li>
@@ -94,7 +94,7 @@
 
                 </div>
                 <div class="col-md-6">
-                    <p class="pull-right"><a href="#">이용약관</a> | <a>개인정보취급방침</a> | <a>위치기반서비스이용약관</a>
+                    <p class="pull-right"><a href="#">이용약관</a> | <a>개인정보취급방침</a> | <!--  <a>위치기반서비스이용약관</a>-->
                          <!-- Please do not remove the backlink to us unless you have purchased the attribution-free license at https://bootstraptemple.com. It is part of the license conditions. Thanks for understanding :) -->
                     </p>
                 </div>
