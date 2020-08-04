@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page session="true" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
@@ -34,7 +35,7 @@
 			<div class="col-md-6" data-animate="fadeInDown">
 				<ul class="menu">
 					<c:choose>
-						<c:when test="${isyn eq 'Y' and type eq 'C'}">
+						<c:when test="${fn:contains(isyn,'Y') and type eq 'C'}">
 							<li><span style="color: white;">${name}(${id})님
 									환영홥니다.</span></li>
 							<li><span style="color: white;">현재 잔여 포인트 : ${point}
@@ -93,16 +94,14 @@
 
 							<p class="text-center">
 
-								<a id="kakao-login-btn"
-									href="https://kauth.kakao.com/oauth/authorize?client_id=118237743806f276d679025f706c0e3c&&redirect_uri=http://localhost:8080/comic/kakaologin.do&&response_type=code">
-									카카오톡 로그인</a> <br> <a
-									href="https://kauth.kakao.com/oauth/logout?client_id=118237743806f276d679025f706c0e3c&&&logout_redirect_uri=http://localhost:8080/comic/index.do">logout</a>
-
-
-
 								<button type="submit" class="btn btn-primary">
 									<i class="fa fa-sign-in"></i> Log in
 								</button>
+									<br><a id="kakao-login-btn"
+									href="https://kauth.kakao.com/oauth/authorize?client_id=118237743806f276d679025f706c0e3c&&redirect_uri=http://localhost:8080/comic/kakaologin.do&&response_type=code">
+									카카오톡 로그인</a> <br> <a
+									href="https://kauth.kakao.com/oauth/logout?client_id=118237743806f276d679025f706c0e3c&&&logout_redirect_uri=http://localhost:8080/comic/index.do">logout</a>
+								
 							</p>
 
 						</form>
@@ -168,7 +167,7 @@
 								<span>주 소</span> <input type="text" class="form-control"
 									id="addrf" placeholder="검색 버튼 클릭" readonly>
 								<p class="text-center" style="margin-top: 16px;">
-									<input type="button" onclick="openApiAddr()" value="검색"
+									<input type="button" onclick="openApiAddr('nomal')" value="검색"
 										class="btn btn-primary">
 								</p>
 							</div>
@@ -418,27 +417,21 @@
 								<div class="yamm-content">
 									<div class="row">
 										<div class="col-sm-3">
-											<h5>카테고리</h5>
+											<a href="/comic/noticeList.do"><h5>게시판</h5></a>
 											<ul>
 												<li><a href="category.html">T-shirts</a></li>
 												<li><a href="category.html">Shirts</a></li>
 											</ul>
 										</div>
 										<div class="col-sm-3">
-											<h5>인기순</h5>
+											<h5>공지사항</h5>
 											<ul>
 												<li><a href="category.html">Trainers</a></li>
 												<li><a href="category.html">Sandals</a></li>
 											</ul>
 										</div>
 										<div class="col-sm-3">
-											<h5>최신간</h5>
-											<ul>
-												<li><a href="category.html">Trainers</a></li>
-												<li><a href="category.html">Sandals</a></li>
-												<li><a href="category.html">Hiking shoes</a></li>
-											</ul>
-											<h5>Looks and trends</h5>
+											<h5>이벤트</h5>
 											<ul>
 												<li><a href="category.html">Trainers</a></li>
 												<li><a href="category.html">Sandals</a></li>

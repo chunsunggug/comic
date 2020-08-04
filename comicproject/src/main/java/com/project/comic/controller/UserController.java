@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,26 +42,54 @@ public class UserController {
 
 	@Transactional
 	@RequestMapping(value = "/signup.do", method = RequestMethod.POST)
-	public ModelAndView SignUp(UserDTO userDto) {
+	public ModelAndView SignUp(UserDTO userDto,HttpSession session,HttpServletRequest req) {
 		ModelAndView mv = new ModelAndView();
 		System.out.println("ctrl addr :" + userDto.getAddr());
 		HashMap<String, String> mapAddr = addrSet(userDto.getAddr(), userDto.getId());
-
+		
+		String kakao = (String) session.getAttribute("token");
+		System.out.println("kakao token : "+kakao);
+		if(kakao==null) {
+			userDto.setIsyn("W");
+		}else {
+			userDto.setPwd((String)session.getAttribute("pwd"));
+			userDto.setIsyn("YK");
+		}
+		session.invalidate();
 		userDto.setAddr("1");
 		mv.addObject("gourl", "index.do");
-
-		boolean check = userService.CheckValude(userDto);// 회원가입 정보 유효성 검사 재확인
+		System.out.println("userDto : " + userDto.toString());
+		boolean check = userService.CheckValued(userDto);// 회원가입 정보 유효성 검사 재확인
 		System.out.println("컨트롤러 check :" + check);
 		if (check) {
 			System.out.println("컨트롤러if check :" + check);
+			
+			Map<String, String> mail = new HashMap<String,String>();
+			mail.put("id",userDto.getId());
+			mail.put("name",userDto.getName());
+			mail.put("mailcode", numberGen(6,1));
+			System.out.println("mail info - id:"+mail.get("id")+",mailcode:"+mail.get("mailcode"));
 			int result = userDao.addUser(userDto);
 			int resultAddr = userDao.addAddr(mapAddr);
-
-			if (result + resultAddr < 2) {
+			int resultMail = userDao.parserMail(mail);
+			System.out.println("result 값 : "+result+",resultAddr 값 : "+resultAddr+",resultMail 값 : "+resultMail);
+			if (result + resultAddr+resultMail < 3) {
 				url = "errorPage";
 			} else {
+				String msg="";
+				if(userDto.getIsyn().equals("W")) {
+					boolean mailparser = mailsender.mailSendWithUserKey(mail);
+					if(mailparser) {
+						msg = "님의 가입을 환영합니다.<br>3일 이내 이메일 인증 후 이용바랍니다.";
+					}else {
+						msg = "이메일 인증 중 오류가 발생하였습니다.";
+					}
+					
+				}else {
+					msg = "님의 가입을 환영합니다.";
+				}
 				url = "user/login";
-				mv.addObject("msg", userDto.getName() + "님의 가입을 환영합니다.");
+				mv.addObject("msg", userDto.getName() +msg);
 
 			}
 			mv.setViewName(url);
@@ -68,13 +97,17 @@ public class UserController {
 		} else {
 			System.out.println("컨트롤러 else");
 			url = "user/login";
-			mv.addObject("msg", "가입 시 필요한 정보 상태를 재 확인바랍니다.");
+			mv.addObject("msg", "가입 시 필요 정보를 재확인바랍니다.");
 			mv.addObject("gourl", "index.do");
 			mv.setViewName(url);
 			return mv;
 		}
 	}
 
+	
+	
+	
+	
 	@RequestMapping(value = "/signin.do", method = RequestMethod.POST)
 	public ModelAndView Login(UserVO uvo, HttpServletRequest req, HttpServletResponse rsp) {
 		ModelAndView mv = new ModelAndView();
@@ -82,16 +115,15 @@ public class UserController {
 		HashMap<String, String> mapLogin = new HashMap<String, String>();
 		mapLogin.put("id", req.getParameter("id"));
 		mapLogin.put("pwd", req.getParameter("pwd"));
-		
+
 		HttpSession session = req.getSession();
 		url = "user/login";
-		
+
 		uvo = userService.logingUser(mapLogin);
-		
-		System.out.println("isyn 값 : " + uvo.getIsYn());
-		
+
+		if (uvo != null) {
 			if (uvo.getIsYn().equals("Y")) {
-				
+
 				session.setAttribute("uidx", uvo.getUidx());
 				session.setAttribute("id", uvo.getId());
 				session.setAttribute("name", uvo.getName());
@@ -99,19 +131,25 @@ public class UserController {
 				session.setAttribute("type", uvo.getType());
 				session.setAttribute("isyn", uvo.getIsYn());
 				session.setMaxInactiveInterval(60 * 10); // 기본 로그인 유지 시간 60초*10
-				mv.addObject("msg",(String)uvo.getName()+"님을 환영합니다."+"정상적으로 로그인이 완료되었습니다.");
-				mv.addObject("gourl","index.do");
+				mv.addObject("msg", (String) uvo.getName() + "님을 환영합니다." + "정상적으로 로그인이 완료되었습니다.");
+				mv.addObject("gourl", "index.do");
+
+			} else if(uvo.getIsYn().equals("W")) {
 				
-			} else {
-				
-				url="user/outCancle";
 				mv.addObject("id", uvo.getId());
-				mv.addObject("msg", "현재 고객님은 탈퇴하신 회원으로 탈퇴 취소를 원하시면 하단의 확인 버튼을 원하지 않으시면 취소 버튼을 눌러주세요.");
-				
+				mv.addObject("msg", "현재 회원님은 이메일 인증이 이루어지지 않았습니다.<br>등록하신 메일의 인증 버튼을 눌러주세요.");
 			}
-			//mv.addObject("msg", "ID(Email형식) 또는 비밀번호를 확인해주세요.");
-			
-		
+			else {
+
+				url = "user/outCancle";
+				mv.addObject("id", uvo.getId());
+				mv.addObject("msg", "현재 회원님은 탈퇴하신 상태로 탈퇴 취소를 원하시면 하단의 확인 버튼을 원하지 않으시면 취소 버튼을 눌러주세요.");
+
+			}
+		} else {
+			mv.addObject("msg", "ID(Email형식) 또는 비밀번호를 확인해주세요.");
+		}
+
 		mv.addObject("gourl", "index.do");
 		mv.setViewName(url);
 		return mv;
@@ -136,19 +174,20 @@ public class UserController {
 		return mv;
 
 	}
+
 	@ResponseBody
 	@RequestMapping(value = "/outCancle.do", method = RequestMethod.POST)
-	public String OutCancle(@RequestParam String id,HttpSession session) {
-		System.out.println("탈퇴 취소 컨트롤러"+id);
+	public String OutCancle(@RequestParam String id, HttpSession session) {
+		System.out.println("탈퇴 취소 컨트롤러" + id);
 		String fail = "0";
 		int cnt = userDao.deleteCancleUser(id);
 		System.out.println("영향 행 : " + cnt);
 		session.invalidate();
-		if(cnt>0) {
+		if (cnt > 0) {
 			System.out.println("return 1");
 			String result = String.valueOf(cnt);
 			return result;
-		}else {
+		} else {
 			System.out.println("return 0");
 			return fail;
 		}
@@ -254,7 +293,7 @@ public class UserController {
 			url = "user/findpwd";
 
 		}
-		mv.addObject("page",url+".jsp");
+		mv.addObject("page", url + ".jsp");
 		url = "index";
 		mv.setViewName(url);
 		return mv;
@@ -275,7 +314,45 @@ public class UserController {
 			mv.addObject("uvo", uvo);
 			mv.addObject("udto", udto);
 		}
-		mv.addObject("page",url+".jsp");
+		mv.addObject("page", url + ".jsp");
+		url = "index";
+		mv.setViewName(url);
+		return mv;
+	}
+	
+	@RequestMapping(value = "/emailConfirm.do", method = RequestMethod.GET)
+	public ModelAndView EmailConfirm(HttpServletRequest req) {
+		System.out.println("user controller emailConfirm.do");
+		ModelAndView mv = new ModelAndView();
+		HashMap<String, String> mailInfo = new HashMap<String, String>();
+		String id = req.getParameter("userEmail");
+		String mailcode = req.getParameter("mailcode");
+		mailInfo.put("id", id);
+		mailInfo.put("mailcode", mailcode);
+		
+		System.out.println("mailcode : " + mailcode);
+		System.out.println("id : " + id);
+		
+		
+		boolean check = false;
+		if(mailcode.length()==6&&id.contains("@")) {
+			if(id.contains(".")) {
+				int result = userDao.MailConfirm(mailInfo);
+				if(result==1) {
+					System.out.println("result :" + result);
+					check=true;	
+				}
+			}
+		}
+		
+		if (check) {
+			mv.addObject("msg", "정상적으로 인증이 완료되었습니다");
+		} else {
+			mv.addObject("msg", "인증 처리에 실패하였습니다.<br>재 인증 바랍니다.");
+		}
+		url = "user/login";
+		mv.addObject("gourl", "index.do");
+		mv.addObject("page", url + ".jsp");
 		url = "index";
 		mv.setViewName(url);
 		return mv;
@@ -292,25 +369,47 @@ public class UserController {
 		String AccessToken = kapi.getAccessToken(code);
 		HashMap userInfo = kapi.getUserInfo(AccessToken);
 
+		String id = (String) userInfo.get("id") + "@kakao.com";
+		String name = (String) userInfo.get("name");
+		int count = userDao.checkUser(id);
+		System.out.println("count : " + count);
 		HttpSession session = req.getSession();
+		if (count == 0) {
+			req.setAttribute("page", "user/kakaoSignUp.jsp");
+			char[] giho = { '~', '!', '@', '#', '$', '%', '^', '&', '*' };
+			int r = (int) (Math.random() * 9);
+			System.out.println("랜덤 수 : " + r);
+			String pwd = (Integer.parseInt((String)userInfo.get("id"))+System.currentTimeMillis())/22+"kakao" + giho[r];
+			req.setAttribute("id", id);
+			req.setAttribute("name", name);
+			session.setAttribute("token", AccessToken);
+			session.setAttribute("pwd", pwd);
 
-		session.setAttribute("id", userInfo.get("id"));// userInfo.get("id")
-		session.setAttribute("name", userInfo.get("name"));// userInfo.get("name")
-		session.setAttribute("point", 500);
-		session.setAttribute("type", "C");
-		session.setAttribute("isyn", "Y");
-		session.setAttribute("token", AccessToken);
+		} else {
+			UserVO uvo = userDao.myInfo(id);
+			System.out.println("uvo" + uvo);
+			session.setAttribute("uidx", uvo.getUidx());// userInfo.get("id")
+			session.setAttribute("id", uvo.getId());// userInfo.get("id")
+			session.setAttribute("name", uvo.getName());// userInfo.get("name")
+			session.setAttribute("point", uvo.getPoint());
+			session.setAttribute("type", uvo.getType());
+			session.setAttribute("isyn", uvo.getIsYn());
+			session.setAttribute("token", AccessToken);
+		}
+
 		System.out.println("여긴 유저 컨트롤러임 : " + userInfo.toString());
-
 		return "index";
 	}
 
+	
+	
+	
 	private HashMap<String, String> addrSet(String addrDto, String idDto) {
 		System.out.println("받은 주소 : " + addrDto);
 		String[] addr = addrDto.split(" ");
 
-		String detail = ""; // addr[0] = post / addr[1] = si / addr[2] = gu / addr[3] = dong / addr[4] =
-							// jibun after /
+		String detail = ""; // addr[0] = post / addr[1] = si / addr[2] = gu / addr[3] = dong /
+							// addr[4] = jibun after /
 							// addr[5,6,7...] = detail
 		HashMap<String, String> mapAddr = new HashMap<String, String>();
 		for (int i = 4; i < addr.length; i++) {
@@ -324,4 +423,40 @@ public class UserController {
 		mapAddr.put("uid", idDto);
 		return mapAddr;
 	}
+	
+	 /**
+     * 전달된 파라미터에 맞게 난수를 생성한다
+     * @param len : 생성할 난수의 길이
+     * @param dupCd : 중복 허용 여부 (1: 중복허용, 2:중복제거)
+     * 
+     * Created by 닢향
+     * http://niphyang.tistory.com
+     */
+    public static String numberGen(int len, int dupCd ) {
+        
+        Random rand = new Random();
+        String numStr = ""; //난수가 저장될 변수
+        
+        for(int i=0;i<len;i++) {
+            
+            //0~9 까지 난수 생성
+            String ran = Integer.toString(rand.nextInt(10));
+            
+            if(dupCd==1) {
+                //중복 허용시 numStr에 append
+                numStr += ran;
+            }else if(dupCd==2) {
+                //중복을 허용하지 않을시 중복된 값이 있는지 검사한다
+                if(!numStr.contains(ran)) {
+                    //중복된 값이 없으면 numStr에 append
+                    numStr += ran;
+                }else {
+                    //생성된 난수가 중복되면 루틴을 다시 실행한다
+                    i-=1;
+                }
+            }
+        }
+        return numStr;
+    }
+
 }
