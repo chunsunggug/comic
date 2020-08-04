@@ -8,6 +8,10 @@
     select * from t_user where id=#{id}
     </select>
     
+    <select id="getUserByUidx" resultType="com.project.comic.user.UserDTO" parameterType="int">
+    	select * from t_user where uidx=#{uidx}
+    </select>
+    
     <select id="loginUser" resultType="com.project.comic.user.UserVO" parameterType="hashmap">
     SELECT * FROM v_login WHERE id=#{id} AND pwd=#{pwd}
     </select>

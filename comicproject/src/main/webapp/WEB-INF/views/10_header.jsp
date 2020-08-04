@@ -22,8 +22,8 @@
 
 <body>
 
-	<!-- *** TOPBAR ***
- _________________________________________________________ -->
+<div class="smart-scroll">
+	<!-- *** TOPBAR *** -->
 	<div id="top">
 		<div class="container">
 			<div class="col-md-6 offer" data-animate="fadeInDown">
@@ -61,9 +61,6 @@
 
 						</c:otherwise>
 					</c:choose>
-
-
-
 				</ul>
 			</div>
 		</div>
@@ -313,8 +310,7 @@
 
 	<!-- *** TOP BAR END *** -->
 
-	<!-- *** NAVBAR ***
- _________________________________________________________ -->
+	<!-- *** NAVBAR *** -->
 
 	<div class="navbar navbar-default yamm" role="navigation" id="navbar">
 		<div class="container">
@@ -573,6 +569,8 @@
 	<!-- /#navbar -->
 
 	<!-- *** NAVBAR END *** -->
+	
+	</div>
 	
 	<script type="text/javascript">
 	/*date check max today*/

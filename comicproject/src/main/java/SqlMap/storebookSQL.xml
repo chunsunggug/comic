@@ -44,5 +44,20 @@
 	<delete id="deleteBook" parameterType="java.lang.String">
 		delete from t_store_book where sbidx=#{sbidx}
 	</delete>
+	
+	<select id="canBorrow" parameterType="java.util.Map" resultType="int">
+		select count(*) from t_store_book where sidx=#{sidx} and (isbn13=#{isbn} or isbn10=#{isbn})
+		and status="S"
+	</select>
+	
+	<select id="getBorrowableBooks" parameterType="java.util.Map" resultType="com.project.comic.storebook.StoreBookDTO">
+		select * from t_store_book where sidx=#{sidx} and
+		(isbn13=#{isbn} or isbn10=#{isbn}) and status="S"
+	</select>
+	
+	<select id="getBooksByIsbn" parameterType="java.util.Map" resultType="com.project.comic.storebook.StoreBookDTO">
+		select * from t_store_book where sidx=#{sidx} and
+		(isbn13=#{isbn} or isbn10=#{isbn})
+	</select>
 		
 </mapper>

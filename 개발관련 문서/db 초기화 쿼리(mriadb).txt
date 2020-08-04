@@ -16,7 +16,7 @@ CREATE TABLE `t_user` (
   `addr` varchar(255) NOT NULL,
   PRIMARY KEY (`uidx`) USING BTREE,
   UNIQUE KEY `id` (`id`) USING BTREE,
-  CONSTRAINT `chk_pwd` CHECK (char_length(`pwd`) between 8 and 20),
+  CONSTRAINT `chk_pwd` CHECK (char_length(`pwd`) between 8 and 30),
   CONSTRAINT `chk_id` CHECK (char_length(`id`) >= 5),
   CONSTRAINT `chk_name` CHECK (char_length(`name`) >= 2),
   CONSTRAINT `chk_phone` CHECK (char_length(`phone`) >= 8),

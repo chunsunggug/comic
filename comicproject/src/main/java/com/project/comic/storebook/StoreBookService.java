@@ -123,7 +123,7 @@ public class StoreBookService implements IStoreBookService{
 
 	@Transactional
 	@Override
-	public List getPageList(int cp, int listsize, int sidx) {
+	public List getManagePageList(int cp, int listsize, int sidx) {
 		// 순서
 		// 점포관리에서 보여줄 페이지당 list를 StoreBookDTO로 가져온다
 		// 가져온 DTO에서 ISBN13을 카카오검색을 이용한 조인으로 뷰에서 보여줄 데이터VO 리스트로 만들어준다
@@ -131,7 +131,7 @@ public class StoreBookService implements IStoreBookService{
 		
 		// StoreBookDTO로 DB에서 가져오는 과정
 		List<StoreBookDTO> storebook_result = storeBookDao.getPageList( cp, listsize, sidx );
-		List list_result = new ArrayList<StoreBookVO>();
+		List list_result = new ArrayList<StoreBookManagePageVO>();
 		
 		// 가져온 DTO를 이용하여 카카오 검색을 통해 VO로 수정
 		for( StoreBookDTO dto : storebook_result ) {
@@ -153,7 +153,7 @@ public class StoreBookService implements IStoreBookService{
 				else
 					authors += (String)json_authors.get(i);
 			
-			StoreBookVO vo = new StoreBookVO( dto.getSbidx(), (String)json_book.get("thumbnail"),
+			StoreBookManagePageVO vo = new StoreBookManagePageVO( dto.getSbidx(), (String)json_book.get("thumbnail"),
 					(String)json_book.get("title"), authors, dto.getCategory(), 
 					dto.getPoint(), dto.getSdate());
 			
@@ -209,5 +209,17 @@ public class StoreBookService implements IStoreBookService{
 			return false;
 
 		return true;
+	}
+
+	@Override
+	public List getBooksByIsbn(int sidx, String isbn) {
+		List list = storeBookDao.getBooksByIsbn(sidx, isbn);
+		return list;
+	}
+
+	@Override
+	public Object getBookByPk(String pk) {
+		StoreBookDTO dto = storeBookDao.getBook(pk);
+		return dto;
 	}
 }
