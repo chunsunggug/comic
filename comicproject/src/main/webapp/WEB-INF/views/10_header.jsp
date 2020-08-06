@@ -19,6 +19,7 @@
 <c:set var="name" value="${name }" scope="session" />
 <c:set var="point" value="${point }" scope="session" />
 <c:set var="type" value="${type }" scope="session" />
+<c:set var="isYn" value="${isYn }" scope="session" />
 
 
 <body>

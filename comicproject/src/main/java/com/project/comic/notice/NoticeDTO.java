@@ -8,8 +8,9 @@ public class NoticeDTO {
 	private int uidx;
 	private String title;
 	private String content;
-	private String img1;
-	private String img2;
+	private String originimg;
+	private String fakeimg;
+	private String noname;
 	private int nlike; 
 	private int readnum;
 	private int refe;
@@ -20,8 +21,8 @@ public class NoticeDTO {
 	
 	@Override
 	public String toString() {
-		return "NoticeDTO [nidx=" + nidx + ", uidx=" + uidx + ", title=" + title + ", content=" + content + ", img1="
-				+ img1 + ", img2=" + img2 + "]";
+		return "NoticeDTO [nidx=" + nidx + ", uidx=" + uidx + ", title=" + title + ", content=" + content + ", originimg="
+				+ originimg + ", fakeimg=" + fakeimg+", noname="+noname + "]";
 	}
 
 
@@ -30,13 +31,14 @@ public class NoticeDTO {
 	}
 
 
-	public NoticeDTO(int uidx, String title, String content, String img1, String img2) {
+	public NoticeDTO(int uidx, String title, String content, String originimg, String fakeimg,String noname) {
 		super();
 		this.uidx = uidx;
 		this.title = title;
 		this.content = content;
-		this.img1 = img1;
-		this.img2 = img2;
+		this.originimg = originimg;
+		this.fakeimg = fakeimg;
+		this.noname = noname;
 	}
 	
 	

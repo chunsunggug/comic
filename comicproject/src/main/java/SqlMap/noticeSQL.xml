@@ -1,27 +1,12 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-         <!-- select id => class 내의 스테이트먼트 파람 -->
        
-<mapper namespace="com.project.comic.notice.NoticeDao">
+<mapper namespace="com.project.comic.notice.NoticeDAO">
    
-   <!-- 
-    <select id="getUser" resultType="com.project.comic.user.UserDTO" parameterType="java.lang.String">
-    select * from t_user where id=#{id}
-    </select>
-    
-    <insert id="addUser" parameterType="com.project.comic.user.UserDTO">
-    insert into t_user(id,pwd,name,addr,phone,birth)
-    values(#{id},#{pwd},#{name},#{addr},#{phone},#{birth})
-    </insert>
-    
-    <update id="deleteUser" parameterType="int">
-    update t_user set isYn="N",edate=now() where uidx=#{uidx}
-    </update>
-    
-    <delete id="deleteUserAll">
-    delete from t_user;
-    </delete>
-    -->
+   <insert id="addNotice" parameterType="com.project.comic.notice.NoticeDTO">
+   insert into t_noticeboard(uidx,title,content,originimg,fakeimg,noname)
+   values(#{uidx},#{title},#{content},#{originimg},#{fakeimg},#{noname})
+   </insert>
 
 </mapper>

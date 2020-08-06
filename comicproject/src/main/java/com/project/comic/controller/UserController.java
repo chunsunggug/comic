@@ -71,9 +71,12 @@ public class UserController {
 			System.out.println("mail info - id:"+mail.get("id")+",mailcode:"+mail.get("mailcode"));
 			int result = userDao.addUser(userDto);
 			int resultAddr = userDao.addAddr(mapAddr);
-			int resultMail = userDao.parserMail(mail);
+			int resultMail = 1;
+			if(userDto.getIsyn().equals("W")) {
+				resultMail = userDao.parserMail(mail);
+			}
 			System.out.println("result 값 : "+result+",resultAddr 값 : "+resultAddr+",resultMail 값 : "+resultMail);
-			if (result + resultAddr+resultMail < 3) {
+			if (result + resultAddr < 2) {
 				url = "errorPage";
 			} else {
 				String msg="";

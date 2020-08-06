@@ -71,7 +71,7 @@
 						</table>
 						<div class="col-sm-12 text-center">
 						<button type="button" class="btn btn-primary"
-									onclick="location.href='addNotice.do'">글쓰기</button>
+									onclick="location.href='addNoticeForm.do'">글쓰기</button>
 							<%-- <c:if test="${!empty sname }">
 								<button type="button" class="btn btn-primary"
 									onclick="location.href='bbsWrite.do'">글쓰기</button>
