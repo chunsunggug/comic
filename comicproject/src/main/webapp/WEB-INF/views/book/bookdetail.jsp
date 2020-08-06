@@ -36,24 +36,24 @@
 				<div class="row" id="productMain">
 					<div class="col-sm-6">
 						<div id="mainImage">
-							<img src="${bookdata.thumbnail}" style="margin:auto;" class="img-responsive">
+							<img src="${item.thumbnail}" style="margin:auto; width:75%;" class="img-responsive">
 						</div>
 						
 					</div>
 					<div class="col-sm-6">
 						<div class="box">
-							<h1 class="text-center">${bookdata.title}</h1>
+							<h1 class="text-center">${item.title}</h1>
 							<p class="goToDescription">
 								<a href="#details" class="scroll-to">자세히로</a>
 							</p>
 							<p class="price">${item.point}</p>
 							<p class="text-center buttons">
-								<a href="basket.html" class="btn btn-primary"><i
+							<h5></h5>
+								<a href='javascript:addCart("${item.sbidx}")' class="btn btn-primary"><i
 									class="fa fa-shopping-cart"></i> 장바구니 담기</a> <a
-									href="basket.html" class="btn btn-default"><i
-									class="fa fa-heart"></i> 즐겨찾기 추가</a>
+									href="#" class="btn btn-default"><i
+									class="fa fa-heart"></i> 찜하기 </a>
 							</p>
-
 
 						</div>
  					
@@ -65,12 +65,12 @@
 					<p>
 					<h4>저자</h4>
 					<ul>
-						<c:forEach var="auth" items="${bookdata.authors}">
+						<c:forEach var="auth" items="${item.authors}">
 							<li>${auth} </li>
 						</c:forEach>
 					</ul>
 					<h4>도서 소개</h4>
-					<p>${bookdata.contents}</p>
+					<p>${item.contents}</p>
 					
 					<hr>
 					<div class="social">
@@ -95,3 +95,4 @@
 
 
 
+<script src="/comic/resources/js/pay/cart.js?v=<%=System.currentTimeMillis() %>"></script>

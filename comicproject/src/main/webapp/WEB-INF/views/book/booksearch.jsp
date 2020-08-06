@@ -38,4 +38,4 @@
 </body>
 
 <script
-	src="/comic/resources/js/search/booksearch.js?v=<%=System.currentTimeMillis() %>"></script>
+	src="/comic/resources/js/search/booksearch.js"></script>

@@ -42,7 +42,7 @@ public class Utility {
 	
 	public static Object JSONParse(String str) {
 		try {
-			JSONObject returnV = (JSONObject)jsonParser.parse(str);
+			Object returnV = jsonParser.parse(str);
 			return returnV;
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

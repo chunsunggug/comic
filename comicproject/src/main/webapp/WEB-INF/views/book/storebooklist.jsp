@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import="java.net.URLEncoder" %>
+
 
 <section class="pt-md-10 sec-pb-70 pt-8 pb-6 bg-light">
 	<div class="container">
@@ -35,19 +35,17 @@
 			<div class="col-md-9">
 				<div id="content" class="row products">
 					<c:forEach var="item" items="${items}">
-					<div class="col-md-3 col-sm-3">
+					<div class="col-md-3 col-sm-3 col-xs-6">
 						<div class="product">
 							<div>
-								<a href="${detailurl.concat('?bookdata=')
-								.concat(URLEncoder.encode(bookdata,'utf-8'))
-								.concat('&sbidx=').concat(item.sbidx)}"> 
+								<a href="${item.url}"> 
 								<c:choose>
-									<c:when test="${bookdata.thumbnail == null}">
+									<c:when test="${item.thumbnail == null}">
 									<img src="/comic/resources/img/book/unknown_cover.png"
 									alt="" class="img-responsive" style="margin:auto;">
 									</c:when>
 									<c:otherwise>
-									<img src="${bookdata.thumbnail}"
+									<img src="${item.thumbnail}"
 									alt="" class="img-responsive" style="margin:auto;">
 									</c:otherwise>
 								</c:choose>
@@ -56,7 +54,7 @@
 
 							<div class="text">
 								<h3>
-									<a href="">${bookdata.title }</a>
+									<a href="${item.url}">${item.title }</a>
 								</h3>
 								<p class="price">${item.point}</p>
 								<p class="text-center">
@@ -66,8 +64,8 @@
 									</c:choose>
 								</p>
 								<p class="buttons">
-									<a href="" class="btn btn-default">자세히</a> <a
-										href="" class="btn btn-primary"><i
+									<a href="${item.url}" class="btn btn-default">자세히</a> <a
+										href='javascript:addCart("${item.sbidx}")' class="btn btn-primary"><i
 										class="fa fa-shopping-cart"></i>장바구니 담기</a>
 								</p>
 							</div>
@@ -86,3 +84,4 @@
 
 
 
+<script src="/comic/resources/js/pay/cart.js?v=<%=System.currentTimeMillis() %>"></script>

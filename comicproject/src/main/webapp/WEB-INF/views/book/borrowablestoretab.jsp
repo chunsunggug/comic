@@ -30,8 +30,7 @@
 				</div>
 			</div>
 			<!-- *** CUSTOMER MENU END *** -->
-		</div>
-
+			
 			<div class="col-md-9">
 
 				<table class="table table-hover">
@@ -46,7 +45,7 @@
 					<tbody>
 						<c:forEach var="item" items="${items}">
 						<tr>
-							<th>${item.name}</th>
+							<th>${item.title}</th>
 							<td>${item.point}</td>
 							<td>
 							<c:choose>
@@ -58,7 +57,7 @@
 								</c:otherwise>
 							</c:choose>
 							</td>
-							<td><a href="/comic/storebooklist.do?isbn=${item.isbn}"
+							<td><a href="/comic/storebooklist.do?isbn=${item.isbn13}&sidx=${item.sidx}"
 								class="btn btn-primary btn-sm">보러가기</a></td>
 						</tr>
 						</c:forEach>
@@ -66,6 +65,9 @@
 				</table>
 
 			</div>
+		</div>
+
+			
 
 		</div>
 </section>

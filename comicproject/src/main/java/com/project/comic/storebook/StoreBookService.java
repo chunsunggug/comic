@@ -14,7 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.project.comic.NotSupportedClass;
 import com.project.comic.Utility;
+import com.project.comic.book.AllInOneBookVO;
 import com.project.comic.book.ISequenceSearch;
+import com.project.comic.book.NoExistBook;
 import com.project.comic.book.kakao.KakaoQueryModel;
 
 @Service
@@ -56,7 +58,7 @@ public class StoreBookService implements IStoreBookService{
 		// 제대로 된 ISBN으로 검색했거나 책이 없는지 검사
 		if( (long)meta.get("total_count") != 1 ) {
 			System.out.println("ISBN이 잘못입력되었거나 책이 없습니다");
-			return false;
+			throw new NoExistBook();
 		}
 		JSONObject result_book = (JSONObject)result_documents.get(0);
 		// 검증 완료
@@ -81,14 +83,14 @@ public class StoreBookService implements IStoreBookService{
 		if( result == 1 )
 			return true;
 		
-		return false;
+		throw new FailedAddStoreBook();
 	}
 	
 	@Transactional
 	@Override
 	public boolean add(Object object, int count) {
 		if( !(object instanceof StoreBookDTO) )
-			return false;
+			throw new NotSupportedClass();
 		
 		for( int i=0; i < count; i++ )
 			add( object );
@@ -118,7 +120,16 @@ public class StoreBookService implements IStoreBookService{
 		json_result.put( "point", dto.getPoint() );
 		json_result.put( "status", dto.getStatus() );
 		
-		return json_result.toJSONString();
+		AllInOneBookVO vo = new AllInOneBookVO();
+		JSONObject doc = (JSONObject)Utility.JSONParse(
+				( (JSONObject)
+						( (JSONArray)json_result.get("documents") ).get(0) )
+				.toJSONString()
+				);
+		vo.setKakaoDocuments(doc);
+		vo.setStoreBookDTO(dto);
+		
+		return vo;
 	}
 
 	@Transactional

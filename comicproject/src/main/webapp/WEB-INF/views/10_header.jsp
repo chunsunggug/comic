@@ -335,7 +335,7 @@
 						<span class="sr-only">Toggle search</span> <i class="fa fa-search"></i>
 					</button>
 
-					<a class="btn btn-default navbar-toggle" href="/comic/index.do">
+					<a class="btn btn-default navbar-toggle" href="/comic/pay/cart.do">
 						<i class="fa fa-shopping-cart"></i> <span class="hidden-xs">최근
 							확인 도서</span>
 					</a>
@@ -513,7 +513,7 @@
 			<div class="navbar-buttons">
 
 				<div class="navbar-collapse collapse right" id="basket-overview">
-					<a href="basket.html" class="btn btn-primary navbar-btn"><i
+					<a href="/comic/pay/cart.do" class="btn btn-primary navbar-btn"><i
 						class="fa fa-shopping-cart"></i><span class="hidden-sm">최근
 							확인 도서</span></a>
 				</div>
