@@ -33,10 +33,23 @@
 		select * from t_store_book where sbidx=#{sbidx}
 	</select>
 
-	<update id="updateBook" parameterType="com.project.comic.storebook.StoreBookDTO">
+	<update id="updateBookDTO" parameterType="com.project.comic.storebook.StoreBookDTO">
 		update t_store_book set category=#{category},
 														point=#{point},
 														status=#{status},
+														udate=now()
+												where sbidx=#{sbidx}
+	</update>
+	
+	<update id="updateAllBook" parameterType="java.util.Map">
+		update t_store_book set category=#{category},
+														point=#{point},
+														udate=now()
+												where sidx=#{sidx} and (isbn13=#{isbn} or isbn10=#{isbn})
+	</update>
+	
+	<update id="updateBook" parameterType="java.util.Map">
+		update t_store_book set status=#{status},
 														udate=now()
 												where sbidx=#{sbidx}
 	</update>

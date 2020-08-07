@@ -54,7 +54,7 @@ public class StoreBookDaoImpl implements IStoreBookDao {
 
 	@Override
 	public int updateBook(StoreBookDTO dto) {
-		return sqlMap.update( "updateBook", dto );
+		return sqlMap.update( "updateBookDTO", dto );
 	}
 
 	@Override
@@ -110,6 +110,28 @@ public class StoreBookDaoImpl implements IStoreBookDao {
 	@Override
 	public List getStoreHasBook(String isbn) {
 		return sqlMap.selectList("getStoreHasBook", isbn);
+	}
+
+	@Override
+	public int updateAllBook(int sidx, String isbn, int point, String category) {
+		Map param = new HashMap();
+		
+		param.put( "sidx", sidx );
+		param.put( "isbn", isbn );
+		param.put( "point", point );
+		param.put( "category", category );
+		
+		return sqlMap.update( "updateAllBook", param );
+	}
+
+	@Override
+	public int updateBook(String sbidx, String status) {
+		Map param = new HashMap();
+		
+		param.put( "sbidx",sbidx );
+		param.put( "status", status );
+		
+		return sqlMap.update( "updateBook", param );
 	}
 	
 }

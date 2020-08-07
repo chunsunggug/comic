@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.project.comic.Utility;
 import com.project.comic.book.BookService;
-import com.project.comic.book.IBookSearchService;
+import com.project.comic.book.ISequenceSearch;
 import com.project.comic.storebook.IStoreBookService;
 
 @Controller
@@ -22,7 +22,7 @@ import com.project.comic.storebook.IStoreBookService;
 public class PayController {
 
 	@Autowired
-	private IBookSearchService kakaoBookSearchService;
+	private ISequenceSearch kakaoBookSequenceSearch;
 	
 	@Autowired
 	private BookService bookService;

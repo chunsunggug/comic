@@ -1,24 +1,23 @@
 package com.project.comic.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.project.comic.book.AllInOneBookVO;
+import com.project.comic.Utility;
 import com.project.comic.book.BookService;
-import com.project.comic.book.IBookSearchService;
+import com.project.comic.book.ISequenceSearch;
+import com.project.comic.book.kakao.KakaoQueryModel;
 import com.project.comic.storebook.IStoreBookService;
 import com.project.comic.storebook.StoreBookDTO;
 
@@ -26,7 +25,7 @@ import com.project.comic.storebook.StoreBookDTO;
 public class BookController {
 
 	@Autowired
-	private IBookSearchService kakaoBookSearchService;
+	private ISequenceSearch kakaoBookSequenceSearch;
 	
 	@Autowired
 	private BookService bookService;
@@ -37,13 +36,21 @@ public class BookController {
 	// 검색페이지로 이동해서 검색결과 보여줌
 	@RequestMapping(value="/search.do")
 	public String bookSearch(@RequestParam( required=false ) Map map_param, HttpSession session, HttpServletRequest request) {
+		KakaoQueryModel model = new KakaoQueryModel();
+		model.setPage(0);
+		model.setQuery((String)map_param.get("query"));
+		model.setTarget((String)map_param.get("target"));
 		
-		String result = kakaoBookSearchService.bookSearch( map_param, session );
+		String result = (String)kakaoBookSequenceSearch.nextSearch(model);
 		
 		if( result != null ) {
 			System.out.println(result);
-			request.setAttribute( "books", result );
+			JSONObject json_result = (JSONObject)Utility.JSONParse(result);
+			session.setAttribute("documents", json_result.get("documents") );
+			session.setAttribute("meta", json_result.get("meta") );
+			session.setAttribute("model", model);
 		}
+		
 		request.setAttribute( "page", "book/booksearch.jsp" );
 		
 		return "index";
@@ -54,7 +61,9 @@ public class BookController {
 	@RequestMapping(value="/searchmore.do", produces = "application/text; charset=UTF-8")
 	public String bookSearchMore(HttpSession session) {
 
-		String result = kakaoBookSearchService.bookSearchMore( session );
+		KakaoQueryModel model = (KakaoQueryModel)session.getAttribute("model");
+		
+		String result = (String)kakaoBookSequenceSearch.nextSearch(model);
 
 		return result;
 	}
@@ -67,14 +76,10 @@ public class BookController {
 	// 점포를 보여주는 페이지
 	@RequestMapping(value="/borrowablestoretab.do")
 	public String viewStoreTab(@RequestParam(name="isbn") String isbn13, HttpServletRequest request) {
-		// 점포 중에서 책이 등록된 곳만 10개 가져오기
-		// 테이블로 만들 수 있도록 정렬 후 페이지로 데이터 보내면서 이동
-		
-		// 3개 목록 가져오기(미구현)
-		List list = bookService.getTableList( isbn13, 3 );
+		//List list = bookService.getTableList( isbn13, 3 );
 		
 		request.setAttribute("page", "book/borrowablestoretab.jsp");
-		request.setAttribute("items", list);
+		//request.setAttribute("items", list);
 		
 		return "index";
 	}
@@ -118,11 +123,11 @@ public class BookController {
 			@RequestParam(name="sidx") int sidx) {
 		
 		List<StoreBookDTO> list = storeBookService.getBooksByIsbn(sidx, isbn13);
-		AllInOneBookVO vo = bookService.getContentVO(list.get(0));
-		vo.setStoreBookDTOList(list);
+		//AllInOneBookVO vo = bookService.getContentVO(list.get(0));
+		//vo.setStoreBookDTOList(list);
 		
 		request.setAttribute("page", "book/bookdetail.jsp");
-		request.setAttribute("item", vo );
+		//request.setAttribute("item", vo );
 
 		return "index";
 	}
@@ -135,10 +140,10 @@ public class BookController {
 			@RequestParam(name="sidx") int sidx) {
 		
 		List<StoreBookDTO> list = storeBookService.getBooksByIsbn(sidx, isbn13);
-		AllInOneBookVO vo = bookService.getContentVO(list.get(0));
-		vo.setStoreBookDTOList(list);
+		//AllInOneBookVO vo = bookService.getContentVO(list.get(0));
+		//vo.setStoreBookDTOList(list);
 		
-		if( bookService.addItemToCart(response, request, vo) == -1) return "0";
+		//if( bookService.addItemToCart(response, request, vo) == -1) return "0";
 
 		return "1";
 	}

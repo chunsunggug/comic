@@ -29,7 +29,11 @@
 					<th style="vertical-align:middle">${item.sbidx}</th>
 					<th style="vertical-align:middle"><img class="img-responsive" src="${item.thumbnail}" /></th>
 					<th style="vertical-align:middle">${item.title}</th>
-					<th style="vertical-align:middle">${item.authors}</th>
+					<th style="vertical-align:middle">
+					<c:forEach var="auth" items="${item.authors}">
+					${auth} 
+					</c:forEach>
+					</th>
 					<th style="vertical-align:middle">${item.category}</th>
 					<th style="vertical-align:middle">${item.point}</th>
 					<th style="vertical-align:middle">${item.sdate}</th>
@@ -54,7 +58,7 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<form name="add_form_book">
-					<div class="modal-header" id="modal-header">도서 추가/삭제</div>
+					<div class="modal-header" id="modal-header">도서 추가</div>
 					<div class="modal-body">
 						<div class="container-fluid">
 							<div class="row">
@@ -87,7 +91,7 @@
 											</select></li>
 											<li><input name="isbn" class="col-xs-12 col-sm-12"
 												type="number" placeholder="ISBN13 or ISBN10"
-												oninput="loadBookData(window.add_form_book)" /></li>
+												oninput="addModalLoadBookData(window.add_form_book)" /></li>
 										</ul>
 									</div>
 								</div>
@@ -142,9 +146,9 @@
 													<option value="S">입고</option>
 													<option value="L">분실</option>
 											</select></li>
-											<li><input id="pk" name="pk" class="col-xs-12 col-sm-12"
-												type="number" placeholder="관리번호"
-												oninput="loadBookData(window.update_form_book)" /></li>
+											<li><input id="pkisbn" name="pkisbn" class="col-xs-12 col-sm-12"
+												type="number" placeholder="관리번호 또는 isbn"
+												oninput="updateModalLoadBookData(window.update_form_book)" /></li>
 										</ul>
 									</div>
 								</div>
@@ -152,7 +156,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-danger" onclick="deleteItem($('#pk')[0].value)">삭제</button>
+						<button type="button" class="btn btn-danger" name="delbtn" onclick="deleteItem(window.update_form_book.pkisbn.value)">삭제</button>
 						<button type="button" class="btn btn-primary" onclick="updateBookData(window.update_form_book)">수정하기</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 					</div>

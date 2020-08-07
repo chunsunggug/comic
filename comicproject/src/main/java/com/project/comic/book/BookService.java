@@ -34,60 +34,6 @@ public class BookService {
 	@Autowired
 	ISequenceSearch kakaoBookSequenceSearch;
 	
-	// 해당 책을 갖고 있는 점포를 보여주는 페이지에서 아이템을 묶어서 가져오는 함수
-	public List getTableList(String isbn, int itemsize) {
-		// 책을 클릭하고 isbn이 넘겨졌다
-		// isbn을 가져와 현재 위치에서 가까운 점포 각각에 대하여(미구현)
-		// sidx와 isbn으로 책 대여 상태 여부를 10개 목록화 한다
-		
-		if( storeBookDaoImpl.existStoreHasBook(isbn) == 0 ) return null;
-		
-		List<Integer> list_sidx = storeBookDaoImpl.getStoreHasBook(isbn);
-		List list = new ArrayList<AllInOneBookVO>();
-		
-		// 위 과정에서 점포 sidx를 정리해서 가져와야 한다
-		int cycle_count = list_sidx.size() > itemsize ? itemsize : list_sidx.size();
-		
-		for(int i=0; i < cycle_count; i++) {
-			List<StoreBookDTO> dto_list = storeBookDaoImpl.getBooksByIsbn(list_sidx.get(i), isbn);
-			AllInOneBookVO vo = getContentVO( dto_list.get(0) );
-			vo.setStoreBookDTOList(dto_list);
-			list.add(vo);
-		}
-		
-		return list;
-	}
-	
-	public List<AllInOneBookVO> getContentsVOList(List<StoreBookDTO> dtos){
-		List<AllInOneBookVO> list = new ArrayList<AllInOneBookVO>();
-		
-		for(int i=0; i < dtos.size(); i++ )
-			list.add( getContentVO(dtos.get(i)) );
-		
-		return list;
-	}
-	
-	public AllInOneBookVO getContentVO(StoreBookDTO dto) {
-		AllInOneBookVO vo = new AllInOneBookVO();
-		
-		KakaoQueryModel model = new KakaoQueryModel();
-		model.setPage(0);
-		model.setQuery(dto.getIsbn13());
-		model.setSize(1);
-		model.setPage(1);
-		model.setTarget("isbn");
-
-		String result = (String)kakaoBookSequenceSearch.nextSearch(model);
-		JSONObject book = (JSONObject)( (JSONArray)( (JSONObject)Utility.JSONParse(result)).get("documents") ).get(0);
-
-		vo.setKakaoDocuments(book);
-		vo.setStoreBookDTO(dto);
-		
-		System.out.println(vo);
-		
-		return vo;
-	}
-	
 	public int addItemToCart(HttpServletResponse response, HttpServletRequest request,
 			AllInOneBookVO vo) {
 		// 쿠키를 전부 가져온다

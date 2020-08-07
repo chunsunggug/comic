@@ -31,7 +31,7 @@ public class StoreBookService implements IStoreBookService{
 	
 	@Transactional
 	@Override
-	public boolean add(Object object) {
+	public int add(Object object) {
 		if( !(object instanceof StoreBookDTO) )
 			throw new NotSupportedClass();
 
@@ -42,136 +42,70 @@ public class StoreBookService implements IStoreBookService{
 		// 통과되면 DB에 몇개있는지 검사
 		// 검사결과 수 +1로 dto 완성해서 추가
 		
-		// dto 에 isbn이 제대로 들어있는지 검증
+		// dto에 isbn이 제대로 들어있는지 검증
 		StoreBookDTO dto = (StoreBookDTO)object;
-		JSONObject val_result = null;
+		KakaoQueryModel model = new KakaoQueryModel();
+		model.setPage(0);
+		model.setTarget("isbn");
 		
 		// 카카오에서 isbn으로 검색결과 가져오기
 		if( dto.getIsbn10() != null ) 
-			val_result = (JSONObject)Utility.JSONParse( (String)loadBookDataFromSearchServer(dto.getIsbn10()) );
-		else if( dto.getIsbn13() != null ) 
-			val_result = (JSONObject)Utility.JSONParse( (String)loadBookDataFromSearchServer(dto.getIsbn13()) );
-		
-		JSONObject meta = (JSONObject)val_result.get("meta");
-		JSONArray result_documents = (JSONArray)val_result.get("documents");
+			model.setQuery( dto.getIsbn10() );
+		else
+			model.setQuery( dto.getIsbn13() );
+
+		String kakao_result = (String)kakaoBookSequenceSearch.nextSearch(model);
+		JSONObject json_kakao = (JSONObject)Utility.JSONParse(kakao_result);
+		JSONArray json_documents = (JSONArray)json_kakao.get("documents");
+		JSONObject json_book = (JSONObject)json_documents.get(0);
+		JSONObject meta = (JSONObject)json_kakao.get("meta");
 		
 		// 제대로 된 ISBN으로 검색했거나 책이 없는지 검사
-		if( (long)meta.get("total_count") != 1 ) {
+		if( (long)meta.get("total_count") == 0 ) {
 			System.out.println("ISBN이 잘못입력되었거나 책이 없습니다");
 			throw new NoExistBook();
 		}
-		JSONObject result_book = (JSONObject)result_documents.get(0);
 		// 검증 완료
 		
 		// 카카오에서 ISBN13과 ISBN10 가져오기
-		String isbn13, isbn10;
-		isbn10 = ((String)result_book.get("isbn")).substring(0,10);
-		isbn13 = ((String)result_book.get("isbn")).substring(11, 24);
-		dto.setIsbn10(isbn10);
-		dto.setIsbn13(isbn13);
+		String[] split = ((String)json_book.get("isbn")).split(" ");
+		dto.setIsbn10(split[0]);
+		dto.setIsbn13(split[1]);
 		
 		// 책 개수 가져오기
-		int count = storeBookDao.getBookCount(dto.getSidx(), isbn13);
-		if( count != 0 )
-			count = storeBookDao.getBookMaximumIdx( dto.getSidx(), isbn13 );
-		dto.setIdx( count + 1 );
+		int index = storeBookDao.getBookCount(dto.getSidx(), split[1]);
+		
+		if( index != 0 )
+			index = storeBookDao.getBookMaximumIdx( dto.getSidx(), split[1] );
+		
+		dto.setIdx( index + 1 );
 		dto.setSbidx( dto.makeSbidx() );
 		
-		int result = storeBookDao.add(dto);
+		int result = storeBookDao.add( dto );
 		System.out.println("책 추가 로우 : " + result);
 
-		if( result == 1 )
-			return true;
-		
-		throw new FailedAddStoreBook();
-	}
-	
-	@Transactional
-	@Override
-	public boolean add(Object object, int count) {
-		if( !(object instanceof StoreBookDTO) )
-			throw new NotSupportedClass();
-		
-		for( int i=0; i < count; i++ )
-			add( object );
-		
-		return true;
-	}
-	
-	@Override
-	public Object loadBookDataFromSearchServer(String isbn) {
-		KakaoQueryModel md = new KakaoQueryModel();
-		md.setQuery(isbn);
-		md.setPage(0);
-		String result = (String)kakaoBookSequenceSearch.nextSearch(md);		
-		
-		System.out.println(result);
 		return result;
 	}
 	
-	@Override
-	public Object loadBookDataForModal(String pk) {
-		String isbn = pk.substring(3, 16);
-		String result = (String)loadBookDataFromSearchServer(isbn);
-		StoreBookDTO dto = storeBookDao.getBook( pk );
-		
-		JSONObject json_result = (JSONObject)Utility.JSONParse(result);
-		json_result.put( "category", dto.getCategory() );
-		json_result.put( "point", dto.getPoint() );
-		json_result.put( "status", dto.getStatus() );
-		
-		AllInOneBookVO vo = new AllInOneBookVO();
-		JSONObject doc = (JSONObject)Utility.JSONParse(
-				( (JSONObject)
-						( (JSONArray)json_result.get("documents") ).get(0) )
-				.toJSONString()
-				);
-		vo.setKakaoDocuments(doc);
-		vo.setStoreBookDTO(dto);
-		
-		return vo;
-	}
-
 	@Transactional
 	@Override
-	public List getManagePageList(int cp, int listsize, int sidx) {
-		// 순서
-		// 점포관리에서 보여줄 페이지당 list를 StoreBookDTO로 가져온다
-		// 가져온 DTO에서 ISBN13을 카카오검색을 이용한 조인으로 뷰에서 보여줄 데이터VO 리스트로 만들어준다
-		// 리스트 결과를 return한다
+	public int add(Object object, int count) {
+		if( !(object instanceof StoreBookDTO) )
+			throw new NotSupportedClass();
 		
-		// StoreBookDTO로 DB에서 가져오는 과정
+		int result = 0;
+		
+		for( int i=0; i < count; i++ )
+			result += add( object );
+		
+		return result;
+	}
+	
+	@Transactional
+	@Override
+	public List<StoreBookDTO> getPageList(int cp, int listsize, int sidx) {
 		List<StoreBookDTO> storebook_result = storeBookDao.getPageList( cp, listsize, sidx );
-		List list_result = new ArrayList<StoreBookManagePageVO>();
-		
-		// 가져온 DTO를 이용하여 카카오 검색을 통해 VO로 수정
-		for( StoreBookDTO dto : storebook_result ) {
-			KakaoQueryModel model = new KakaoQueryModel();
-			model.setPage( 0 );
-			model.setQuery( dto.getIsbn13() );
-			model.setTarget( "isbn" );
-			
-			String result = (String)kakaoBookSequenceSearch.nextSearch( model );
-			JSONObject json_result = (JSONObject)Utility.JSONParse(result);
-			JSONArray documents = (JSONArray)json_result.get("documents");
-			JSONObject json_book = (JSONObject)documents.get(0);
-			JSONArray json_authors = (JSONArray)json_book.get("authors");
-			String authors = "";
-			
-			for( int i=0; i < json_authors.size(); i++ )
-				if(i != json_authors.size() - 1 )
-					authors += (String)json_authors.get(i) + ",";
-				else
-					authors += (String)json_authors.get(i);
-			
-			StoreBookManagePageVO vo = new StoreBookManagePageVO( dto.getSbidx(), (String)json_book.get("thumbnail"),
-					(String)json_book.get("title"), authors, dto.getCategory(), 
-					dto.getPoint(), dto.getSdate());
-			
-			list_result.add(vo);
-		}
-		
-		return list_result;
+		return storebook_result;
 	}
 	
 	@Override
@@ -181,7 +115,7 @@ public class StoreBookService implements IStoreBookService{
 
 	@Transactional
 	@Override
-	public boolean update(Object object) {
+	public int update(Object object) {
 		if( !(object instanceof StoreBookDTO) )
 			throw new NotSupportedClass();
 		
@@ -194,7 +128,7 @@ public class StoreBookService implements IStoreBookService{
 		// 책이 있는지 검사
 		StoreBookDTO update_dto = storeBookDao.getBook( dto.getSbidx() );
 		
-		if( update_dto == null ) return false;
+		if( update_dto == null ) return 0;
 		
 		// 수정할 항목만 수정
 		update_dto.setCategory( dto.getCategory() );
@@ -205,32 +139,41 @@ public class StoreBookService implements IStoreBookService{
 		
 		System.out.println("수정 된 로우 : " + result);
 		
-		if( result != 1 )
-			return false;
-		
-		return true;
+		return result;
 	}
 	
 	// 기본키로 삭제
 	@Override
-	public boolean delete(String sbidx) {
+	public int delete(String sbidx) {
 		int result = storeBookDao.deleteBook(sbidx);
 		System.out.println("result : " + result);
-		if( result != 1 )
-			return false;
-
-		return true;
+		
+		return result;
 	}
 
 	@Override
-	public List getBooksByIsbn(int sidx, String isbn) {
-		List list = storeBookDao.getBooksByIsbn(sidx, isbn);
-		return list;
+	public List<StoreBookDTO> getBooksByIsbn(int sidx, String isbn) {
+		int count = storeBookDao.getBookCount(sidx, isbn);
+		
+		if( count != 0 )
+			return storeBookDao.getBooksByIsbn(sidx, isbn);
+		
+		return null;
 	}
 
 	@Override
 	public Object getBookByPk(String pk) {
 		StoreBookDTO dto = storeBookDao.getBook(pk);
 		return dto;
+	}
+
+	@Override
+	public int update(int sidx, String isbn, int point, String category) {
+		return storeBookDao.updateAllBook(sidx, isbn, point, category);
+	}
+
+	@Override
+	public int update(String sbidx, String status) {
+		return storeBookDao.updateBook(sbidx, status);
 	}
 }
