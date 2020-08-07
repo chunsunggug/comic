@@ -9,7 +9,7 @@
 
 			<c:forEach var="content" items="${documents}">
 				<div class="col-xs-6 col-sm-3 col-md-2 same-height" >
-					<a href="https://www.naver.com"> <c:choose>
+					<a href="/comic/borrowablestoretab.do?isbn=${content.isbn.split(' ')[1]}"> <c:choose>
 							<c:when test="${content.thumbnail == ''}">
 								<img class="img-thumbnail img-responsive"
 									src="/comic/resources/img/book/unknown_cover.png" />
@@ -38,4 +38,4 @@
 </body>
 
 <script
-	src="/comic/resources/js/search/booksearch.js"></script>
+	src="/comic/resources/js/search/booksearch.js?v=<%=System.currentTimeMillis() %>"></script>

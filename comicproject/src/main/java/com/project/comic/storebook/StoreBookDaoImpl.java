@@ -101,5 +101,15 @@ public class StoreBookDaoImpl implements IStoreBookDao {
 		
 		return sqlMap.selectList( "getBooksByIsbn", param );
 	}
+
+	@Override
+	public int existStoreHasBook(String isbn) {
+		return sqlMap.selectOne("existStoreHasBook", isbn);
+	}
+
+	@Override
+	public List getStoreHasBook(String isbn) {
+		return sqlMap.selectList("getStoreHasBook", isbn);
+	}
 	
 }

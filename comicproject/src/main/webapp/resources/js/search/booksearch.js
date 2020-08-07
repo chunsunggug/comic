@@ -17,7 +17,7 @@ function show_contents() {
 				div.setAttribute("style", "height:220px; margin-bottom:5px; ");
 				
 				var a = document.createElement("a");
-				a.setAttribute( "href", "https://www.naver.com");
+				a.setAttribute( "href", "/comic/borrowablestoretab.do?isbn="+contents[i].isbn.substring(10,24).split(" ")[1]);
 				
 				var img = document.createElement("img");
 				img.setAttribute("class", "img-thumbnail img-responsive" );

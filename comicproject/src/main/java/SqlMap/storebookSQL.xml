@@ -59,5 +59,13 @@
 		select * from t_store_book where sidx=#{sidx} and
 		(isbn13=#{isbn} or isbn10=#{isbn})
 	</select>
+	
+	<select id="existStoreHasBook" parameterType="java.lang.String" resultType="int">
+		select count(*) from t_store_book where isbn13=#{isbn} or isbn10=#{isbn}
+	</select>
+	
+	<select id="getStoreHasBook" parameterType="java.lang.String" resultType="int">
+		select distinct sidx from t_store_book where isbn13=#{isbn} or isbn10=#{isbn}
+	</select>
 		
 </mapper>

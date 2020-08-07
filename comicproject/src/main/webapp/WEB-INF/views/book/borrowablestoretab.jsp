@@ -9,7 +9,7 @@
 			<div class="col-md-12">
 				<ul class="breadcrumb">
 					<li><a href="/comic/index.do">Book</a></li>
-					<li>Book Detail</li>
+					<li>Store View</li>
 				</ul>
 			</div>
 
@@ -57,7 +57,7 @@
 								</c:otherwise>
 							</c:choose>
 							</td>
-							<td><a href="/comic/storebooklist.do?isbn=${item.isbn13}&sidx=${item.sidx}"
+							<td><a href="/comic/bookdetail.do?isbn=${item.isbn13}&sidx=${item.sidx}"
 								class="btn btn-primary btn-sm">보러가기</a></td>
 						</tr>
 						</c:forEach>

@@ -8,7 +8,8 @@
 		<div class="container">
 			<div class="col-md-12">
 				<ul class="breadcrumb">
-					<li><a href="/comic/index.do">Book</a></li>
+					<li><a href="/comic/index.do">Home</a></li>
+					<li>Store View</li>
 					<li>Book Detail</li>
 				</ul>
 			</div>
@@ -49,7 +50,7 @@
 							<p class="price">${item.point}</p>
 							<p class="text-center buttons">
 							<h5></h5>
-								<a href='javascript:addCart("${item.sbidx}")' class="btn btn-primary"><i
+								<a href='javascript:addCart(${item.sidx},"${item.isbn13}")' class="btn btn-primary"><i
 									class="fa fa-shopping-cart"></i> 장바구니 담기</a> <a
 									href="#" class="btn btn-default"><i
 									class="fa fa-heart"></i> 찜하기 </a>

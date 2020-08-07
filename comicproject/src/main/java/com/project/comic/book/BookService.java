@@ -34,66 +34,28 @@ public class BookService {
 	@Autowired
 	ISequenceSearch kakaoBookSequenceSearch;
 	
-	// 순서
-	// 페이지 링크에 isbn넣어줘서 연결
-	// 점포별 가능여부 보여줄 항목 점포이름, 대여요금, 책상태, 책보러가기 버튼
-	// 상세페이지 보여줄 것 타이틀, 섬네일, 대여요금, 저자, 번역, 도서 소개, isbn
-	// storebook에서 가져와야 할 것 대여가능상태, 요금, isbn
-	
+	// 해당 책을 갖고 있는 점포를 보여주는 페이지에서 아이템을 묶어서 가져오는 함수
 	public List getTableList(String isbn, int itemsize) {
 		// 책을 클릭하고 isbn이 넘겨졌다
 		// isbn을 가져와 현재 위치에서 가까운 점포 각각에 대하여(미구현)
 		// sidx와 isbn으로 책 대여 상태 여부를 10개 목록화 한다
 		
+		if( storeBookDaoImpl.existStoreHasBook(isbn) == 0 ) return null;
+		
+		List<Integer> list_sidx = storeBookDaoImpl.getStoreHasBook(isbn);
 		List list = new ArrayList<AllInOneBookVO>();
 		
-		for(int i=0; i < itemsize; i++)
-			list.add( getTableItemVO( 1, isbn ) );
+		// 위 과정에서 점포 sidx를 정리해서 가져와야 한다
+		int cycle_count = list_sidx.size() > itemsize ? itemsize : list_sidx.size();
 		
-		return list;
-	}
-	
-	public AllInOneBookVO getTableItemVO(int sidx, String isbn) {
-		AllInOneBookVO vo = new AllInOneBookVO();
-		
-		// 점포에 빌릴 수 있는 책 있는지 검사
-		int result = storeBookDaoImpl.canBorrow(sidx, isbn);
-		
-		if( result == 0 )
-			throw new NoExistBook();
-		
-		// sidx로 점포 이름 가져오기 (미구현으로 생략)
-		// isbn으로 StoreBook에서 검색해서 VO 만들기
-		List<StoreBookDTO> dtos = storeBookDaoImpl.getBorrowableBooks(sidx, isbn);
-		StoreBookDTO dto;
-		
-		if(dtos.size() == 0)
-			throw new NoExistBook();
-		
-		dto = dtos.get(0);
-		
-		// 대여료 제일 싼거 찾기
-		if( dtos.size() >= 2 ) {
-			for( int i=1; i < dtos.size(); i++ )
-				if( dtos.get(i).getPoint() < dto.getPoint() )
-					dto = dtos.get(i);
+		for(int i=0; i < cycle_count; i++) {
+			List<StoreBookDTO> dto_list = storeBookDaoImpl.getBooksByIsbn(list_sidx.get(i), isbn);
+			AllInOneBookVO vo = getContentVO( dto_list.get(0) );
+			vo.setStoreBookDTOList(dto_list);
+			list.add(vo);
 		}
 		
-		// 책 정보 가져오기
-		KakaoQueryModel model = new KakaoQueryModel();
-		model.setPage(0);
-		model.setQuery(isbn);
-		model.setTarget("isbn");
-		String ka_result = (String)kakaoBookSequenceSearch.nextSearch(model);
-		JSONObject doc = (JSONObject)( (JSONArray)
-				( (JSONObject)Utility.JSONParse(ka_result) )
-				.get("documents") )
-				.get(0);
-		
-		vo.setKakaoDocuments(doc);
-		vo.setStoreBookDTO(dto);
-		
-		return vo;
+		return list;
 	}
 	
 	public List<AllInOneBookVO> getContentsVOList(List<StoreBookDTO> dtos){
@@ -143,7 +105,7 @@ public class BookService {
 		
 		for(Cookie cookie : cookies ) {
 			// bookmark 쿠키 찾기
-			if( cookie.getName().equals("cart") ) {
+			if( cookie.getName().equals("comiccart") ) {
 				String cookie_value = cookie.getValue();
 				String decoded_cookie = "";
 				
@@ -160,9 +122,10 @@ public class BookService {
 				// 같은 거 있는지 검사
 				for(Object json_obj : cookie_arr) {
 					JSONObject book = (JSONObject)json_obj;
-					String sbidx = (String)book.get("sbidx");
+					long sidx = (long)book.get("sidx");
+					String isbn13 = (String)book.get("isbn13"); 
 					
-					if( sbidx.equals( vo.getSbidx() ) )
+					if( sidx == vo.getSidx() && isbn13.equals( vo.getIsbn13() ) )
 						return 1;
 				}
 				
@@ -199,10 +162,60 @@ public class BookService {
 			return -1;
 		}
 		
-		Cookie cookie = new Cookie( "cart", encoded_arr );
+		Cookie cookie = new Cookie( "comiccart", encoded_arr );
 		cookie.setMaxAge(1 * 60 * 60 * 24); //쿠키 유지 하루
 		response.addCookie( cookie );
 		
 		return 1;
+	}
+	
+	public int DeleteItemCart(HttpServletResponse response, HttpServletRequest request,
+			int sidx, String isbn13) {
+		Cookie[] cookies = request.getCookies();
+		
+		for(Cookie cookie : cookies) {
+			if(cookie.getName().equals("comiccart")) {
+				String origin_value = cookie.getValue();
+				String decoded_value = "";
+				
+				try {
+					decoded_value = URLDecoder.decode(origin_value, "utf-8");
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return 0;
+				}
+				
+				JSONArray json_arr = (JSONArray)Utility.JSONParse(decoded_value);
+				System.out.println("pre json arr : " + json_arr);
+				
+				for( int i=0; i < json_arr.size(); i++) {
+					JSONObject json_ = (JSONObject)json_arr.get(i);
+					long cookie_sidx = (long)json_.get("sidx");
+					String cookie_isbn13 = (String)json_.get("isbn13");
+					if( cookie_sidx == sidx && cookie_isbn13.equals(isbn13) ) {
+						json_arr.remove(i);
+						System.out.println("json cookie 삭제");
+					}
+				}
+				System.out.println("post json arr : " + json_arr);
+				
+				String encoded_value = "";
+				
+				try {
+					encoded_value = URLEncoder.encode(json_arr.toJSONString(), "utf-8");
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return 0;
+				}
+				
+				Cookie new_cookie = new Cookie("comiccart", encoded_value);
+				response.addCookie(new_cookie);
+				
+				return 1;
+			}
+		}
+		return 0;
 	}
 }

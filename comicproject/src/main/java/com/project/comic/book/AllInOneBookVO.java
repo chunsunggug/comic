@@ -1,7 +1,6 @@
 package com.project.comic.book;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -13,7 +12,6 @@ import lombok.Data;
 @Data
 public class AllInOneBookVO {
 	private String sbidx;			// storebook 테이블 기본키
-	private int idx;				// 책 식별용
 	private String udate;			// 업뎃 날짜
 	private String category;		// 카테고리
 	private String title;			// 책 제목
@@ -33,7 +31,6 @@ public class AllInOneBookVO {
 	
 	public void setStoreBookDTO(StoreBookDTO dto) {
 		category = dto.getCategory();
-		idx = dto.getIdx();
 		isbn10 = dto.getIsbn10();
 		isbn13 = dto.getIsbn13();
 		point = dto.getPoint();
@@ -42,7 +39,20 @@ public class AllInOneBookVO {
 		sidx = dto.getSidx();
 		status = dto.getStatus();
 		udate = dto.getUdate();
-		url = "/comic/bookdetail.do?pk=" + sbidx;
+		url = "/comic/bookdetail.do?sidx=" + sbidx + "&isbn=" + isbn13;
+	}
+	
+	public void setStoreBookDTOList(List<StoreBookDTO> list) {
+		setStoreBookDTO( list.get(0) );
+		
+		status = "N";
+		
+		// 하나라도 대여가능 책이 있으면 S로 리턴
+		for(int i=0; i<list.size(); i++)
+			if( list.get(i).getStatus().equals("S") ) {
+				status="S";
+				return;
+			}
 	}
 	
 	public void setKakaoDocuments(JSONObject obj) {
@@ -65,4 +75,5 @@ public class AllInOneBookVO {
 			translators[j] = (String)json_translators.get(j);
 	}
 
+	
 }

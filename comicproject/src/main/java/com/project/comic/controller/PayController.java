@@ -1,5 +1,8 @@
 package com.project.comic.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONArray;
@@ -27,15 +30,24 @@ public class PayController {
 	@Autowired
 	private IStoreBookService storeBookService;
 
-	// 북마크 페이지
+	// 카트 페이지
 	@RequestMapping(value="/cart.do")
 	public ModelAndView cart(HttpServletRequest request,
-			@CookieValue(required=false, value="cart") String arr_vo ) {
-		JSONArray json_arr = (JSONArray)Utility.JSONParse(arr_vo);
+			@CookieValue(required=false, value="comiccart") String arr_vo ) {
+		String decoded = "";
+		try {
+			decoded = URLDecoder.decode(arr_vo, "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		JSONArray json_arr = (JSONArray)Utility.JSONParse(decoded);
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("index");
-		mv.addObject("page", "pay/cart.jsp");
-		mv.addObject("cart", json_arr);
+		
+		mv.setViewName( "index" );
+		mv.addObject( "page", "pay/cart.jsp" );
+		mv.addObject( "comiccart", json_arr );
+		mv.addObject( "tot_count", json_arr.size() );
 		
 		return mv;
 	}
