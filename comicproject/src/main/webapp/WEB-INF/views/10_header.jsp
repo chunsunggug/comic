@@ -24,7 +24,6 @@
 
 <body>
 
-
 		<!-- login modal -->
 		
 		<div class="modal fade" id="login-modal" tabindex="-1" role="dialog"
