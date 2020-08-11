@@ -95,7 +95,7 @@ AUTO_INCREMENT=23
 
 drop table if exists t_store_book cascade;
 CREATE TABLE `t_store_book` (
-	`sbidx` VARCHAR(50) NOT NULL COLLATE 'utf8_general_ci',
+	`sbidx` INT(11) NOT NULL AUTO_INCREMENT,
 	`sidx` INT(11) NOT NULL COMMENT '점포번호',
 	`isbn13` VARCHAR(50) NOT NULL COLLATE 'utf8_general_ci',
 	`isbn10` VARCHAR(50) NOT NULL COLLATE 'utf8_general_ci',
@@ -104,16 +104,32 @@ CREATE TABLE `t_store_book` (
 	`point` INT(11) NOT NULL DEFAULT '0',
 	`category` VARCHAR(50) NULL COLLATE 'utf8_general_ci',
 	`udate` DATE NOT NULL DEFAULT current_timestamp() COMMENT '최근수정날짜',
-	`status` VARCHAR(5) NOT NULL DEFAULT 'S' COLLATE 'utf8_general_ci',
-	PRIMARY KEY (`sbidx`) USING BTREE,
-	UNIQUE INDEX `t_store_book_un` (`sidx`, `isbn13`, `isbn10`, `idx`) USING BTREE
+	`status` VARCHAR(5) NOT NULL DEFAULT 'S' COMMENT 'S입점,L분실' COLLATE 'utf8_general_ci',
+	PRIMARY KEY (`sbidx`) USING BTREE
 )
 COLLATE='utf8_general_ci'
 ENGINE=InnoDB
+AUTO_INCREMENT=8
 ;
 
-
-
+CREATE TABLE `t_order` (
+	`oadix` INT(11) NOT NULL AUTO_INCREMENT,
+	`uidx` INT(11) NULL,
+	`oidx` INT(11) NOT NULL,
+	`sbidx` INT(11) NOT NULL,
+	`sdate` DATETIME NULL,
+	`edate` DATETIME NULL,
+	`odate` DATETIME NOT NULL,
+	`delstate` VARCHAR(50) NOT NULL DEFAULT 'R' COLLATE 'utf8_general_ci',
+	`bookstate` VARCHAR(50) NOT NULL DEFAULT 'R' COLLATE 'utf8_general_ci',
+	`point` INT(11) NOT NULL,
+	`uaddr` VARCHAR(255) NOT NULL COLLATE 'utf8_general_ci',
+	PRIMARY KEY (`oadix`) USING BTREE
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=8
+;
 
 
 drop table if exists t_user_store cascade;

@@ -51,4 +51,9 @@ public class UserVO {
 		return "UserVO[uidx="+uidx+",addr="+addr+",id="+id+",name="+name+",phone="+phone+",birth="+birth+",point="+point+",post="+post+",si="+si+",gu="+gu+",dong="+dong+",detail="+detail+",type="+type+",isYn="+isYn+",sdate"+sdate;
 	}
 	
+	public String getFullAddr() {
+		String str = si + " " + gu + " " + dong + " " + detail;
+		return str;
+	}
+	
 }

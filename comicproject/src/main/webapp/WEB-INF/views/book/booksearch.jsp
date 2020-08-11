@@ -6,7 +6,6 @@
 
 	<div class="container">
 		<div id="contents_container" class="row same-height-row">
-
 			<c:forEach var="content" items="${documents}">
 				<div class="col-xs-6 col-sm-3 col-md-2 same-height" >
 					<a href="/comic/borrowablestoretab.do?isbn=${content.isbn.split(' ')[1]}"> <c:choose>

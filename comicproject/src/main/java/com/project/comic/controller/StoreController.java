@@ -9,14 +9,20 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.project.comic.Utility;
+import com.project.comic.book.BookGroupVO;
+import com.project.comic.book.BookVO;
+import com.project.comic.book.ISequenceSearch;
+import com.project.comic.book.kakao.BookGroupVOMakerByKakao;
+import com.project.comic.book.kakao.BookVOMakerByKakao;
+import com.project.comic.book.kakao.KakaoQueryModel;
 import com.project.comic.page.PageMaker;
 import com.project.comic.storebook.IStoreBookService;
 import com.project.comic.storebook.StoreBookDTO;
@@ -29,21 +35,30 @@ public class StoreController {
 	// 9788954671873
 	// 9788954657556
 	// 테스트용 isbn
-	private final String SIDX = "uidx";
 	private final int PAGE_LIST_SIZE = 10;
 	private final int PAGE_SIZE = 10;
 	
 	@Autowired
 	IStoreBookService storeBookService; 
 	
+	@Autowired
+	BookVOMakerByKakao bookVOMakerByKakao;
+	
+	@Autowired
+	BookGroupVOMakerByKakao bookGroupVOMakerByKakao;
+	
+	@Autowired
+	ISequenceSearch kakaoBookSequenceSearch;
+	
 	// 점주의 도서관리 페이지 이동
 	@RequestMapping(value="/listbook.do")
 	public ModelAndView listBook(HttpSession session,
 			@RequestParam(value="cp", defaultValue="1")int cp) {
 		
-		// test 상황 sidx : 1
-		int sidx = 1;
-		List listitem = storeBookService.getManagePageList(cp, PAGE_LIST_SIZE, 1);
+		int sidx = (int)session.getAttribute("uidx");
+		List<StoreBookDTO> list_dto = storeBookService.getPageList(cp, PAGE_LIST_SIZE, 1);
+		List<BookVO> list_vo = bookVOMakerByKakao.getVOList(list_dto);
+		
 		int total = storeBookService.getBooksCountAll(sidx);
 		String pagestr = PageMaker.makePage("/comic/store/listbook.do", total, PAGE_LIST_SIZE, PAGE_SIZE, cp);
 		
@@ -51,32 +66,80 @@ public class StoreController {
 		
 		mv.setViewName("index");
 		mv.addObject("page","store/listbook.jsp");
-		mv.addObject( "listitem", listitem );
+		mv.addObject( "listitem", list_vo );
 		mv.addObject("pagestr", pagestr);
-		mv.addObject("include", "booksearch.jsp");
 		
 		return mv;
 	}
 	
 	// 점포 도서 추가시 텍스트박스에 ISBN 검색하여 책정보 불러오기
-	@RequestMapping(value="/loadbookdata.do", produces = "application/text; charset=UTF-8",
+	@RequestMapping(value="/addloadbookdata.do", produces = "application/text; charset=UTF-8",
 					method = RequestMethod.POST)
 	@ResponseBody
-	public String getBookDataByISBN(@RequestParam Map param, HttpSession session) {
+	public String getAddBookDataByISBN(@RequestParam(name="isbn") String isbn, HttpSession session) {
 		
-		int sidx = 1; // session.getAttribute("sidx");
-		String result = "";
+		int sidx = (int)session.getAttribute("uidx");
+		BookGroupVO vo = new BookGroupVO();
+		Gson gson = new Gson();
 		
-		if( !param.get("isbn").equals("") ) 
-			result = (String)storeBookService.
-					loadBookDataFromSearchServer((String)param.get("isbn"));
-		else if( !param.get("pk").equals("") )
-			result = (String)storeBookService.
-					loadBookDataForModal((String)param.get("pk"));
-				
-		if(result != null) 
-			return result;
+		if( isbn.length() == 10 || isbn.length() == 13 ) {
+			// 책이 있으면 카카오 책정보랑 요금을 같이 가져가야함
+			List<StoreBookDTO> list_dto = storeBookService.getBooksByIsbn(sidx, isbn);
+			
+			if( list_dto != null ) {
+				return gson.toJson( bookGroupVOMakerByKakao.getVO( list_dto ) );
+			}
+			
+			KakaoQueryModel model = new KakaoQueryModel();
+			model.setPage(0);
+			model.setTarget("isbn");
+			model.setQuery(isbn);
+			
+			String result = (String)kakaoBookSequenceSearch.nextSearch(model);
+			JSONObject json_result = (JSONObject)Utility.JSONParse(result);
+			JSONArray json_documents = (JSONArray)json_result.get("documents");
+			
+			if( json_documents.size() == 0 )
+				return null;
+			
+			vo.setKakaoDocuments( (JSONObject)json_documents.get(0) );
+		}
+	
+		return gson.toJson( vo );
+	}
+	
+	// 점포 수정/삭제시 텍스트박스에 ISBN 검색하여 책정보 불러오기
+	@RequestMapping(value="/updateloadbookdata.do", produces = "application/text; charset=UTF-8",
+			method = RequestMethod.POST)
+	@ResponseBody
+	public String getUpdateBookDataByISBN(@RequestParam(name="isbn") String isbn, HttpSession session) {
+
+		int sidx = (int)session.getAttribute("uidx");
+		Gson gson = new Gson();
+
+		if( isbn.length() == 10 || isbn.length() == 13 ) {
+			// 책이 있으면 카카오 책정보랑 요금을 같이 가져가야함
+			List<StoreBookDTO> list_dto = storeBookService.getBooksByIsbn(sidx, isbn);
+
+			if( list_dto != null ) {
+				return gson.toJson( bookGroupVOMakerByKakao.getVO( list_dto ) );
+			}else
+				return null; // 위에서 안나왔다면 없는 번호		
+		}/*
+		// 나중에 관리번호 적으면 개별 도서상태 수정에 쓰일 것 지우지 마시오
+		else if(isbn.length() == 16 || isbn.length() == 19) {
+			// 여기서는 isbn이 아닌 기본키
+			StoreBookDTO dto = (StoreBookDTO)storeBookService.getBookByPk( isbn );
+			
+			if( dto == null )
+				return null;
+			
+			AllInOneBookVO vo = bookVOMakerByKakao.getVO( dto );
+			
+			return gson.toJson( vo );
+		}*/
 		
+		// 여기까지 왔다면 그냥 없는번호
 		return null;
 	}
 	
@@ -86,31 +149,43 @@ public class StoreController {
 	@ResponseBody
 	public String registerStoreBookData(@RequestParam Map param, HttpSession session) {
 		
-		StoreBookDTO dto = getDTOFromParam( param, session );
-
-		boolean result = storeBookService.add( dto,
+		StoreBookDTO dto = new StoreBookDTO();
+		dto.setCategory( (String)param.get("category") );
+		dto.setIsbn10( (String)param.get("isbn") );
+		dto.setIsbn13( (String)param.get("isbn") );
+		dto.setPoint( Integer.parseInt((String)param.get("point")) );
+		dto.setSidx(1); // session.getAttribute("sidx");
+		
+		int result = storeBookService.add( dto,
 						Integer.parseInt((String)param.get("total")) );
 		
-		if( result )
-			return "1";
-		
-		return "0";
+		return result + "";
 	}
 	
 	@RequestMapping(value="/update.do", produces = "application/text; charset=UTF-8",
 			method = RequestMethod.POST )
 	@ResponseBody
 	public String updateStoreBookData(@RequestParam Map param, HttpSession session) {
-		// 받아온 수정할 데이터를 dto에 정리
-		// 서비스로 dto를 보내 update 진행
-		// return 값에 따라 성공 실패 결과 return
+		int result = 0;
 		System.out.println(param);
-		StoreBookDTO dto = getDTOFromParam( param, session );
-		
-		if( storeBookService.update(dto) )
-			return "1";
-		
-		return "0";
+		if( param.containsKey("isbn") ) {
+			// isbn이 적힌 경우
+			String isbn = (String)param.get("isbn"),
+					category = (String)param.get("category");
+			// int sidx = session.getAttribute("sidx");
+			int sidx = 1, point = Integer.parseInt( (String)param.get("point") );
+			
+			result = storeBookService.update( sidx, isbn, point, category );
+		}
+		else if( param.containsKey("sbidx") ) {
+			// 관리번호가 적힌 경우
+			System.out.println("관리번호 들어옴");
+			int sbidx = Integer.parseInt( (String)param.get("sbidx") );
+			String status = (String)param.get("status");
+			
+			result = storeBookService.update( sbidx, status );
+		}
+		return "" + result;
 	}
 	
 	@RequestMapping(value="/delete.do", produces = "application/text; charset=UTF-8",
@@ -120,39 +195,11 @@ public class StoreController {
 		
 		// sbidx로 삭제
 		if( param.containsKey("sbidx") ) {
-			String sbidx = (String)param.get("sbidx");
+			int sbidx = Integer.parseInt( (String)param.get("sbidx") );
 			
-			if( storeBookService.delete(sbidx) )
-				return "1";
+			return "" + storeBookService.delete(sbidx);
 		}
 		
 		return "0";
 	}
-	
-	private StoreBookDTO getDTOFromParam( Map param, HttpSession session ) {
-		StoreBookDTO dto = new StoreBookDTO();
-		
-		// dto.setSidx( session.getAttribute("sidx") );
-		dto.setSidx( 1 ); // test : 1		
-		
-		if( param.containsKey("isbn") ) {
-			String isbn = (String)param.get("isbn");
-			
-			if( isbn.length() == 10 ) dto.setIsbn10( isbn );
-			else if( isbn.length() == 13 ) dto.setIsbn13( isbn );
-		}
-		
-		if( param.containsKey("pk") )
-			dto.setSbidx( (String)param.get("pk") );
-		
-		if( param.containsKey("status") )
-			dto.setStatus( (String)param.get("status") );
-		
-		dto.setPoint( Integer.parseInt((String)param.get("point")) );
-		dto.setCategory( (String)param.get("category") );
-		
-		
-		return dto;
-	}
-
 }

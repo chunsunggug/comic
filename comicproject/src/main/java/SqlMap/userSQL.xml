@@ -1,76 +1,99 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-        
-        <!-- select id => class 내의 스테이트먼트 파람 -->
-<mapper namespace="com.project.comic.user.UserDao">
-    <select id="getUser" resultType="com.project.comic.user.UserDTO" parameterType="java.lang.String">
-    select * from t_user where id=#{id}
-    </select>
-    
-    <select id="getUserByUidx" resultType="com.project.comic.user.UserDTO" parameterType="int">
-    	select * from t_user where uidx=#{uidx}
-    </select>
-    
-    <select id="loginUser" resultType="com.project.comic.user.UserVO" parameterType="hashmap">
-    SELECT * FROM v_login WHERE id=#{id} AND pwd=#{pwd}
-    </select>
-    
-    <select id="getUserAll" resultType="com.project.comic.user.UserDTO" >
-    select * from t_user;
-    </select>
-    
-    <insert id="addUser" parameterType="com.project.comic.user.UserDTO">
-    insert into t_user(id,pwd,name,addr,phone,birth,isYn)
-    values(#{id},#{pwd},#{name},#{addr},#{phone},#{birth},#{isyn})
-    </insert>
-    
-    <update id="deleteUser" parameterType="int">
-    update t_user set isYn="N",edate=now() where uidx=#{uidx}
-    </update>
-    
-    <update id="deleteCancleUser" parameterType="String">
-    update t_user set isYn="Y",edate=null where id=#{id}
-    </update>
-    
-    <delete id="deleteUserAll">
-    delete from t_user;
-    </delete>
 
-    <update id="updateUser" parameterType="com.project.comic.user.UserDTO">
-    update t_user set pwd=#{pwd},phone=#{phone}
-                      where id=#{id}
-    </update>
-    
-    <update id="updateUserPoint" parameterType="com.project.comic.user.UserDTO">
-    update t_user set point=#{point} where id=#{id}
-    </update>
-    
-    <select id="checkUser" parameterType="java.lang.String" resultType="java.lang.Integer">
-    select COUNT(id) from t_user where id=#{id}
-    </select>
-    
-    <insert id="addAddr" parameterType="hashmap">
-    INSERT INTO t_user_addr(uidx,post,si,gu,dong,detail) VALUES((select uidx from t_user where id=#{uid}),#{addr0},#{addr1},#{addr2},#{addr3},#{addr4});
-    </insert>
-    
-     <select id="findId" parameterType="hashmap" resultType="hashmap" >
-    select id from t_user where name=#{name} and birth=#{birth} and isYn NOT LIKE 'YK'
-    </select>
-    
-     <select id="findPwd" parameterType="hashmap" resultType="com.project.comic.user.UserDTO" >
-    select * from t_user where name=#{name} and phone=#{phone} and isYn NOT LIKE 'YK'
-    </select>
-    
-    <select id="myInfo" parameterType="String" resultType="com.project.comic.user.UserVO" >
-    SELECT * FROM v_login WHERE id=#{id}
-    </select>
-    
-      <update id="mailCheck" parameterType="hashmap">
-    update t_user set mailcode=#{mailcode} where id=#{id}
-    </update>
-    
-      <update id="mailConfirm" parameterType="hashmap">
-    update t_user set isYn='Y',mailcode=null where mailcode=#{mailcode} and id=#{id}
-    </update>
+<!-- select id => class 내의 스테이트먼트 파람 -->
+<mapper namespace="com.project.comic.user.UserDao">
+	<select id="getUser" resultType="com.project.comic.user.UserDTO"
+		parameterType="java.lang.String">
+		select * from t_user where id=#{id}
+	</select>
+
+	<select id="getUserByUidx"
+		resultType="com.project.comic.user.UserDTO" parameterType="int">
+		select * from t_user where uidx=#{uidx}
+	</select>
+
+	<select id="loginUser"
+		resultType="com.project.comic.user.UserVO" parameterType="hashmap">
+		SELECT * FROM v_login WHERE id=#{id} AND pwd=#{pwd}
+	</select>
+
+	<select id="getUserAll"
+		resultType="com.project.comic.user.UserDTO">
+		select * from t_user;
+	</select>
+
+	<insert id="addUser"
+		parameterType="com.project.comic.user.UserDTO">
+		insert into t_user(id,pwd,name,addr,phone,birth,isYn)
+		values(#{id},#{pwd},#{name},#{addr},#{phone},#{birth},#{isyn})
+	</insert>
+
+	<update id="deleteUser" parameterType="int">
+		update t_user set isYn="N",edate=now() where uidx=#{uidx}
+	</update>
+
+	<update id="deleteCancleUser" parameterType="String">
+		update t_user set isYn="Y",edate=null where id=#{id}
+	</update>
+
+	<delete id="deleteUserAll">
+		delete from t_user;
+	</delete>
+
+	<update id="updateUser"
+		parameterType="com.project.comic.user.UserDTO">
+		update t_user set pwd=#{pwd},phone=#{phone}
+		where id=#{id}
+	</update>
+
+	<update id="updateUserPoint"
+		parameterType="com.project.comic.user.UserDTO">
+		update t_user set point=#{point} where id=#{id}
+	</update>
+
+	<select id="checkUser" parameterType="java.lang.String"
+		resultType="java.lang.Integer">
+		select COUNT(id) from t_user where id=#{id}
+	</select>
+
+	<insert id="addAddr" parameterType="hashmap">
+		INSERT INTO t_user_addr(uidx,post,si,gu,dong,detail) VALUES((select uidx
+		from t_user where
+		id=#{uid}),#{addr0},#{addr1},#{addr2},#{addr3},#{addr4});
+	</insert>
+
+	<select id="findId" parameterType="hashmap" resultType="hashmap">
+		select id from t_user where name=#{name} and birth=#{birth} and isYn
+		NOT LIKE 'YK'
+	</select>
+
+	<select id="findPwd" parameterType="hashmap"
+		resultType="com.project.comic.user.UserDTO">
+		select * from t_user where name=#{name} and phone=#{phone} and isYn NOT LIKE
+		'YK'
+	</select>
+
+	<select id="myInfo" parameterType="String"
+		resultType="com.project.comic.user.UserVO">
+		SELECT * FROM v_login WHERE id=#{id}
+	</select>
+
+	<update id="mailCheck" parameterType="hashmap">
+		update t_user set mailcode=#{mailcode} where id=#{id}
+	</update>
+
+	<update id="mailConfirm" parameterType="hashmap">
+		update t_user set isYn='Y',mailcode=null where mailcode=#{mailcode} and
+		id=#{id}
+	</update>
+
+	<update id="payPoint" parameterType="hashmap">
+		update t_user set point = point - #{point} where uidx=#{uidx}
+	</update>
+	
+	<select id="getUserPoint" parameterType="int">
+		select t_user where sidx=#{sidx}
+	</select>
 </mapper>

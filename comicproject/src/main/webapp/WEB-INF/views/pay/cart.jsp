@@ -38,7 +38,7 @@
 
 				<div class="box">
 
-					<form method="post">
+					<form method="post" action="/comic/pay/pay.do">
 
 						<h1>Shopping cart</h1>
 						<p class="text-muted">You currently have ${tot_count} item(s) in your
@@ -101,7 +101,7 @@
 								<tfoot>
 									<tr>
 										<th colspan="4">합계</th>
-										<th colspan="2">${tot}</th>
+										<th colspan="2">${tot != 0 ? tot+1000 : 0}</th>
 									</tr>
 								</tfoot>
 							</table>

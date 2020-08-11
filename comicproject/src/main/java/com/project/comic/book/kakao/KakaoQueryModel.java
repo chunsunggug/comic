@@ -18,12 +18,20 @@ public class KakaoQueryModel extends AbstractQueryModel {
 	private String target;
 	
 	public String toURLParam() {
-		String param = "query=" + query + "&size=" + size +
-				"&page=" + page;
+		String param = "size=" + size + "&page=" + page;
 		
-		if( sort != null ) param += "&sort=" + sort; 
+		if( sort != null ) param += "&sort=" + sort;
 		if( target != null ) param += "&target=" + target;
 		
+		String encoded = "";
+		try {
+			encoded = URLEncoder.encode( query.replaceAll(" ", "+") , "utf-8" );
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		param += "&query=" + encoded;
 		return param;
 	}
 

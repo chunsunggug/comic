@@ -1,0 +1,16 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+         <!-- select id => class 내의 스테이트먼트 파람 -->
+       
+<mapper namespace="com.project.comic.pay.IOrderDao">
+   <insert id="addNewOrder" parameterType="com.project.comic.pay.OrderDTO" >
+   	insert into t_order(oidx, sbidx,uidx, odate, point, uaddr)
+   	 values( #{oidx}, #{sbidx},#{uidx}, now(), #{point}, #{uaddr})
+   </insert>
+  
+  <select id="getMaxOidx" resultType="int">
+  	select COUNT( distinct oidx) from t_order
+  </select>
+
+</mapper>

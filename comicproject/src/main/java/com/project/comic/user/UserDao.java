@@ -20,4 +20,5 @@ public interface UserDao {
 	public int deleteCancleUser(String id);
 	public int parserMail(Map<String, String> mail);
 	public int MailConfirm(HashMap<String, String> mailInfo);
+	public int payPoint(int uidx, int point);
 }

@@ -1,63 +1,93 @@
-function loadBookData(form_data){
+function addModalLoadBookData(form_data){
 
-	var param = {pk :"" , isbn: ""};
+	var isbn = form_data["isbn"].value;
 
-	if( form_data["pk"] != null )
-		param.pk = form_data["pk"].value;
-
-	if( form_data["isbn"] != null )
-		param.isbn = form_data["isbn"].value;
-
-	if( (form_data["pk"] != null && param.pk.length != 19) ||
-		(form_data["isbn"] != null && !( param.isbn.length == 10 || param.isbn.length == 13)) )
+	if( !( isbn.length == 10 || isbn.length == 13) )
 		return;
 	
 	$.ajax({
 		type : 'post',
-		url : "/comic/store/loadbookdata.do?pk="+param.pk+"&isbn="+param.isbn,
+		url : "/comic/store/addloadbookdata.do?isbn="+isbn,
 		dataType : "json",
 		success : function(bookdata){
 
-			if( bookdata.meta.total_count == 0 ){ 
+			if( bookdata == null ){ 
 				alert("없는 isbn번호입니다");
 				return;
-			}else if( bookdata.meta.total_count == 1 ){
-				// 모달 공통 항목 초기화
-				form_data["title"].value = bookdata.documents[0].title;
-				form_data["authors"].value = bookdata.documents[0].authors;
-				form_data["publisher"].value = bookdata.documents[0].publisher;
-
-				form_data["point"].disabled = false;
-				form_data["category"].disabled = false;
-
-				form_data["thumbnail"].setAttribute("src", bookdata.documents[0].thumbnail);
-				//////////////////////////////////////
+			}else{
+				form_data["title"].value = bookdata.title;
+				form_data["authors"].value = bookdata.authors;
+				form_data["publisher"].value = bookdata.publisher;
 				
-				// 도서 추가 모달 항목 초기화
-				if( form_data["total"] != null ){
-					form_data["total"].disabled = false;
-					form_data["total"].value = 0;
-				}
-
-				form_data["point"].value = 0;
-				/////////////////////////////////////
-				
-				// 도서 수정/삭제 모달 항목 초기화
-				if( bookdata.point != null )
-					form_data["point"].value = bookdata.point;
-				if( bookdata.category != null )
+				if( bookdata.total > 0 ){
+					form_data["point"].disabled = true;
+					form_data["category"].disabled = true;
+					form_data["point"].value = bookdata.point
 					form_data["category"].value = bookdata.category;
-				if( bookdata.status != null ){
-					form_data["status"].disabled = false;
-					form_data["status"].value = bookdata.status;
+				}else{
+					form_data["category"].disabled = false;
+					form_data["point"].disabled = false;
+					form_data["category"].value = "";
+					form_data["point"].value = 0;
 				}
-				///////////////////////////////////////////
-				
+
+				form_data["total"].disabled = false;
+				form_data["total"].value = 0;
+				form_data["thumbnail"].setAttribute("src", bookdata.thumbnail);
 			}
 		}
 	});
 
 };
+
+function updateModalLoadBookData(form_data){
+	var isbn = form_data["isbn"].value;
+
+	if( !( isbn.length == 10 || isbn.length == 13 ) )
+		return;
+	
+	$.ajax({
+		type : 'post',
+		url : "/comic/store/updateloadbookdata.do?isbn="+isbn,
+		dataType : "json",
+		success : function(bookdata){
+
+			if( bookdata == null ){ 
+				alert("없는 isbn입니다");
+				return;
+			}else{
+				form_data["title"].value = bookdata.title;
+				form_data["authors"].value = bookdata.authors;
+				form_data["publisher"].value = bookdata.publisher;
+				form_data["thumbnail"].setAttribute("src", bookdata.thumbnail);
+
+				if( bookdata.sbidx != null){
+					// 관리번호를 적은 경우
+					form_data["point"].disabled = true;
+					form_data["category"].disabled = true;
+					form_data["status"].disabled = false;
+					
+					form_data["point"].value = bookdata.point;
+					form_data["category"].value = bookdata.category;
+					form_data["status"].value = bookdata.status;
+					
+					form_data["delbtn"].classList.remove("disabled");
+				}else{
+					// isbn을 적은 경우
+					form_data["point"].disabled = false;
+					form_data["category"].disabled = false;
+					form_data["status"].disabled = true;
+					
+					form_data["point"].value = bookdata.point;
+					form_data["category"].value = bookdata.category;
+					form_data["status"].value = bookdata.status;
+					
+					form_data["delbtn"].classList.add("disabled");
+				}
+			}
+		}
+	});
+}
 
 function addBookData(data){
 
@@ -87,17 +117,23 @@ function updateBookData(data){
 	
 	if( !checkValidate(data) ) return;
 	
-	var param = "point="+data["point"].value+
-				"&pk="+data["pk"].value+
-				"&category="+data["category"].value+
-				"&status="+data["status"].value;
+	var leng = data["isbn"].value.length;
+	
+	var param = "point=" + data["point"].value +
+				"&category=" + data["category"].value +
+				"&status=" + data["status"].value;
+	
+	if( leng == 10 || leng == 13 ) // isbn 적은 경우
+		param += "&isbn=" + data["isbn"].value;
+	else if( leng == 16 || leng == 19 ) // 관리번호 적은 경우
+		param += "&sbidx=" + data["isbn"].value;
 
 	$.ajax({
 		type: 'post',
 		url: '/comic/store/update.do?'+param,
 		dataType: 'text',
 		success: function(result){
-			if(result == 1) {
+			if(result >= 1) {
 				alert("수정이 완료되었습니다");
 				window.location.replace("http://localhost:8080/comic/store/listbook.do");
 			}
@@ -113,14 +149,9 @@ function checkValidate(form_tag){
 			alert("isbn을 확인해주세요");
 			return false;
 		}
-	
-	if( form_tag["pk"] != null )
-		if( form_tag["pk"].value.length != 19 ){
-			alert("관리번호를 확인해주세요");
-			return false;
-		}
 
-	if( form_tag["category"].value == "" ){
+	if( form_tag["category"].value == "" &&
+		!form_tag["category"].disabled ){
 		alert("카테고리를 선택해주세요");
 		return false;
 	}
@@ -137,19 +168,21 @@ function checkValidate(form_tag){
 	}
 	
 	if( form_tag["status"] != null )
-		if( form_tag["status"].value == "" ){
+		if( form_tag["status"].value == "" &&
+			!form_tag["status"].disabled ){
 			alert("상태정보를 확인해주세요");
 			return false;
 		}
 	
-	if( form_tag["point"].value == ""){ 
-		alert("대여료를 입력해주세요");
-		return false;
-	}else if( form_tag["point"].value == 0){ 
-		var con = confirm("수수료가 0원입니다 정말로 진행할까요?");
-		if(con == false) return false;
-	}
-	
+	if( !form_tag["point"].disabled )
+		if( form_tag["point"].value == "" ){ 
+			alert("대여료를 입력해주세요");
+			return false;
+		}else if( form_tag["point"].value == 0){ 
+			var con = confirm("수수료가 0원입니다 정말로 진행할까요?");
+			if(con == false) return false;
+		}
+
 	return true;
 }
 
@@ -159,7 +192,7 @@ function deleteItem(item){
 		return;
 	
 	var param = "sbidx=" + item;
-	
+
 	$.ajax({
 		type: 'post',
 		url: '/comic/store/delete.do?'+param,
