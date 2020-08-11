@@ -1,5 +1,6 @@
 package com.project.comic.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,9 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.comic.Utility;
-import com.project.comic.book.BookService;
+import com.project.comic.book.BookGroupVO;
 import com.project.comic.book.ISequenceSearch;
 import com.project.comic.book.kakao.KakaoQueryModel;
+import com.project.comic.pay.PayService;
 import com.project.comic.storebook.IStoreBookService;
 import com.project.comic.storebook.StoreBookDTO;
 
@@ -28,7 +30,7 @@ public class BookController {
 	private ISequenceSearch kakaoBookSequenceSearch;
 	
 	@Autowired
-	private BookService bookService;
+	private PayService payService;
 	
 	@Autowired
 	private IStoreBookService storeBookService;
@@ -67,67 +69,40 @@ public class BookController {
 
 		return result;
 	}
-	
-	
+
 	// 책을 누루면 들어오는 페이지의 순서
 	// 대여가능 점포 목록을 보여준다
 	// 점포를 클릭하면 자세히 페이지로 넘어간다
 	
-	// 점포를 보여주는 페이지
+	// 점포목록 보여주는 페이지
 	@RequestMapping(value="/borrowablestoretab.do")
-	public String viewStoreTab(@RequestParam(name="isbn") String isbn13, HttpServletRequest request) {
-		//List list = bookService.getTableList( isbn13, 3 );
+	public String viewStoreTab(@RequestParam(name="isbn") String isbn, HttpServletRequest request) {
+		List<BookGroupVO> vo_list = new ArrayList<BookGroupVO>();
+		List<StoreBookDTO> dto_list = storeBookService.getBooksByIsbn( 1, isbn );
 		
-		request.setAttribute("page", "book/borrowablestoretab.jsp");
-		//request.setAttribute("items", list);
+		if( dto_list != null ) { 
+			BookGroupVO vo = new BookGroupVO();
+			vo.setStoreBookDTOList(dto_list);
+			vo_list.add( vo );
+		}
+		
+		request.setAttribute( "page", "book/borrowablestoretab.jsp" );
+		request.setAttribute( "list_items", vo_list );
 		
 		return "index";
 	}
 	
-	// 점포를 선택하고 넘어오는 페이지
-	// 점포의 해당책을 전부 보여준다
-	/*@RequestMapping(value="/storebooklist.do")
-	public String viewBorrowList(HttpServletRequest request,
-			@RequestParam(name="isbn") String isbn,
-			@RequestParam(name="sidx") int sidx ) {
-		
-		List<StoreBookDTO> list = storeBookService.getBooksByIsbn(sidx, isbn);
-		List<AllInOneBookVO> vo_list = bookService.getContentsVOList(list);
-		
-		request.setAttribute("page", "book/storebooklist.jsp");
-		request.setAttribute("items", vo_list);
-		
-		return "index";
-	}*/
-	
-	// 식별된 하나의 책을 자세히 페이지에서 보여준다
-	// 완벽한 하나의 책을 분류해서 보여주는 페이지
-	/*@RequestMapping(value="/bookdetail.do")
-	public String bookDetail(HttpServletRequest request,
-			@RequestParam(name="pk") String sbidx) {
-		
-		StoreBookDTO dto = (StoreBookDTO)storeBookService.getBookByPk(sbidx);
-		AllInOneBookVO vo = bookService.getContentVO(dto);
-		
-		request.setAttribute("page", "book/bookdetail.jsp");
-		request.setAttribute("item", vo );
-
-		return "index";
-	}*/
-
 	// 점포의 해당 책을 자세히 페이지에서 보여준다
 	// sidx, isbn으로만 분류된 책의 페이지
 	@RequestMapping(value="/bookdetail.do")
 	public String bookDetail(HttpServletRequest request,
-			@RequestParam(name="isbn") String isbn13,
+			@RequestParam(name="isbn") String isbn,
 			@RequestParam(name="sidx") int sidx) {
 		
-		List<StoreBookDTO> list = storeBookService.getBooksByIsbn(sidx, isbn13);
-		//AllInOneBookVO vo = bookService.getContentVO(list.get(0));
-		//vo.setStoreBookDTOList(list);
+		BookGroupVO vo = (BookGroupVO)storeBookService.getBookGroupVO( sidx, isbn );
 		
 		request.setAttribute("page", "book/bookdetail.jsp");
-		//request.setAttribute("item", vo );
+		request.setAttribute("item", vo );
 
 		return "index";
 	}
@@ -136,14 +111,12 @@ public class BookController {
 	@ResponseBody
 	@RequestMapping(value="/additemtocart.do")
 	public String addItemToCart(HttpServletResponse response, HttpServletRequest request,
-			@RequestParam(name="isbn") String isbn13,
+			@RequestParam(name="isbn") String isbn,
 			@RequestParam(name="sidx") int sidx) {
 		
-		List<StoreBookDTO> list = storeBookService.getBooksByIsbn(sidx, isbn13);
-		//AllInOneBookVO vo = bookService.getContentVO(list.get(0));
-		//vo.setStoreBookDTOList(list);
+		BookGroupVO vo = (BookGroupVO)storeBookService.getBookGroupVO(sidx, isbn);
 		
-		//if( bookService.addItemToCart(response, request, vo) == -1) return "0";
+		if( payService.addItemToCart(response, request, isbn, sidx) == -1) return "0";
 
 		return "1";
 	}
@@ -152,10 +125,10 @@ public class BookController {
 	@ResponseBody
 	@RequestMapping(value="/deletecartitem.do")
 	public String deleteCartItem(HttpServletResponse response, HttpServletRequest request,
-			@RequestParam(name="isbn") String isbn13,
+			@RequestParam(name="isbn") String isbn,
 			@RequestParam(name="sidx") int sidx) {
 		
-		if( bookService.DeleteItemCart(response, request, sidx, isbn13 ) == 0 ) {
+		if( payService.DeleteItemCart(response, request, sidx, isbn ) == 0 ) {
 			return "0";
 		}
 

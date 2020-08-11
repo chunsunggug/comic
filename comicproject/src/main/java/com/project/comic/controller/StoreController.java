@@ -17,8 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.project.comic.Utility;
-import com.project.comic.book.AllInOneBookGroupVO;
-import com.project.comic.book.AllInOneBookVO;
+import com.project.comic.book.BookGroupVO;
+import com.project.comic.book.BookVO;
 import com.project.comic.book.ISequenceSearch;
 import com.project.comic.book.kakao.BookGroupVOMakerByKakao;
 import com.project.comic.book.kakao.BookVOMakerByKakao;
@@ -35,7 +35,6 @@ public class StoreController {
 	// 9788954671873
 	// 9788954657556
 	// 테스트용 isbn
-	private final String SIDX = "uidx";
 	private final int PAGE_LIST_SIZE = 10;
 	private final int PAGE_SIZE = 10;
 	
@@ -56,10 +55,9 @@ public class StoreController {
 	public ModelAndView listBook(HttpSession session,
 			@RequestParam(value="cp", defaultValue="1")int cp) {
 		
-		// test 상황 sidx : 1
-		int sidx = 1;
+		int sidx = (int)session.getAttribute("uidx");
 		List<StoreBookDTO> list_dto = storeBookService.getPageList(cp, PAGE_LIST_SIZE, 1);
-		List<AllInOneBookVO> list_vo = bookVOMakerByKakao.getVOList(list_dto);
+		List<BookVO> list_vo = bookVOMakerByKakao.getVOList(list_dto);
 		
 		int total = storeBookService.getBooksCountAll(sidx);
 		String pagestr = PageMaker.makePage("/comic/store/listbook.do", total, PAGE_LIST_SIZE, PAGE_SIZE, cp);
@@ -80,8 +78,8 @@ public class StoreController {
 	@ResponseBody
 	public String getAddBookDataByISBN(@RequestParam(name="isbn") String isbn, HttpSession session) {
 		
-		int sidx = 1; // session.getAttribute("sidx");
-		AllInOneBookGroupVO vo = new AllInOneBookGroupVO();
+		int sidx = (int)session.getAttribute("uidx");
+		BookGroupVO vo = new BookGroupVO();
 		Gson gson = new Gson();
 		
 		if( isbn.length() == 10 || isbn.length() == 13 ) {
@@ -114,23 +112,24 @@ public class StoreController {
 	@RequestMapping(value="/updateloadbookdata.do", produces = "application/text; charset=UTF-8",
 			method = RequestMethod.POST)
 	@ResponseBody
-	public String getUpdateBookDataByISBN(@RequestParam(name="pkisbn") String pkisbn, HttpSession session) {
+	public String getUpdateBookDataByISBN(@RequestParam(name="isbn") String isbn, HttpSession session) {
 
-		int sidx = 1; // session.getAttribute("sidx");
+		int sidx = (int)session.getAttribute("uidx");
 		Gson gson = new Gson();
 
-		if( pkisbn.length() == 10 || pkisbn.length() == 13 ) {
+		if( isbn.length() == 10 || isbn.length() == 13 ) {
 			// 책이 있으면 카카오 책정보랑 요금을 같이 가져가야함
-			List<StoreBookDTO> list_dto = storeBookService.getBooksByIsbn(sidx, pkisbn);
+			List<StoreBookDTO> list_dto = storeBookService.getBooksByIsbn(sidx, isbn);
 
 			if( list_dto != null ) {
 				return gson.toJson( bookGroupVOMakerByKakao.getVO( list_dto ) );
 			}else
 				return null; // 위에서 안나왔다면 없는 번호		
-		}
-		else if(pkisbn.length() == 16 || pkisbn.length() == 19) {
+		}/*
+		// 나중에 관리번호 적으면 개별 도서상태 수정에 쓰일 것 지우지 마시오
+		else if(isbn.length() == 16 || isbn.length() == 19) {
 			// 여기서는 isbn이 아닌 기본키
-			StoreBookDTO dto = (StoreBookDTO)storeBookService.getBookByPk( pkisbn );
+			StoreBookDTO dto = (StoreBookDTO)storeBookService.getBookByPk( isbn );
 			
 			if( dto == null )
 				return null;
@@ -138,7 +137,7 @@ public class StoreController {
 			AllInOneBookVO vo = bookVOMakerByKakao.getVO( dto );
 			
 			return gson.toJson( vo );
-		}
+		}*/
 		
 		// 여기까지 왔다면 그냥 없는번호
 		return null;
@@ -181,8 +180,8 @@ public class StoreController {
 		else if( param.containsKey("sbidx") ) {
 			// 관리번호가 적힌 경우
 			System.out.println("관리번호 들어옴");
-			String sbidx = (String)param.get("sbidx"),
-					status = (String)param.get("status");
+			int sbidx = Integer.parseInt( (String)param.get("sbidx") );
+			String status = (String)param.get("status");
 			
 			result = storeBookService.update( sbidx, status );
 		}
@@ -196,7 +195,7 @@ public class StoreController {
 		
 		// sbidx로 삭제
 		if( param.containsKey("sbidx") ) {
-			String sbidx = (String)param.get("sbidx");
+			int sbidx = Integer.parseInt( (String)param.get("sbidx") );
 			
 			return "" + storeBookService.delete(sbidx);
 		}

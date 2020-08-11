@@ -38,7 +38,7 @@
 					<th style="vertical-align:middle">${item.point}</th>
 					<th style="vertical-align:middle">${item.sdate}</th>
 					<th style="vertical-align:middle">
-					<button class="btn btn-danger" onclick="deleteItem('${item.sbidx}')">삭제</button>
+					<button class="btn btn-danger" onclick="deleteItem(${item.sbidx})">삭제</button>
 					</th>
 				</tr>
 				</c:forEach>
@@ -146,8 +146,8 @@
 													<option value="S">입고</option>
 													<option value="L">분실</option>
 											</select></li>
-											<li><input id="pkisbn" name="pkisbn" class="col-xs-12 col-sm-12"
-												type="number" placeholder="관리번호 또는 isbn"
+											<li><input id="isbn" name="isbn" class="col-xs-12 col-sm-12"
+												type="number" placeholder="isbn"
 												oninput="updateModalLoadBookData(window.update_form_book)" /></li>
 										</ul>
 									</div>
@@ -156,7 +156,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-danger" name="delbtn" onclick="deleteItem(window.update_form_book.pkisbn.value)">삭제</button>
+						<button type="button" class="btn btn-danger" name="delbtn" onclick="deleteItem(window.update_form_book.isbn.value)">삭제</button>
 						<button type="button" class="btn btn-primary" onclick="updateBookData(window.update_form_book)">수정하기</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 					</div>

@@ -8,8 +8,8 @@ import com.project.comic.storebook.StoreBookDTO;
 import lombok.Data;
 
 @Data
-public class AllInOneBookVO {
-	private String sbidx;			// storebook 테이블 기본키
+public class BookVO {
+	private int sbidx;			// storebook 테이블 기본키
 	private int idx;				// 책 식별
 	private String udate;			// 업뎃 날짜
 	private String category;		// 카테고리
@@ -17,6 +17,7 @@ public class AllInOneBookVO {
 	private int point;				// 책 대여료
 	private String status;			// 책 상태
 	private int sidx;				// 점포 번호
+	private String name;			// 점포 이름
 	private String isbn13;			// isbn13
 	private String isbn10;			// isbn10
 	private String contents;		// 책소개 내용
@@ -38,6 +39,7 @@ public class AllInOneBookVO {
 		sidx = dto.getSidx();
 		status = dto.getStatus();
 		udate = dto.getUdate();
+		name = dto.getName();
 	}
 	
 	public void setKakaoDocuments(JSONObject obj) {

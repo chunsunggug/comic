@@ -7,5 +7,6 @@
         <mapper resource="SqlMap/storeSQL.xml"/>
         <mapper resource="SqlMap/storebookSQL.xml"/>
         <mapper resource="SqlMap/noticeSQL.xml"/>
+        <mapper resource="SqlMap/orderSQL.xml"/>
     </mappers>
 </configuration>

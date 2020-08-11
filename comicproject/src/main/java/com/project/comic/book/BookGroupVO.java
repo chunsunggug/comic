@@ -10,12 +10,13 @@ import com.project.comic.storebook.StoreBookDTO;
 import lombok.Data;
 
 @Data
-public class AllInOneBookGroupVO {
+public class BookGroupVO {
 	private String category;		// 카테고리
 	private String title;			// 책 제목
 	private int point;				// 책 대여료
 	private String status;			// 책 상태
 	private int sidx;				// 점포 번호
+	private String name;			// 가게 이름
 	private String isbn13;			// isbn13
 	private String isbn10;			// isbn10
 	private String contents;		// 책소개 내용
@@ -39,7 +40,7 @@ public class AllInOneBookGroupVO {
 		isbn13 = dto.getIsbn13();
 		point = dto.getPoint();
 		sidx = dto.getSidx();
-		url = "/comic/bookdetail.do?sidx=" + sidx + "&isbn=" + isbn13;
+		name = dto.getName();
 		total = dtos.size();
 		
 		operating = 0;
@@ -54,6 +55,11 @@ public class AllInOneBookGroupVO {
 		}
 		
 		valuable = operating - borrowed;	// 실제 운영중인 책 - 대여중인 책 = 대여가능 수량
+		status = valuable > 0 ? "S" : "N";	// 1권이라도 있으면 입고상태, 없으면 N으로 없음 표시
+		
+		String isbn = isbn13 != null ? isbn13 : isbn10;
+		url = "/comic/bookdetail.do?sidx=" + sidx + "&isbn=" + isbn;
+
 	}
 	
 	public void setKakaoDocuments(JSONObject obj) {

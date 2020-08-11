@@ -43,9 +43,9 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="item" items="${items}">
+						<c:forEach var="item" items="${list_items}">
 						<tr>
-							<th>${item.title}</th>
+							<th>${item.name}</th>
 							<td>${item.point}</td>
 							<td>
 							<c:choose>
@@ -57,8 +57,18 @@
 								</c:otherwise>
 							</c:choose>
 							</td>
-							<td><a href="/comic/bookdetail.do?isbn=${item.isbn13}&sidx=${item.sidx}"
-								class="btn btn-primary btn-sm">보러가기</a></td>
+							<td>
+								<c:choose>
+								<c:when test="${item.isbn13 != null }">
+								<a href="/comic/bookdetail.do?isbn=${item.isbn13}&sidx=${item.sidx}"
+									class="btn btn-primary btn-sm">보러가기</a>
+								</c:when>
+								<c:otherwise>
+								<a href="/comic/bookdetail.do?isbn=${item.isbn10}&sidx=${item.sidx}"
+									class="btn btn-primary btn-sm">보러가기</a>
+								</c:otherwise>
+								</c:choose>
+							</td>
 						</tr>
 						</c:forEach>
 					</tbody>

@@ -94,4 +94,13 @@ public class UserDaoImpl implements UserDao {
 		return sqlMap.update("mailConfirm", mailInfo);
 	}
 
+	@Override
+	public int payPoint(int uidx, int point) {
+		Map param = new HashMap();
+		param.put("uidx", uidx);
+		param.put("point", point);
+		
+		return sqlMap.update("payPoint", param);
+	}
+
 }

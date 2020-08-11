@@ -5,8 +5,8 @@
 <mapper namespace="com.project.comic.storebook.StoreBookDaoImpl">
 	<insert id="addStoreBook"
 		parameterType="com.project.comic.storebook.StoreBookDTO">
-		insert into t_store_book(sbidx,sidx,isbn13,isbn10,idx,point,category)
-		values(#{sbidx},#{sidx},#{isbn13},#{isbn10},#{idx},#{point},#{category})
+		insert into t_store_book(sidx,isbn13,isbn10,idx,point,category)
+		values(#{sidx},#{isbn13},#{isbn10},#{idx},#{point},#{category})
 	</insert>
 	
 	<select id="getBookCount" parameterType="java.util.Map" resultType="int" >
@@ -19,7 +19,7 @@
 	
 	<select id="getPageList" parameterType="java.util.Map"
 	resultType="com.project.comic.storebook.StoreBookDTO">
-		select * from t_store_book where sidx=#{sidx}
+		select *,(SELECT NAME FROM t_user WHERE uidx = 1 ) AS name from t_store_book where sidx=#{sidx}
 		limit #{start}, #{listsize}
 	</select>
 	
@@ -28,7 +28,7 @@
 		select count(*) from t_store_book where sidx=#{sidx}
 	</select>	
 	
-	<select id="getBook" parameterType="java.lang.String"
+	<select id="getBook" parameterType="int"
 	resultType="com.project.comic.storebook.StoreBookDTO" >
 		select * from t_store_book where sbidx=#{sbidx}
 	</select>
@@ -54,7 +54,7 @@
 												where sbidx=#{sbidx}
 	</update>
 
-	<delete id="deleteBook" parameterType="java.lang.String">
+	<delete id="deleteBook" parameterType="int">
 		delete from t_store_book where sbidx=#{sbidx}
 	</delete>
 	
@@ -69,7 +69,7 @@
 	</select>
 	
 	<select id="getBooksByIsbn" parameterType="java.util.Map" resultType="com.project.comic.storebook.StoreBookDTO">
-		select * from t_store_book where sidx=#{sidx} and
+		select *,(SELECT NAME FROM t_user WHERE uidx = #{sidx} ) AS name from t_store_book where sidx=#{sidx} and
 		(isbn13=#{isbn} or isbn10=#{isbn})
 	</select>
 	

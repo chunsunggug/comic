@@ -41,19 +41,19 @@ function addModalLoadBookData(form_data){
 };
 
 function updateModalLoadBookData(form_data){
-	var pkisbn = form_data["pkisbn"].value;
+	var isbn = form_data["isbn"].value;
 
-	if( !( pkisbn.length == 10 || pkisbn.length == 13 || pkisbn.length == 16 || pkisbn.length == 19) )
+	if( !( isbn.length == 10 || isbn.length == 13 ) )
 		return;
 	
 	$.ajax({
 		type : 'post',
-		url : "/comic/store/updateloadbookdata.do?pkisbn="+pkisbn,
+		url : "/comic/store/updateloadbookdata.do?isbn="+isbn,
 		dataType : "json",
 		success : function(bookdata){
 
 			if( bookdata == null ){ 
-				alert("없는 isbn 또는 관리번호입니다");
+				alert("없는 isbn입니다");
 				return;
 			}else{
 				form_data["title"].value = bookdata.title;
@@ -117,16 +117,16 @@ function updateBookData(data){
 	
 	if( !checkValidate(data) ) return;
 	
-	var leng = data["pkisbn"].value.length;
+	var leng = data["isbn"].value.length;
 	
 	var param = "point=" + data["point"].value +
 				"&category=" + data["category"].value +
 				"&status=" + data["status"].value;
 	
 	if( leng == 10 || leng == 13 ) // isbn 적은 경우
-		param += "&isbn=" + data["pkisbn"].value;
+		param += "&isbn=" + data["isbn"].value;
 	else if( leng == 16 || leng == 19 ) // 관리번호 적은 경우
-		param += "&sbidx=" + data["pkisbn"].value;
+		param += "&sbidx=" + data["isbn"].value;
 
 	$.ajax({
 		type: 'post',
@@ -147,15 +147,6 @@ function checkValidate(form_tag){
 	if( form_tag["isbn"] != null)
 		if( form_tag["isbn"].value.length != 10 && form_tag["isbn"].value.length != 13 ){
 			alert("isbn을 확인해주세요");
-			return false;
-		}
-	
-	if( form_tag["pkisbn"] != null )
-		if( !(form_tag["pkisbn"].value.length == 10 ||
-			form_tag["pkisbn"].value.length == 13 ||
-			form_tag["pkisbn"].value.length == 16 ||
-			form_tag["pkisbn"].value.length == 19) ){
-			alert("관리번호를 확인해주세요");
 			return false;
 		}
 
@@ -183,7 +174,7 @@ function checkValidate(form_tag){
 			return false;
 		}
 	
-	if( !form_tag["status"].disabled )
+	if( !form_tag["point"].disabled )
 		if( form_tag["point"].value == "" ){ 
 			alert("대여료를 입력해주세요");
 			return false;

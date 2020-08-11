@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.project.comic.Utility;
-import com.project.comic.book.AllInOneBookGroupVO;
+import com.project.comic.book.BookGroupVO;
 import com.project.comic.book.ISequenceSearch;
 import com.project.comic.storebook.StoreBookDTO;
 
@@ -17,8 +17,8 @@ public class BookGroupVOMakerByKakao {
 	@Autowired
 	private ISequenceSearch kakaoBookSequenceSearch;
 	
-	public AllInOneBookGroupVO getVO(List<StoreBookDTO> dto) {
-		AllInOneBookGroupVO vo = new AllInOneBookGroupVO();
+	public BookGroupVO getVO(List<StoreBookDTO> dto) {
+		BookGroupVO vo = new BookGroupVO();
 		
 		KakaoQueryModel model = new KakaoQueryModel();
 		model.setPage(0);

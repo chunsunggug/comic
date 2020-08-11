@@ -1,9 +1,6 @@
 package com.project.comic.storebook;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -14,7 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.project.comic.NotSupportedClass;
 import com.project.comic.Utility;
-import com.project.comic.book.AllInOneBookVO;
+import com.project.comic.book.BookGroupVO;
+import com.project.comic.book.BookVO;
 import com.project.comic.book.ISequenceSearch;
 import com.project.comic.book.NoExistBook;
 import com.project.comic.book.kakao.KakaoQueryModel;
@@ -79,7 +77,6 @@ public class StoreBookService implements IStoreBookService{
 			index = storeBookDao.getBookMaximumIdx( dto.getSidx(), split[1] );
 		
 		dto.setIdx( index + 1 );
-		dto.setSbidx( dto.makeSbidx() );
 		
 		int result = storeBookDao.add( dto );
 		System.out.println("책 추가 로우 : " + result);
@@ -144,7 +141,7 @@ public class StoreBookService implements IStoreBookService{
 	
 	// 기본키로 삭제
 	@Override
-	public int delete(String sbidx) {
+	public int delete(int sbidx) {
 		int result = storeBookDao.deleteBook(sbidx);
 		System.out.println("result : " + result);
 		
@@ -162,8 +159,8 @@ public class StoreBookService implements IStoreBookService{
 	}
 
 	@Override
-	public Object getBookByPk(String pk) {
-		StoreBookDTO dto = storeBookDao.getBook(pk);
+	public Object getBookByPk(int sbidx) {
+		StoreBookDTO dto = storeBookDao.getBook(sbidx);
 		return dto;
 	}
 
@@ -173,7 +170,66 @@ public class StoreBookService implements IStoreBookService{
 	}
 
 	@Override
-	public int update(String sbidx, String status) {
+	public int update(int sbidx, String status) {
 		return storeBookDao.updateBook(sbidx, status);
+	}
+
+	@Override
+	public Object getBookVO(int sbidx) {
+		StoreBookDTO dto = (StoreBookDTO)getBookByPk(sbidx);
+		BookVO vo = new BookVO();
+		
+		if( dto != null ) {
+			vo.setStoreBookDTO(dto);
+			KakaoQueryModel md = new KakaoQueryModel();
+			md.setPage(0);
+			md.setTarget("isbn");
+			
+			if( dto.getIsbn13() != null )
+				md.setQuery(dto.getIsbn13());
+			else
+				md.setQuery(dto.getIsbn10());
+			
+			String result = (String)kakaoBookSequenceSearch.nextSearch(md);
+			JSONObject json_result = (JSONObject)Utility.JSONParse(result);
+			JSONArray json_documents = (JSONArray)json_result.get("documents");
+			JSONObject json_book = (JSONObject)json_documents.get(0);
+			
+			vo.setKakaoDocuments(json_book);
+			
+			return vo;
+		}
+		
+		return null;
+	}
+
+	@Override
+	public Object getBookGroupVO(int sidx, String isbn) {
+		List<StoreBookDTO> dtolist = getBooksByIsbn(sidx, isbn);
+		BookGroupVO vo = new BookGroupVO();
+		
+		if( dtolist != null) {
+			vo.setStoreBookDTOList(dtolist);
+			StoreBookDTO dto = dtolist.get(0);
+			KakaoQueryModel md = new KakaoQueryModel();
+			md.setPage(0);
+			md.setTarget("isbn");
+			
+			if( dto.getIsbn13() != null )
+				md.setQuery(dto.getIsbn13());
+			else
+				md.setQuery(dto.getIsbn10());
+			
+			String result = (String)kakaoBookSequenceSearch.nextSearch(md);
+			JSONObject json_result = (JSONObject)Utility.JSONParse(result);
+			JSONArray json_documents = (JSONArray)json_result.get("documents");
+			JSONObject json_book = (JSONObject)json_documents.get(0);
+			
+			vo.setKakaoDocuments(json_book);
+			
+			return vo;
+		}
+		
+		return null;
 	}
 }
