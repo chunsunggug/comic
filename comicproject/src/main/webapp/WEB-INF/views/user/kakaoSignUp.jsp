@@ -4,7 +4,7 @@
 
 <div class="modal-body">
 
-	<h2>서비스를 이용하시려면 하단의 정보 기재 후 회원가입 버튼을 눌러주세요</h2>
+	<h2 style="text-align: center;">추가 정보 입력</h2>
 	<form action="/comic/signup.do" method="post" name="signup"
 		onsubmit="return checkValue()">
 		<input type="hidden" name="id" value="${id}" /> 

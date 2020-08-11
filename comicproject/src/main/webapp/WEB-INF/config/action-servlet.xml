@@ -126,7 +126,14 @@
 	</beans:bean>
 
 	<context:component-scan
-		base-package="com.project.comic,com.project.comic.user,com.project.comic.controller,
-									com.project.comic.book,com.project.comic.store,com.project.comic.mail,
-									com.project.comic.storebook,com.project.comic.kakao" />
+		base-package="com.project.comic,
+					  com.project.comic.user,
+					  com.project.comic.controller,
+					  com.project.comic.book,
+					  com.project.comic.store,
+					  com.project.comic.mail,
+					  com.project.comic.storebook,
+					  com.project.comic.kakao,
+					  com.project.comic.notice
+					  " />
 </beans:beans>
