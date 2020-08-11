@@ -50,11 +50,9 @@ public class NoticeController {
 			req.setAttribute("page", "user/login"+jsp);
 			req.setAttribute("msg", "로그인 후 이용 바랍니다.");
 			req.setAttribute("gourl", "index.do");
-			
 			return "index";
 		}else {
 			nservice.AddNotice(files, req, session, ndto);
-			
 			req.setAttribute("page", "notice/listNotice"+jsp);
 			return "index";
 		}

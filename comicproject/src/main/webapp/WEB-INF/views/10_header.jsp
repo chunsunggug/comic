@@ -44,14 +44,18 @@
 							<li><a href="/comic/myInfo.do">마이페이지</a></li>
 							<li><a href="/comic/signout.do">로그아웃</a></li>
 						</c:when>
-						<c:when test="${isyn eq 'Y' and type eq 'S'}">
+						<c:when test="${fn:contains(isyn,'Y') and type eq 'S'}">
 							<div class="float-right btn-wrapper" style="margin-top: 40px;">
-								<span style="color: blue" class="navlogininfo">${name}(${id})님
+								<span style="color: blue" class="navlogininfo">${name}님
 									환영합니다. || </span> <span style="color: blue" class="navlogininfo">현재
 									잔여 포인트 : ${point } || </span> <a href="/comic/myInfo.do"><span
 									style="color: blue" class="navlogininfo">마이페이지 || </span></a> <a
 									href="/comic/store/listbook.do"><span style="color: blue"
-									class="navlogininfo">도서관리 || </span></a> <a
+									class="navlogininfo">도서관리 || </span></a> 
+									<a
+									href="/comic/listuser.do"><span style="color: blue"
+									class="navlogininfo">회원관리 || </span></a> 
+									<a
 									href="/comic/signout.do"><span style="color: blue">로그아웃</span></a>
 							</div>
 						</c:when>

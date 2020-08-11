@@ -32,8 +32,6 @@ response.setDateHeader("Expires",0);
 
 
     <!-- styles -->
-      <link href="/comic/resources/plugins/listtyicons/style.css" rel="stylesheet">
-  <link href="/comic/resources/plugins/menuzord/css/menuzord.css" rel="stylesheet">
     <link href="/comic/resources/css/font-awesome.css" rel="stylesheet">
     <link href="/comic/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="/comic/resources/css/animate.min.css" rel="stylesheet">

@@ -19,9 +19,6 @@
                         <div class="item">
                             <img class="img-responsive" src="/comic/resources/img/main-slider3.jpg" alt="">
                         </div>
-                        <div class="item">
-                            <img class="img-responsive" src="/comic/resources/img/main-slider4.jpg" alt="">
-                        </div>
                     </div>
                     <!-- /#main-slider -->
                 </div>
@@ -37,8 +34,8 @@
                                 <div class="icon"><i class="fa fa-heart"></i>
                                 </div>
 
-                                <h3><a href="#">We love our customers</a></h3>
-                                <p>We are known to provide best possible service ever</p>
+                                <h3><a href="#">신간 추천 만화</a></h3>
+                                <p>새로 나온 만화를 보시려면 클릭!</p>
                             </div>
                         </div>
 
@@ -47,8 +44,8 @@
                                 <div class="icon"><i class="fa fa-tags"></i>
                                 </div>
 
-                                <h3><a href="#">Best prices</a></h3>
-                                <p>You can check that the height of the boxes adjust when longer text like this one is used in one of them.</p>
+                                <h3><a href="#">신간 추천 소설</a></h3>
+                                <p>새로 나온 소설을 보시려면 클릭!</p>
                             </div>
                         </div>
 
@@ -57,8 +54,8 @@
                                 <div class="icon"><i class="fa fa-thumbs-up"></i>
                                 </div>
 
-                                <h3><a href="#">100% satisfaction guaranteed</a></h3>
-                                <p>Free returns on everything for 3 months.</p>
+                                <h3><a href="#">인기 도서</a></h3>
+                                <p>최근 인기 있는 도서가 궁금하다면 클릭!</p>
                             </div>
                         </div>
                     </div>
@@ -78,7 +75,7 @@
                 <div class="box">
                     <div class="container">
                         <div class="col-md-12">
-                            <h2>Hot this week</h2>
+                           <h2><b>Hot this week</b></h2>
                         </div>
                     </div>
                 </div>
@@ -106,9 +103,12 @@
                                 </a>
                                 <div class="text">
                                     <h3><a href="detail.html">Fur coat with very but very very long name</a></h3>
-                                    <p class="price">$143.00</p>
                                 </div>
                                 <!-- /.text -->
+                                    <div class="ribbon sale">
+                                    <div class="theribbon">1위</div>
+                                    <div class="ribbon-background"></div>
+                                </div>
                             </div>
                             <!-- /.product -->
                         </div>
@@ -137,22 +137,14 @@
                                 </div>
                                 <!-- /.text -->
 
-                                <div class="ribbon sale">
-                                    <div class="theribbon">SALE</div>
-                                    <div class="ribbon-background"></div>
-                                </div>
-                                <!-- /.ribbon -->
 
                                 <div class="ribbon new">
-                                    <div class="theribbon">NEW</div>
+                                    <div class="theribbon">2위</div>
                                     <div class="ribbon-background"></div>
                                 </div>
                                 <!-- /.ribbon -->
 
-                                <div class="ribbon gift">
-                                    <div class="theribbon">GIFT</div>
-                                    <div class="ribbon-background"></div>
-                                </div>
+                                
                                 <!-- /.ribbon -->
                             </div>
                             <!-- /.product -->
@@ -179,9 +171,12 @@
                                 </a>
                                 <div class="text">
                                     <h3><a href="detail.html">Black Blouse Versace</a></h3>
-                                    <p class="price">$143.00</p>
                                 </div>
                                 <!-- /.text -->
+                                <div class="ribbon gift">
+                                    <div class="theribbon">3위</div>
+                                    <div class="ribbon-background"></div>
+                                </div>
                             </div>
                             <!-- /.product -->
                         </div>
@@ -207,7 +202,6 @@
                                 </a>
                                 <div class="text">
                                     <h3><a href="detail.html">Black Blouse Versace</a></h3>
-                                    <p class="price">$143.00</p>
                                 </div>
                                 <!-- /.text -->
                             </div>
@@ -235,15 +229,9 @@
                                 </a>
                                 <div class="text">
                                     <h3><a href="detail.html">White Blouse Versace</a></h3>
-                                    <p class="price">$143.00</p>
                                 </div>
                                 <!-- /.text -->
 
-                                <div class="ribbon new">
-                                    <div class="theribbon">NEW</div>
-                                    <div class="ribbon-background"></div>
-                                </div>
-                                <!-- /.ribbon -->
                             </div>
                             <!-- /.product -->
                         </div>
@@ -269,15 +257,9 @@
                                 </a>
                                 <div class="text">
                                     <h3><a href="detail.html">Fur coat</a></h3>
-                                    <p class="price">$143.00</p>
                                 </div>
                                 <!-- /.text -->
 
-                                <div class="ribbon gift">
-                                    <div class="theribbon">GIFT</div>
-                                    <div class="ribbon-background"></div>
-                                </div>
-                                <!-- /.ribbon -->
 
                             </div>
                             <!-- /.product -->
@@ -308,23 +290,6 @@
                                 </div>
                                 <!-- /.text -->
 
-                                <div class="ribbon sale">
-                                    <div class="theribbon">SALE</div>
-                                    <div class="ribbon-background"></div>
-                                </div>
-                                <!-- /.ribbon -->
-
-                                <div class="ribbon new">
-                                    <div class="theribbon">NEW</div>
-                                    <div class="ribbon-background"></div>
-                                </div>
-                                <!-- /.ribbon -->
-
-                                <div class="ribbon gift">
-                                    <div class="theribbon">GIFT</div>
-                                    <div class="ribbon-background"></div>
-                                </div>
-                                <!-- /.ribbon -->
                             </div>
                             <!-- /.product -->
                         </div>
@@ -350,7 +315,6 @@
                                 </a>
                                 <div class="text">
                                     <h3><a href="detail.html">Black Blouse Versace</a></h3>
-                                    <p class="price">$143.00</p>
                                 </div>
                                 <!-- /.text -->
                             </div>

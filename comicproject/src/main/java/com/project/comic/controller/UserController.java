@@ -416,7 +416,7 @@ public class UserController {
 							// addr[5,6,7...] = detail
 		HashMap<String, String> mapAddr = new HashMap<String, String>();
 		for (int i = 4; i < addr.length; i++) {
-			detail += addr[i];
+			detail += addr[i]+" ";
 		}
 		System.out.println("detail:" + detail);
 		addr[4] = detail;
