@@ -194,6 +194,11 @@ public class PayService {
 					// 점수 빼기
 					session.setAttribute( "point", user_point - total_point);
 					
+					// 쿠키 비우기
+					item_arr.clear();
+					cookie.setValue(valueToEncodedString(item_arr.toJSONString()));
+					response.addCookie(cookie);
+					
 					return result;
 
 				}else {

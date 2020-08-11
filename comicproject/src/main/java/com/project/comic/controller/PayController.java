@@ -92,10 +92,6 @@ public class PayController {
 		
 		mv.addObject( "page", "20_main.jsp");// "pay/payresult.jsp" );
 		
-		Cookie delete = new Cookie("comiccart", "");
-		delete.setMaxAge(0);
-		response.addCookie(delete);
-		
 		return mv;
 	}
 	
