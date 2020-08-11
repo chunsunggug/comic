@@ -43,7 +43,7 @@ public class StoreController {
 		
 		// test 상황 sidx : 1
 		int sidx = 1;
-		List listitem = storeBookService.getPageList(cp, PAGE_LIST_SIZE, 1);
+		List listitem = storeBookService.getManagePageList(cp, PAGE_LIST_SIZE, 1);
 		int total = storeBookService.getBooksCountAll(sidx);
 		String pagestr = PageMaker.makePage("/comic/store/listbook.do", total, PAGE_LIST_SIZE, PAGE_SIZE, cp);
 		

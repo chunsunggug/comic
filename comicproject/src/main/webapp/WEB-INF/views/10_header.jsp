@@ -24,8 +24,8 @@
 
 <body>
 
-	<!-- *** TOPBAR ***
- _________________________________________________________ -->
+<div class="smart-scroll">
+	<!-- *** TOPBAR *** -->
 	<div id="top">
 		<div class="container">
 			<div class="col-md-6 offer" data-animate="fadeInDown">
@@ -67,9 +67,6 @@
 
 						</c:otherwise>
 					</c:choose>
-
-
-
 				</ul>
 			</div>
 		</div>
@@ -317,8 +314,7 @@
 
 	<!-- *** TOP BAR END *** -->
 
-	<!-- *** NAVBAR ***
- _________________________________________________________ -->
+	<!-- *** NAVBAR *** -->
 
 	<div class="navbar navbar-default yamm" role="navigation" id="navbar">
 		<div class="container">
@@ -344,7 +340,7 @@
 						<span class="sr-only">Toggle search</span> <i class="fa fa-search"></i>
 					</button>
 
-					<a class="btn btn-default navbar-toggle" href="/comic/index.do">
+					<a class="btn btn-default navbar-toggle" href="/comic/pay/cart.do">
 						<i class="fa fa-shopping-cart"></i> <span class="hidden-xs">최근
 							확인 도서</span>
 					</a>
@@ -522,7 +518,7 @@
 			<div class="navbar-buttons">
 
 				<div class="navbar-collapse collapse right" id="basket-overview">
-					<a href="basket.html" class="btn btn-primary navbar-btn"><i
+					<a href="/comic/pay/cart.do" class="btn btn-primary navbar-btn"><i
 						class="fa fa-shopping-cart"></i><span class="hidden-sm">최근
 							확인 도서</span></a>
 				</div>
@@ -571,6 +567,8 @@
 	<!-- /#navbar -->
 
 	<!-- *** NAVBAR END *** -->
+	
+	</div>
 	
 	<script type="text/javascript">
 	/*date check max today*/

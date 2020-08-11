@@ -71,5 +71,45 @@ public class StoreBookDaoImpl implements IStoreBookDao {
 		
 		return sqlMap.selectOne( "getBookMaximumIdx", param );
 	}
+
+	@Override
+	public int canBorrow(int sidx, String isbn) {
+		Map param = new HashMap();
+		
+		param.put( "sidx",sidx );
+		param.put( "isbn", isbn );
+		
+		return sqlMap.selectOne( "canBorrow", param );
+	}
+
+	@Override
+	public List getBorrowableBooks(int sidx, String isbn) {
+		Map param = new HashMap();
+		
+		param.put( "sidx", sidx );
+		param.put( "isbn", isbn );
+		
+		return sqlMap.selectList( "getBorrowableBooks", param );
+	}
+
+	@Override
+	public List getBooksByIsbn(int sidx, String isbn) {
+		Map param = new HashMap();
+		
+		param.put( "sidx", sidx );
+		param.put( "isbn", isbn );
+		
+		return sqlMap.selectList( "getBooksByIsbn", param );
+	}
+
+	@Override
+	public int existStoreHasBook(String isbn) {
+		return sqlMap.selectOne("existStoreHasBook", isbn);
+	}
+
+	@Override
+	public List getStoreHasBook(String isbn) {
+		return sqlMap.selectList("getStoreHasBook", isbn);
+	}
 	
 }

@@ -118,7 +118,10 @@
     <script src="/comic/resources/js/bootstrap-hover-dropdown.js"></script>
     <script src="/comic/resources/js/owl.carousel.min.js"></script>
     <script src="/comic/resources/js/front.js"></script>
-	
+    
+    <!-- 사용자 정의 js -->
+		<script src="/comic/resources/js/nav-scroll.js?v=<%=System.currentTimeMillis() %>"></script>
+    
 
 </body>
 

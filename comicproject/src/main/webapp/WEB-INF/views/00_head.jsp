@@ -48,6 +48,7 @@ response.setDateHeader("Expires",0);
 
     <link rel="shortcut icon" href="/comic/resources/img/favicon.png">
 
-
+		<!-- 사용자 정의 css -->
+    <link href="/comic/resources/css/nav.scroll.css" rel="stylesheet" />
 
 </head>

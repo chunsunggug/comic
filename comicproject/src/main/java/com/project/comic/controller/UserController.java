@@ -404,9 +404,6 @@ public class UserController {
 		return "index";
 	}
 
-	
-	
-	
 	private HashMap<String, String> addrSet(String addrDto, String idDto) {
 		System.out.println("받은 주소 : " + addrDto);
 		String[] addr = addrDto.split(" ");
@@ -461,5 +458,4 @@ public class UserController {
         }
         return numStr;
     }
-
 }

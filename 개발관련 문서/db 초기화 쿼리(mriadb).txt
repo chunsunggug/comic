@@ -25,7 +25,6 @@ AUTO_INCREMENT=31
 ;
 
 
-
 DROP TABLE if exists T_USER_ADDR cascade;
 CREATE TABLE `t_user_addr` (
 	`pidx` INT(11) NOT NULL DEFAULT 1 COMMENT '주소 인덱스',
