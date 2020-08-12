@@ -102,7 +102,7 @@
                                     <img src="/comic/resources/img/product1.jpg" alt="" class="img-responsive">
                                 </a>
                                 <div class="text">
-                                    <h3><a href="detail.html">Fur coat with very but very very long name</a></h3>
+                                    <h3><a href="detail.html">1위 만화</a></h3>
                                 </div>
                                 <!-- /.text -->
                                     <div class="ribbon sale">
@@ -133,7 +133,7 @@
                                     <img src="/comic/resources/img/product2.jpg" alt="" class="img-responsive">
                                 </a>
                                 <div class="text">
-                                    <h3><a href="detail.html">White Blouse Armani</a></h3>
+                                    <h3><a href="detail.html">2위 만화</a></h3>
                                 </div>
                                 <!-- /.text -->
 
@@ -170,7 +170,7 @@
                                     <img src="/comic/resources/img/product3.jpg" alt="" class="img-responsive">
                                 </a>
                                 <div class="text">
-                                    <h3><a href="detail.html">Black Blouse Versace</a></h3>
+                                    <h3><a href="detail.html">3위 만화</a></h3>
                                 </div>
                                 <!-- /.text -->
                                 <div class="ribbon gift">
