@@ -51,7 +51,8 @@ public class BookGroupVO {
 			if( !tmp.getStatus().equals("L") ) operating++;	// 분실되지 않고 운영중이라면 +1
 			else	lost++;									// 분실이라면 분실 +1
 			
-			if( tmp.getStatus().equals("B") ) borrowed++;	// 대여중이라면 +1
+			if( !(tmp.getStatus().equals("S") || 
+				tmp.getStatus().equals("L")) ) borrowed++;	// 대여중이라면 +1
 		}
 		
 		valuable = operating - borrowed;	// 실제 운영중인 책 - 대여중인 책 = 대여가능 수량

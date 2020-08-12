@@ -6,7 +6,7 @@
 		<div class="col-md-12">
 			<ul class="breadcrumb">
 				<li><a href="/comic/index.do">Home</a></li>
-				<li>Book Manage</li>
+				<li>Delivery Manage</li>
 			</ul>
 		</div>
 
@@ -26,8 +26,8 @@
 						</li>
 						<li><a href="#" onclick="removeCheck()"><i
 								class="fa fa-sign-out"></i>회원탈퇴</a></li>
-						<li class="active"><a href="/comic/store/listbook.do"><i class="fa fa-heart"></i>도서관리</a></li>
-						<li><a href="/comic/store/delivery.do"><i class="fa fa-heart"></i>배송관리</a></li>
+						<li><a href="#"><i class="fa fa-heart"></i>도서관리</a></li>
+						<li class="active"><a href="/comic/store/delivery.do"><i class="fa fa-heart"></i>배송관리</a></li>
 					</ul>
 				</div>
 			</div>
@@ -37,22 +37,23 @@
 		<div class="col-md-9">
 			<div class="container-fluid text-right">
 				<button class="btn btn-primary" data-toggle="modal" type="button"
-					data-target="#add-book-modal">추가</button>
+					data-target="#add-book-modal">요청수락</button>
 				<button class="btn btn-primary" data-toggle="modal" type="button"
-					data-target="#update-book-modal">수정/삭제</button>
+					data-target="#update-book-modal">요청거절</button>
 			</div>
 			<div class="container-fluid text-center">
 				<table class="table table-bordered">
 					<thead>
 						<tr>
-							<th>번호</th>
+							<th></th>
+							<th>주문번호</th>
+							<th>요청구분</th>
 							<th>이미지</th>
 							<th>도서명</th>
-							<th>저자</th>
-							<th>장르</th>
 							<th>포인트</th>
-							<th>등록일</th>
-							<th>비고</th>
+							<th>요청날짜</th>
+							<th>배송시작</th>
+							<th>배송완료</th>							
 						</tr>
 					</thead>
 					<tbody>

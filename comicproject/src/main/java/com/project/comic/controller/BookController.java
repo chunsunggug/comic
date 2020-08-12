@@ -19,7 +19,7 @@ import com.project.comic.Utility;
 import com.project.comic.book.BookGroupVO;
 import com.project.comic.book.ISequenceSearch;
 import com.project.comic.book.kakao.KakaoQueryModel;
-import com.project.comic.pay.PayService;
+import com.project.comic.order.OrderService;
 import com.project.comic.storebook.IStoreBookService;
 import com.project.comic.storebook.StoreBookDTO;
 
@@ -30,7 +30,7 @@ public class BookController {
 	private ISequenceSearch kakaoBookSequenceSearch;
 	
 	@Autowired
-	private PayService payService;
+	private OrderService payService;
 	
 	@Autowired
 	private IStoreBookService storeBookService;
@@ -84,6 +84,7 @@ public class BookController {
 			BookGroupVO vo = new BookGroupVO();
 			vo.setStoreBookDTOList(dto_list);
 			vo_list.add( vo );
+			System.out.println(vo.toString());
 		}
 		
 		request.setAttribute( "page", "book/borrowablestoretab.jsp" );

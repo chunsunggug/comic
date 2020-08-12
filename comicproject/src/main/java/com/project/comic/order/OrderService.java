@@ -1,4 +1,4 @@
-package com.project.comic.pay;
+package com.project.comic.order;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.project.comic.Utility;
 import com.project.comic.book.BookGroupVO;
-import com.project.comic.book.ISequenceSearch;
+import com.project.comic.book.kakao.KakaoSearchService;
 import com.project.comic.storebook.IStoreBookDao;
 import com.project.comic.storebook.IStoreBookService;
 import com.project.comic.storebook.StoreBookDTO;
@@ -27,7 +27,7 @@ import com.project.comic.user.UserDao;
 import com.project.comic.user.UserVO;
 
 @Service
-public class PayService {
+public class OrderService {
 
 	@Autowired
 	IStoreBookService storeBookService;
@@ -36,7 +36,7 @@ public class PayService {
 	IStoreBookDao storeBookDaoImpl;
 	
 	@Autowired
-	ISequenceSearch kakaoBookSequenceSearch;
+	KakaoSearchService kakaoSearchService;
 	
 	@Autowired
 	private UserDao userDaoImpl;
@@ -78,7 +78,7 @@ public class PayService {
 				// 같은게 없으므로
 				// 바꾼 jsonArray에 추가
 				cookie_arr.add( json_item );
-				
+				cookie.setPath("/comic");
 				cookie.setValue( valueToEncodedString(cookie_arr.toJSONString()) );
 				response.addCookie(cookie);
 				
@@ -93,6 +93,7 @@ public class PayService {
 		Cookie cookie = new Cookie( "comiccart", 
 				valueToEncodedString(arr.toJSONString()) );
 		cookie.setMaxAge(1 * 60 * 60 * 24); //쿠키 유지 하루
+		cookie.setPath("/comic");
 		response.addCookie( cookie );
 		
 		return 1;
@@ -119,9 +120,11 @@ public class PayService {
 				}
 				System.out.println("post json arr : " + json_arr);
 				
-				Cookie new_cookie = new Cookie("comiccart",
-						valueToEncodedString(json_arr.toJSONString()) );
-				response.addCookie(new_cookie);
+				if( json_arr.size() == 0 )cookie.setMaxAge(0);
+				
+				cookie.setValue(valueToEncodedString(json_arr.toJSONString() ));
+				cookie.setPath("/comic");
+				response.addCookie(cookie);
 				
 				return 1;
 			}
@@ -132,81 +135,83 @@ public class PayService {
 	// 실제로 결제를 진행하는 함수
 	// 리턴값 정리
 	// -1 유저의 포인트가 적다
-	// -2 결제 목록을 가져올 쿠키가 없다 즉, 정상적인 접근이 아니다
 	// -3 대여가능한 책이 없다
 	@Transactional
-	public int payPoint(HttpServletRequest request, HttpServletResponse response) {
+	public int payPoint(String cookie_value, HttpServletResponse response, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		int uidx = (int)session.getAttribute("uidx");
 		int user_point = (int)session.getAttribute("point");
 		String user_id = (String)session.getAttribute("id");
 		int total_point = 0;
-		System.out.println("uidx : "+uidx);
-		Cookie[] cookies = request.getCookies();
-		
-		for(Cookie cookie : cookies) {
-			// 카트 쿠키를 가려낸다
-			if( cookie.getName().equals("comiccart")) {
-				JSONArray item_arr = (JSONArray)valueToDecodedJSON(cookie.getValue());
-				List<OrderDTO> order_list = new ArrayList<OrderDTO>();
-				int new_oidx = orderDao.getMaxOidx() + 1;
-				
-				// 쿠키에 저장되어있는 도서목록들 대여료 전부 더하기
-				// 주문 row 만들기 위한 dto 정리
-				for(int i=0; i < item_arr.size(); i++) {
-					JSONObject tmp = (JSONObject)item_arr.get(i);
-					int sidx = Integer.parseInt(tmp.get("sidx").toString());
-					String isbn = (String)tmp.get("isbn");
-					BookGroupVO vo = (BookGroupVO)storeBookService.getBookGroupVO( sidx, isbn );
-					OrderDTO dto_tmp = new OrderDTO();
-					
-					total_point += vo.getPoint();
-					
-					// 주문번호, 점포책고유번호, 대여료
-					dto_tmp.setOidx( new_oidx );
-					dto_tmp.setPoint( vo.getPoint() );
-					dto_tmp.setUidx(uidx);
-					List<StoreBookDTO> canBorrow = storeBookDaoImpl.getBorrowableBooks(sidx, isbn);
-					
-					if( canBorrow.size() == 0 ) return -3;
-					
-					dto_tmp.setSbidx(canBorrow.get(0).getSbidx());
-					
-					// 주소 가져와서 세트
-					UserVO user_vo = userDaoImpl.myInfo( user_id );
-					dto_tmp.setUaddr( user_vo.getFullAddr() );
-					order_list.add( dto_tmp );
-				}
-				
-				total_point += 1000; // 택배비
-				
-				// 유저 포인트가 충분하면 결제 시작
-				if( user_point >= total_point) {
-					
-					int result = userDaoImpl.payPoint( uidx, total_point );
 
-					if( result == 0 ) throw new PayFailedException();	// payPoint sql 실패
-					
-					result = orderDao.addNewOrder(order_list);
-					
-					if( result != order_list.size() ) throw new CreateOrderFailedException();
-					
-					// 점수 빼기
-					session.setAttribute( "point", user_point - total_point);
-					
-					// 쿠키 비우기
-					item_arr.clear();
-					cookie.setValue(valueToEncodedString(item_arr.toJSONString()));
-					response.addCookie(cookie);
-					
-					return result;
+		JSONArray item_arr = (JSONArray)valueToDecodedJSON( cookie_value );
+		List<OrderDTO> order_list = new ArrayList<OrderDTO>();
+		int new_oidx = orderDao.getMaxOidx() + 1;
 
-				}else {
-					return -1;	// 유저의 포인트가 적다
-				}		
-			}
+		// 쿠키에 저장되어있는 도서목록들 대여료 전부 더하기
+		// 주문 row 만들기 위한 dto 정리
+		for(int i=0; i < item_arr.size(); i++) {
+			JSONObject tmp = (JSONObject)item_arr.get(i);
+			int sidx = Integer.parseInt(tmp.get("sidx").toString());
+			String isbn = (String)tmp.get("isbn");
+			BookGroupVO vo = (BookGroupVO)storeBookService.getBookGroupVO( sidx, isbn );
+			OrderDTO dto_tmp = new OrderDTO();
+
+			total_point += vo.getPoint();
+
+			// 주문번호, 점포책고유번호, 대여료
+			dto_tmp.setOidx( new_oidx );
+			dto_tmp.setPoint( vo.getPoint() );
+			dto_tmp.setUidx(uidx);
+			dto_tmp.setSidx(sidx);
+			List<StoreBookDTO> canBorrow = storeBookDaoImpl.getBorrowableBooks(sidx, isbn);
+
+			if( canBorrow.size() == 0 ) return -3;
+
+			dto_tmp.setSbidx(canBorrow.get(0).getSbidx());
+
+			// 주소 가져와서 세트
+			UserVO user_vo = userDaoImpl.myInfo( user_id );
+			dto_tmp.setUaddr( user_vo.getFullAddr() );
+			order_list.add( dto_tmp );
 		}
-		return -2; // 결제 목록을 가져올 쿠키가 없다
+
+		// 유저 포인트가 충분하면 결제 시작
+		if( user_point >= total_point) {
+
+			// 점수 빼기
+			session.setAttribute( "point", user_point - total_point);
+			int result = userDaoImpl.payPoint( uidx, total_point );
+
+			if( result == 0 ) throw new PayFailedException();	// payPoint sql 실패
+
+			result = 0;
+			for( OrderDTO dto : order_list) {
+				result += orderDao.addNewOrder(dto);
+				storeBookDaoImpl.updateBook(dto.getSbidx(), "W");
+			}
+
+			if( result != order_list.size() ) throw new CreateOrderFailedException();
+			
+			// 쿠키 비우기
+			for(int i=0; i < item_arr.size(); i++) {
+				JSONObject json_ = (JSONObject)item_arr.get(i);
+				int sidx = Integer.parseInt(json_.get("sidx").toString());
+				String isbn = (String)json_.get("isbn");
+				DeleteItemCart(response, request, sidx, isbn);
+			}
+			
+			return result;
+
+		}else {
+			return -1;	// 유저의 포인트가 적다
+		}		
+
+	}
+	
+	public List<OrderVO> getDREQOrdersVO(int sidx){
+		List<OrderDTO> dto_list = orderDao.getDREQOrders(sidx);
+		return null;
 	}
 	
 	private String valueToEncodedString(String str) {

@@ -23,6 +23,7 @@ import com.project.comic.book.ISequenceSearch;
 import com.project.comic.book.kakao.BookGroupVOMakerByKakao;
 import com.project.comic.book.kakao.BookVOMakerByKakao;
 import com.project.comic.book.kakao.KakaoQueryModel;
+import com.project.comic.order.IOrderDao;
 import com.project.comic.page.PageMaker;
 import com.project.comic.storebook.IStoreBookService;
 import com.project.comic.storebook.StoreBookDTO;
@@ -39,16 +40,16 @@ public class StoreController {
 	private final int PAGE_SIZE = 10;
 	
 	@Autowired
-	IStoreBookService storeBookService; 
+	private IStoreBookService storeBookService; 
 	
 	@Autowired
-	BookVOMakerByKakao bookVOMakerByKakao;
+	private BookVOMakerByKakao bookVOMakerByKakao;
 	
 	@Autowired
-	BookGroupVOMakerByKakao bookGroupVOMakerByKakao;
+	private BookGroupVOMakerByKakao bookGroupVOMakerByKakao;
 	
 	@Autowired
-	ISequenceSearch kakaoBookSequenceSearch;
+	private ISequenceSearch kakaoBookSequenceSearch;
 	
 	// 점주의 도서관리 페이지 이동
 	@RequestMapping(value="/listbook.do")
@@ -201,5 +202,17 @@ public class StoreController {
 		}
 		
 		return "0";
+	}
+	
+	@RequestMapping(value="/delivery.do")
+	public ModelAndView delivery() {
+		ModelAndView mv = new ModelAndView();
+		
+		mv.setViewName("index");
+		mv.addObject("page","store/delivery.jsp");
+		
+		
+		
+		return mv;
 	}
 }

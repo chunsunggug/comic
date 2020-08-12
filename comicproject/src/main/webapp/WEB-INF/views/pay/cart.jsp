@@ -38,7 +38,7 @@
 
 				<div class="box">
 
-					<form method="post" action="/comic/pay/pay.do">
+					<form method="post" action="/comic/order/pay.do">
 
 						<h1>Shopping cart</h1>
 						<p class="text-muted">You currently have ${tot_count} item(s) in your
@@ -55,7 +55,7 @@
 								</thead>
 								<tbody>
 									<c:set var="tot" value="0" />
-									<c:forEach var="book" items='${comiccart}'>
+									<c:forEach var="book" items='${cartlist}'>
 									<tr>
 										<td><a href="/comic/bookdetail.do?isbn=${book.isbn13}&sidx=${book.sidx}">
 												<img src="${book.thumbnail }"/>
@@ -101,7 +101,7 @@
 								<tfoot>
 									<tr>
 										<th colspan="4">합계</th>
-										<th colspan="2">${tot != 0 ? tot+1000 : 0}</th>
+										<th colspan="2">${tot != null ? tot : 0}</th>
 									</tr>
 								</tfoot>
 							</table>

@@ -16,6 +16,7 @@ import com.project.comic.book.BookVO;
 import com.project.comic.book.ISequenceSearch;
 import com.project.comic.book.NoExistBook;
 import com.project.comic.book.kakao.KakaoQueryModel;
+import com.project.comic.book.kakao.KakaoSearchService;
 
 @Service
 public class StoreBookService implements IStoreBookService{
@@ -23,9 +24,9 @@ public class StoreBookService implements IStoreBookService{
 	@Autowired
 	@Qualifier("impl")
 	private IStoreBookDao storeBookDao;
-
+	
 	@Autowired
-	private ISequenceSearch kakaoBookSequenceSearch;
+	private KakaoSearchService kakaoSearchService;
 	
 	@Transactional
 	@Override
@@ -42,24 +43,18 @@ public class StoreBookService implements IStoreBookService{
 		
 		// dto에 isbn이 제대로 들어있는지 검증
 		StoreBookDTO dto = (StoreBookDTO)object;
-		KakaoQueryModel model = new KakaoQueryModel();
-		model.setPage(0);
-		model.setTarget("isbn");
+		String isbn = "";
 		
 		// 카카오에서 isbn으로 검색결과 가져오기
 		if( dto.getIsbn10() != null ) 
-			model.setQuery( dto.getIsbn10() );
+			isbn = dto.getIsbn10();
 		else
-			model.setQuery( dto.getIsbn13() );
+			isbn = dto.getIsbn13();
 
-		String kakao_result = (String)kakaoBookSequenceSearch.nextSearch(model);
-		JSONObject json_kakao = (JSONObject)Utility.JSONParse(kakao_result);
-		JSONArray json_documents = (JSONArray)json_kakao.get("documents");
-		JSONObject json_book = (JSONObject)json_documents.get(0);
-		JSONObject meta = (JSONObject)json_kakao.get("meta");
+		JSONObject json_book = kakaoSearchService.getBook(isbn);
 		
 		// 제대로 된 ISBN으로 검색했거나 책이 없는지 검사
-		if( (long)meta.get("total_count") == 0 ) {
+		if( json_book == null ) {
 			System.out.println("ISBN이 잘못입력되었거나 책이 없습니다");
 			throw new NoExistBook();
 		}
@@ -181,19 +176,14 @@ public class StoreBookService implements IStoreBookService{
 		
 		if( dto != null ) {
 			vo.setStoreBookDTO(dto);
-			KakaoQueryModel md = new KakaoQueryModel();
-			md.setPage(0);
-			md.setTarget("isbn");
+			String isbn = "";
 			
 			if( dto.getIsbn13() != null )
-				md.setQuery(dto.getIsbn13());
+				isbn = dto.getIsbn13();
 			else
-				md.setQuery(dto.getIsbn10());
+				isbn = dto.getIsbn10();
 			
-			String result = (String)kakaoBookSequenceSearch.nextSearch(md);
-			JSONObject json_result = (JSONObject)Utility.JSONParse(result);
-			JSONArray json_documents = (JSONArray)json_result.get("documents");
-			JSONObject json_book = (JSONObject)json_documents.get(0);
+			JSONObject json_book = kakaoSearchService.getBook(isbn);
 			
 			vo.setKakaoDocuments(json_book);
 			
@@ -211,19 +201,8 @@ public class StoreBookService implements IStoreBookService{
 		if( dtolist != null) {
 			vo.setStoreBookDTOList(dtolist);
 			StoreBookDTO dto = dtolist.get(0);
-			KakaoQueryModel md = new KakaoQueryModel();
-			md.setPage(0);
-			md.setTarget("isbn");
 			
-			if( dto.getIsbn13() != null )
-				md.setQuery(dto.getIsbn13());
-			else
-				md.setQuery(dto.getIsbn10());
-			
-			String result = (String)kakaoBookSequenceSearch.nextSearch(md);
-			JSONObject json_result = (JSONObject)Utility.JSONParse(result);
-			JSONArray json_documents = (JSONArray)json_result.get("documents");
-			JSONObject json_book = (JSONObject)json_documents.get(0);
+			JSONObject json_book = kakaoSearchService.getBook(isbn);
 			
 			vo.setKakaoDocuments(json_book);
 			

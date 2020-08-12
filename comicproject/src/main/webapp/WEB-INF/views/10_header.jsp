@@ -290,7 +290,9 @@
 									잔여 포인트 : ${point } || </span> <a href="/comic/myInfo.do"><span
 									style="color: blue" class="navlogininfo">마이페이지 || </span></a> <a
 									href="/comic/store/listbook.do"><span style="color: blue"
-									class="navlogininfo">도서관리 || </span></a> <a
+									class="navlogininfo">도서관리 || </span></a></a> <a
+									href="/comic/store/listbook.do"><span style="color: blue"
+									class="navlogininfo">배송관리 || </span></a> <a
 									href="/comic/signout.do"><span style="color: blue">로그아웃</span></a>
 							</div>
 						</c:when>
@@ -339,7 +341,7 @@
 						<span class="sr-only">Toggle search</span> <i class="fa fa-search"></i>
 					</button>
 
-					<a class="btn btn-default navbar-toggle" href="/comic/pay/cart.do">
+					<a class="btn btn-default navbar-toggle" href="/comic/order/cart.do">
 						<i class="fa fa-shopping-cart"></i> <span class="hidden-xs">최근
 							확인 도서</span>
 					</a>
@@ -517,7 +519,7 @@
 			<div class="navbar-buttons">
 
 				<div class="navbar-collapse collapse right" id="basket-overview">
-					<a href="/comic/pay/cart.do" class="btn btn-primary navbar-btn"><i
+					<a href="/comic/order/cart.do" class="btn btn-primary navbar-btn"><i
 						class="fa fa-shopping-cart"></i><span class="hidden-sm">최근
 							확인 도서</span></a>
 				</div>
