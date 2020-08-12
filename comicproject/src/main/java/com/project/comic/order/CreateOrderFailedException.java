@@ -1,4 +1,4 @@
-package com.project.comic.pay;
+package com.project.comic.order;
 
 public class CreateOrderFailedException extends RuntimeException{
 

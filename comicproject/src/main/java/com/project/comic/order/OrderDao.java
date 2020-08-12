@@ -1,4 +1,4 @@
-package com.project.comic.pay;
+package com.project.comic.order;
 
 import java.util.List;
 
@@ -13,17 +13,18 @@ public class OrderDao implements IOrderDao{
 	private SqlSessionTemplate sqlMap;
 	
 	@Override
-	public int addNewOrder(List<OrderDTO> dto_list) {
-		int result = 0;
-		for(OrderDTO dto : dto_list ) {
-			result += sqlMap.insert( "addNewOrder", dto );
-		}
-		return result;
+	public int addNewOrder(OrderDTO dto) {
+		return sqlMap.insert( "addNewOrder", dto );
 	}
 
 	@Override
 	public int getMaxOidx() {
 		return sqlMap.selectOne("getMaxOidx");
+	}
+
+	@Override
+	public List getDREQOrders(int sidx) {
+		return sqlMap.selectList("getDREQOrders", sidx);
 	}
 
 }

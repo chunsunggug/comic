@@ -3,14 +3,18 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
          <!-- select id => class 내의 스테이트먼트 파람 -->
        
-<mapper namespace="com.project.comic.pay.IOrderDao">
-   <insert id="addNewOrder" parameterType="com.project.comic.pay.OrderDTO" >
-   	insert into t_order(oidx, sbidx,uidx, odate, point, uaddr)
-   	 values( #{oidx}, #{sbidx},#{uidx}, now(), #{point}, #{uaddr})
+<mapper namespace="com.project.comic.order.IOrderDao">
+   <insert id="addNewOrder" parameterType="com.project.comic.order.OrderDTO" >
+   	insert into t_order(oidx, sbidx,uidx,sidx, point, uaddr)
+   	 values( #{oidx}, #{sbidx},#{uidx},#{sidx}, #{point}, #{uaddr})
    </insert>
   
   <select id="getMaxOidx" resultType="int">
   	select COUNT( distinct oidx) from t_order
+  </select>
+  
+  <select id="getDREQOrders" parameterType="int" resultType="com.project.comic.order.OrderDTO">
+  	select * from t_orders where sidx=#{sidx} order by oidx
   </select>
 
 </mapper>
