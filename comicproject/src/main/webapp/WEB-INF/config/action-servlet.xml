@@ -134,6 +134,7 @@
 					  com.project.comic.mail,
 					  com.project.comic.storebook,
 					  com.project.comic.kakao,
-					  com.project.comic.notice
+					  com.project.comic.notice,
+					  com.project.comic.order
 					  " />
 </beans:beans>

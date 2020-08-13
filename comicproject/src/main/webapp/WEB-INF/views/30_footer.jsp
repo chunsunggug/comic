@@ -121,7 +121,7 @@
     
     <!-- 사용자 정의 js -->
 		<script src="/comic/resources/js/nav-scroll.js?v=<%=System.currentTimeMillis() %>"></script>
-    
+    <script	src="/comic/resources/js/store/store-delivery.js?v=<%=System.currentTimeMillis() %>"></script>
 
 </body>
 

@@ -27,7 +27,7 @@
 						<li><a href="#" onclick="removeCheck()"><i
 								class="fa fa-sign-out"></i>회원탈퇴</a></li>
 						<li class="active"><a href="/comic/store/listbook.do"><i class="fa fa-heart"></i>도서관리</a></li>
-						<li><a href="/comic/store/delivery.do"><i class="fa fa-heart"></i>배송관리</a></li>
+						<li><a href="/comic/store/deliverymanage.do"><i class="fa fa-heart"></i>배송관리</a></li>
 					</ul>
 				</div>
 			</div>

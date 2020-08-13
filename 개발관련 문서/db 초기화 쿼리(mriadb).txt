@@ -112,24 +112,32 @@ ENGINE=InnoDB
 AUTO_INCREMENT=8
 ;
 
+
 CREATE TABLE `t_order` (
 	`oadix` INT(11) NOT NULL AUTO_INCREMENT,
-	`uidx` INT(11) NULL,
+	`uidx` INT(11) NOT NULL,
 	`oidx` INT(11) NOT NULL,
+	`sidx` INT(11) NOT NULL,
 	`sbidx` INT(11) NOT NULL,
-	`sdate` DATETIME NULL,
-	`edate` DATETIME NULL,
-	`odate` DATETIME NOT NULL,
-	`delstate` VARCHAR(50) NOT NULL DEFAULT 'R' COLLATE 'utf8_general_ci',
-	`bookstate` VARCHAR(50) NOT NULL DEFAULT 'R' COLLATE 'utf8_general_ci',
+	`dreqdate` DATETIME NULL DEFAULT current_timestamp(),
+	`dcdate` DATETIME NULL,
+	`dddate` DATETIME NULL,
+	`bdate` DATETIME NULL,
+	`rreqdate` DATETIME NULL,
+	`rcdate` DATETIME NULL,
+	`rddate` DATETIME NULL,
+	`cdate` DATETIME NULL,
+	`odate` DATETIME NOT NULL DEFAULT current_timestamp(),
+	`state` VARCHAR(50) NOT NULL DEFAULT 'DREQ' COLLATE 'utf8_general_ci',
 	`point` INT(11) NOT NULL,
 	`uaddr` VARCHAR(255) NOT NULL COLLATE 'utf8_general_ci',
 	PRIMARY KEY (`oadix`) USING BTREE
 )
 COLLATE='utf8_general_ci'
 ENGINE=InnoDB
-AUTO_INCREMENT=8
+AUTO_INCREMENT=2
 ;
+
 
 
 drop table if exists t_user_store cascade;
