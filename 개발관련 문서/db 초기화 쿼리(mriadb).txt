@@ -109,34 +109,36 @@ CREATE TABLE `t_store_book` (
 )
 COLLATE='utf8_general_ci'
 ENGINE=InnoDB
-AUTO_INCREMENT=8
+AUTO_INCREMENT=15
 ;
 
 
+drop table if exists t_order cascade;
 CREATE TABLE `t_order` (
-	`oadix` INT(11) NOT NULL AUTO_INCREMENT,
+	`oaidx` INT(11) NOT NULL AUTO_INCREMENT,
 	`uidx` INT(11) NOT NULL,
 	`oidx` INT(11) NOT NULL,
 	`sidx` INT(11) NOT NULL,
 	`sbidx` INT(11) NOT NULL,
-	`dreqdate` DATETIME NULL DEFAULT current_timestamp(),
-	`dcdate` DATETIME NULL,
-	`dddate` DATETIME NULL,
-	`bdate` DATETIME NULL,
+	`breqdate` DATETIME NULL DEFAULT current_timestamp(),
+	`bcdate` DATETIME NULL,
+	`bddate` DATETIME NULL,
+	`bdcdate` DATETIME NULL,
 	`rreqdate` DATETIME NULL,
 	`rcdate` DATETIME NULL,
 	`rddate` DATETIME NULL,
-	`cdate` DATETIME NULL,
+	`rdcdate` DATETIME NULL,
 	`odate` DATETIME NOT NULL DEFAULT current_timestamp(),
-	`state` VARCHAR(50) NOT NULL DEFAULT 'DREQ' COLLATE 'utf8_general_ci',
+	`state` VARCHAR(50) NOT NULL DEFAULT BREQ COLLATE 'utf8_general_ci',
 	`point` INT(11) NOT NULL,
 	`uaddr` VARCHAR(255) NOT NULL COLLATE 'utf8_general_ci',
-	PRIMARY KEY (`oadix`) USING BTREE
+	PRIMARY KEY (`oaidx`) USING BTREE
 )
 COLLATE='utf8_general_ci'
 ENGINE=InnoDB
-AUTO_INCREMENT=2
+AUTO_INCREMENT=3
 ;
+
 
 
 
