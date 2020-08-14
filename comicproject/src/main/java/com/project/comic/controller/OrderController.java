@@ -5,9 +5,9 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -16,42 +16,39 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.project.comic.Utility;
 import com.project.comic.book.BookGroupVO;
-import com.project.comic.book.ISequenceSearch;
 import com.project.comic.order.OrderService;
+import com.project.comic.order.OrderVO;
+import com.project.comic.page.PageMaker;
 import com.project.comic.storebook.IStoreBookService;
 
 @Controller
 @RequestMapping(value="/order")
 public class OrderController {
-
-	@Autowired
-	private ISequenceSearch kakaoBookSequenceSearch;
-	
-	@Autowired
-	private OrderService bookService;
 	
 	@Autowired
 	private IStoreBookService storeBookService;
 	
 	@Autowired
-	private OrderService payService;
+	private OrderService orderService;
+	
 
 	// 카트 페이지
 	@RequestMapping(value="/cart.do")
 	public ModelAndView cart(HttpServletRequest request,
-			@CookieValue(required=false, value="comiccart") String cookie_comiccart ) {
+			@CookieValue(required=false, value="comiccart", defaultValue="") String cookie_comiccart ) {
 		String decoded = "";
 		ModelAndView mv = new ModelAndView();
 
 		mv.setViewName( "index" );
 		mv.addObject( "page", "pay/cart.jsp" );
 
-		if( cookie_comiccart != null ) {
+		if( !cookie_comiccart.equals("") ) {
 			try {
 				decoded = URLDecoder.decode(cookie_comiccart, "utf-8");
 			} catch (UnsupportedEncodingException e) {
@@ -80,16 +77,17 @@ public class OrderController {
 
 	@RequestMapping(value="/pay.do", method=RequestMethod.POST)
 	public ModelAndView payItems(HttpServletRequest request, HttpServletResponse response,
-			@CookieValue(required=false, value="comiccart") String cookie_comiccart) {
+			@CookieValue(required=false, value="comiccart", defaultValue="") String cookie_comiccart) {
 		ModelAndView mv = new ModelAndView();
 		
 		mv.setViewName( "index" );
 		
 		mv.addObject( "page", "pay/cart.jsp");// "pay/payresult.jsp" );
 		
-		if( request.getSession().getAttribute("uidx") != null ) {
+		if( request.getSession().getAttribute("uidx") != null &&
+			cookie_comiccart != "" ) {
 		
-			int result = payService.payPoint(cookie_comiccart, response, request);
+			int result = orderService.payPoint(cookie_comiccart, response, request);
 			
 			if( result < 0 ) {
 				System.out.println("결제 실패 !! : " + result);
@@ -99,5 +97,5 @@ public class OrderController {
 		
 		return mv;
 	}
-	
+
 }

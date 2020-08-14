@@ -44,6 +44,7 @@ public class OrderService {
 	@Autowired
 	private IOrderDao orderDao;
 	
+	// 카트에 목록 추가하기
 	public int addItemToCart(HttpServletResponse response, HttpServletRequest request,
 			String isbn, int sidx) {
 		// 쿠키를 전부 가져온다
@@ -98,7 +99,7 @@ public class OrderService {
 		
 		return 1;
 	}
-	
+	// 카트에서 목록 제거
 	public int DeleteItemCart(HttpServletResponse response, HttpServletRequest request,
 			int sidx, String isbn) {
 		Cookie[] cookies = request.getCookies();
@@ -209,11 +210,56 @@ public class OrderService {
 
 	}
 	
-	public List<OrderVO> getDREQOrdersVO(int sidx){
-		List<OrderDTO> dto_list = orderDao.getDREQOrders(sidx);
-		return null;
+	public List<OrderVO> getOrdersPageByState(int sidx, int cp, int listsize, OrderDTO.State state){
+		List<OrderDTO> dto_list = orderDao.getOrdersPageByState(sidx, cp, listsize, state);
+		List<OrderVO> vo_list = new ArrayList<OrderVO>();
+		
+		// DTO를 VO로 바꿔준다
+		if( dto_list != null) {
+			for(OrderDTO dto : dto_list) {
+				OrderVO vo = new OrderVO();
+				String isbn = dto.getIsbn10() != null ? dto.getIsbn10() : dto.getIsbn13();
+				JSONObject json_book = kakaoSearchService.getBook(isbn);
+				vo.setDTO(dto);
+				vo.setKakao(json_book);
+				vo_list.add(vo);
+			}
+		}
+		return vo_list;
 	}
 	
+	public int nextStep(int oaidx) {
+		OrderDTO dto = orderDao.getDTO(oaidx);
+		
+		switch( dto.getState() ) {
+		case BREQ: 	
+			return orderDao.changeState(oaidx, "bcdate", OrderDTO.State.BC);
+		case BC: 	
+			return orderDao.changeState(oaidx, "bddate", OrderDTO.State.BD);
+		case BD:	
+			return orderDao.changeState(oaidx, "bdcdate", OrderDTO.State.BDC);
+		case BDC:	
+			return orderDao.changeState(oaidx, "rreqdate", OrderDTO.State.RREQ);
+		case RREQ:	
+			return orderDao.changeState(oaidx, "rcdate", OrderDTO.State.RC);
+		case RC:	
+			return orderDao.changeState(oaidx, "rddate", OrderDTO.State.RD);
+		case RD:	
+			return orderDao.changeState(oaidx, "rdcdate", OrderDTO.State.RDC);
+		}
+		
+		return 0;
+	}
+	
+	@Transactional
+	public int nextStep(int[] oaidx) {
+		int result = 0;
+		for(int oaidx_ : oaidx)
+			result += nextStep(oaidx_);
+		
+		return result;
+	}
+		
 	private String valueToEncodedString(String str) {
 		try {
 			String result = URLEncoder.encode(str, "utf-8");
@@ -239,4 +285,6 @@ public class OrderService {
 		
 		return null;
 	}
+
+
 }

@@ -13,8 +13,17 @@
   	select COUNT( distinct oidx) from t_order
   </select>
   
-  <select id="getDREQOrders" parameterType="int" resultType="com.project.comic.order.OrderDTO">
-  	select * from t_orders where sidx=#{sidx} order by oidx
+  <select id="getOrdersPageByState" parameterType="java.util.Map" resultType="com.project.comic.order.OrderDTO">
+  	select * from t_order o, t_store_book sb WHERE o.sidx=#{sidx} AND sb.sbidx = o.sbidx and o.state=#{state} order by o.oidx
+  	limit #{start}, #{listsize}
+  </select>
+  
+  <select id="getDTO" parameterType="int" resultType="com.project.comic.order.OrderDTO">
+  	select * from t_order where oaidx=#{oaidx}
   </select>
 
+  <update id="changeState" parameterType="java.util.Map">
+  	update t_order set state=#{state}, ${datetype}=now()
+  	where oaidx=#{oaidx}
+  </update>
 </mapper>

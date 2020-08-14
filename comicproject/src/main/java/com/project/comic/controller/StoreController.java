@@ -1,5 +1,6 @@
 package com.project.comic.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +25,10 @@ import com.project.comic.book.ISequenceSearch;
 import com.project.comic.book.kakao.BookGroupVOMakerByKakao;
 import com.project.comic.book.kakao.BookVOMakerByKakao;
 import com.project.comic.book.kakao.KakaoQueryModel;
-import com.project.comic.order.IOrderDao;
+import com.project.comic.order.OrderDTO;
+import com.project.comic.order.OrderDTO.State;
+import com.project.comic.order.OrderService;
+import com.project.comic.order.OrderVO;
 import com.project.comic.page.PageMaker;
 import com.project.comic.storebook.IStoreBookService;
 import com.project.comic.storebook.StoreBookDTO;
@@ -50,6 +55,9 @@ public class StoreController {
 	
 	@Autowired
 	private ISequenceSearch kakaoBookSequenceSearch;
+	
+	@Autowired
+	private OrderService orderService;
 	
 	// 점주의 도서관리 페이지 이동
 	@RequestMapping(value="/listbook.do")
@@ -203,16 +211,47 @@ public class StoreController {
 		
 		return "0";
 	}
-	
-	@RequestMapping(value="/delivery.do")
-	public ModelAndView delivery() {
+
+	@RequestMapping(value="/deliverymanage.do")
+	public ModelAndView delivery(HttpSession session,
+			@RequestParam(value="cp", defaultValue="1")int cp,
+			@RequestParam(value="state", defaultValue="breq") String state_) {
+		int sidx = (int)session.getAttribute("uidx");
+		OrderDTO.State state = Enum.valueOf(OrderDTO.State.class, state_.toUpperCase());
+		String lower_case = state.toString().toLowerCase();
+		List<OrderVO> vo_list = orderService.getOrdersPageByState(sidx, cp, 10, state);
 		ModelAndView mv = new ModelAndView();
 		
+		mv.addObject("delivery_page", "delivery" + lower_case + ".jsp"); 
+		String pager = PageMaker.makePage("/comic/store/deliverymanage.do?state=" +lower_case, vo_list.size(), 10, 10, cp);
+		
 		mv.setViewName("index");
-		mv.addObject("page","store/delivery.jsp");
+		mv.addObject("page","store/deliverymanage.jsp");
+
+		mv.addObject("order_list", vo_list);
 		
-		
+		mv.addObject("pagestr", pager );
 		
 		return mv;
+	}
+	
+	// 리턴값 정리
+	// -1 수락요청 체크한게 아무것도 없다
+	@RequestMapping(value="/breqok.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String breqOk(@RequestBody String values) {
+		JSONArray json_arr = (JSONArray)Utility.JSONParse(Utility.decodeString(values).split("=")[0]);
+		
+		if( json_arr.size() == 0 )
+			return "-1";
+
+		int[] oaidx = new int[json_arr.size()];
+		
+		for(int i=0; i<json_arr.size(); i++)
+			oaidx[i] = Integer.parseInt(json_arr.get(i).toString());
+		
+		int result = orderService.nextStep(oaidx);
+		
+		return result+"";
 	}
 }

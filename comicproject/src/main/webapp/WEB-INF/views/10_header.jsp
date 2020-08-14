@@ -77,7 +77,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
 
 	<!-- register modal -->
 	<div class="modal fade" id="reg-modal" tabindex="-1" role="dialog"
@@ -119,49 +118,6 @@
 								name="name" id="name" placeholder="이 름 입력" required>
 						</div>
 
-
-						<input type="hidden" name="addr" id="addr" value="" />
-
-						<div class="form-group">
-							<span>주 소</span> <input type="text" class="form-control"
-								id="addrf" placeholder="검색 버튼 클릭" readonly>
-							<p class="text-center" style="margin-top: 16px;">
-								<input type="button" onclick="openApiAddr('nomal')" value="검색"
-									class="btn btn-primary">
-							</p>
-						</div>
-
-
-
-						<div class="form-group">
-							<span>상세 주소</span> <input type="text" class="form-control"
-								name="addrd" id="addrd" placeholder="나머지 주소 입력" required>
-						</div>
-
-
-
-						<div class="form-group">
-							<span>연락처</span> <input type="tel" class="form-control"
-								name="phone" id="phone" maxlength="12"
-								placeholder="핸드폰 번호 (ex: 01039063915)" onchange="addrAppend()"
-								required>
-						</div>
-						<div class="form-group">
-							<span>생년월일</span> <input type="date" class="form-control"
-								name="birth" id="birth" required>
-						</div>
-
-
-
-
-						<p class="text-center">
-							<button class="btn btn-primary" type="submit">
-								<i class="fa fa-sign-in"></i> 회원가입
-							</button>
-						</p>
-
-
-					</form>
 
 				</div>
 			</div>
