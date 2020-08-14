@@ -37,15 +37,15 @@
 				<div class="row" id="productMain">
 					<div class="col-sm-6">
 						<div id="mainImage">
-							<img src="${item.thumbnail}" style="margin:auto; width:75%;" class="img-responsive">
+							<img src="${item.thumbnail}" style="margin:auto; width:75%; max-height:350px;" class="img-responsive">
 						</div>
 						
 					</div>
 					<div class="col-sm-6">
-						<div class="box">
-							<h1 class="text-center">${item.title}</h1>
+						<div class="box" style="height:358px;">
+							<h1 style="overflow:hidden;text-overflow:ellipsis;" class="text-center">${item.title}</h1>
 							<p class="goToDescription">
-								<a href="#details" class="scroll-to">자세히로</a>
+								<a href="#details" class="scroll-to">자세히</a>
 							</p>
 							<p class="price">${item.point}</p>
 							<p class="text-center buttons">

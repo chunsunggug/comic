@@ -13,8 +13,8 @@
 			<option value="dc">완료</option>
 		</select>
 		<button class="btn btn-primary" type="button" id="view">조회</button>
-		<button class="btn btn-primary" type="button" id="ok">요청수락</button>
-		<button class="btn btn-primary" type="button" id="deny">요청거절</button>
+		<button class="btn btn-primary" type="button" id="ok">배송시작</button>
+		<button class="btn btn-primary" type="button" id="deny">배송거절</button>
 	</div>
 	<div class="container-fluid text-center">
 		<table class="table table-bordered">

@@ -13,8 +13,8 @@
 			<option value="dc">완료</option>
 		</select>
 		<button class="btn btn-primary" type="button" id="view">조회</button>
-		<button class="btn btn-primary" type="button" id="reqok">요청수락</button>
-		<button class="btn btn-primary" type="button" id="reqdeny">요청거절</button>
+		<button class="btn btn-primary" type="button" id="ok">배송시작</button>
+		<button class="btn btn-primary" type="button" id="deny">배송거절</button>
 	</div>
 	<div class="container-fluid text-center">
 		<table class="table table-bordered">
@@ -28,6 +28,7 @@
 					<th>포인트</th>
 					<th>요청날짜</th>
 					<th>확인날짜</th>
+					<th>배송지</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -43,6 +44,7 @@
 						<th style="vertical-align: middle">${item.point}</th>
 						<th style="vertical-align: middle">${item.breqdate}</th>
 						<th style="vertical-align: middle">${item.bcdate}</th>
+						<th style="vertical-align: middle">${item.uaddr}</th>
 					</tr>
 				</c:forEach>
 			</tbody>

@@ -13,8 +13,6 @@
 			<option value="dc">완료</option>
 		</select>
 		<button class="btn btn-primary" type="button" id="view">조회</button>
-		<button class="btn btn-primary" type="button" id="ok">요청수락</button>
-		<button class="btn btn-primary" type="button" id="deny">요청거절</button>
 	</div>
 	<div class="container-fluid text-center">
 		<table class="table table-bordered">
@@ -26,8 +24,8 @@
 					<th>이미지</th>
 					<th>도서명</th>
 					<th>포인트</th>
-					<th>요청날짜</th>
-					<th>확인날짜</th>
+					<th>배송시작날짜</th>
+					<th>배송완료날짜</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -41,8 +39,8 @@
 							class="img-responsive" src="${item.thumbnail}" /></th>
 						<th style="vertical-align: middle">${item.title}</th>
 						<th style="vertical-align: middle">${item.point}</th>
-						<th style="vertical-align: middle">${item.breqdate}</th>
-						<th style="vertical-align: middle">${item.bcdate}</th>
+						<th style="vertical-align: middle">${item.rddate}</th>
+						<th style="vertical-align: middle">${item.rdcdate}</th>
 					</tr>
 				</c:forEach>
 			</tbody>

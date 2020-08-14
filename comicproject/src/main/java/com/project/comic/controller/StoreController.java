@@ -217,56 +217,16 @@ public class StoreController {
 			@RequestParam(value="cp", defaultValue="1")int cp,
 			@RequestParam(value="state", defaultValue="breq") String state_) {
 		int sidx = (int)session.getAttribute("uidx");
-		String pager = "";
-		List<OrderVO> vo_list = null;
+		OrderDTO.State state = Enum.valueOf(OrderDTO.State.class, state_.toUpperCase());
+		String lower_case = state.toString().toLowerCase();
+		List<OrderVO> vo_list = orderService.getOrdersPageByState(sidx, cp, 10, state);
 		ModelAndView mv = new ModelAndView();
-		OrderDTO.State state = State.BC;
-		switch(state_) {
-			case "breq":state = OrderDTO.State.BREQ;
-						vo_list = orderService.getOrdersPageByState(sidx, cp, 10, state);
-						mv.addObject("delivery_page", "deliverybreq.jsp"); 
-						pager = PageMaker.makePage("/comic/store/deliverymanage.do?state=breq", vo_list.size(), 10, 10, cp);
-						break;
-			case "bc": 	state = OrderDTO.State.BC;
-						vo_list = orderService.getOrdersPageByState(sidx, cp, 10, state);
-						mv.addObject("delivery_page", "deliverybreq.jsp"); 
-						pager = PageMaker.makePage("/comic/store/deliverymanage.do?state=bc", vo_list.size(), 10, 10, cp);
-						break;
-			case "bd":	state = OrderDTO.State.BD;
-						vo_list = orderService.getOrdersPageByState(sidx, cp, 10, state);
-						mv.addObject("delivery_page", "deliverybreq.jsp"); 
-						pager = PageMaker.makePage("/comic/store/deliverymanage.do?state=bd", vo_list.size(), 10, 10, cp);
-						break;
-			case "bdc": state = OrderDTO.State.BDC;
-						vo_list = orderService.getOrdersPageByState(sidx, cp, 10, state);
-						mv.addObject("delivery_page", "deliverybreq.jsp"); 
-						pager = PageMaker.makePage("/comic/store/deliverymanage.do?state=bdc", vo_list.size(), 10, 10, cp);
-						break;
-			case "rreq":state = OrderDTO.State.RREQ;
-						vo_list = orderService.getOrdersPageByState(sidx, cp, 10, state);
-						mv.addObject("delivery_page", "deliverybreq.jsp"); 
-						pager = PageMaker.makePage("/comic/store/deliverymanage.do?state=rreq", vo_list.size(), 10, 10, cp);
-						break;
-			case "rc": 	state = OrderDTO.State.RC;
-						vo_list = orderService.getOrdersPageByState(sidx, cp, 10, state);
-						mv.addObject("delivery_page", "deliverybreq.jsp"); 
-						pager = PageMaker.makePage("/comic/store/deliverymanage.do?state=rc", vo_list.size(), 10, 10, cp);
-						break;
-			case "rd": 	state = OrderDTO.State.RD;
-						vo_list = orderService.getOrdersPageByState(sidx, cp, 10, state);
-						mv.addObject("delivery_page", "deliverybreq.jsp"); 
-						pager = PageMaker.makePage("/comic/store/deliverymanage.do?state=rd", vo_list.size(), 10, 10, cp);
-						break;
-			case "rdc": state = OrderDTO.State.RDC;
-						vo_list = orderService.getOrdersPageByState(sidx, cp, 10, state);
-						mv.addObject("delivery_page", "deliverybreq.jsp"); 
-						pager = PageMaker.makePage("/comic/store/deliverymanage.do?state=rdc", vo_list.size(), 10, 10, cp);
-						break;
-		}
-
+		
+		mv.addObject("delivery_page", "delivery" + lower_case + ".jsp"); 
+		String pager = PageMaker.makePage("/comic/store/deliverymanage.do?state=" +lower_case, vo_list.size(), 10, 10, cp);
+		
 		mv.setViewName("index");
 		mv.addObject("page","store/deliverymanage.jsp");
-		
 
 		mv.addObject("order_list", vo_list);
 		

@@ -4,7 +4,7 @@
         } );
       } );
  
- $('#reqok').click( function() {
+ $('#ok').click( function() {
 	var items = $('.cb:checked');
 	var values = new Array();
 	var type = $('#type option:selected').val();
@@ -23,10 +23,10 @@
 		dataType : "text",
 		success : function(result){
 			if(result > 0){
-				alert("요청을 수락하였습니다");
+				alert("완료되었습니다");
 				location.replace(replaceurl);
 			}else{
-				alert("요청수락이 실패하였습니다");
+				alert("실패하였습니다");
 			}
 		}
 	});

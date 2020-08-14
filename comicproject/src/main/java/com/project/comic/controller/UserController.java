@@ -133,7 +133,7 @@ public class UserController {
 				session.setAttribute("point", uvo.getPoint());
 				session.setAttribute("type", uvo.getType());
 				session.setAttribute("isyn", uvo.getIsYn());
-				session.setMaxInactiveInterval(60 * 10); // 기본 로그인 유지 시간 60초*10
+				session.setMaxInactiveInterval(-1); // 기본 로그인 유지 시간 60초*10
 				mv.addObject("msg", (String) uvo.getName() + "님을 환영합니다." + "정상적으로 로그인이 완료되었습니다.");
 				mv.addObject("gourl", "index.do");
 

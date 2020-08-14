@@ -268,7 +268,7 @@
 	<div id="top">
 		<div class="container">
 			<div class="col-md-6 offer" data-animate="fadeInDown">
-				<span style="color: white;">현재는 봉천동 일부 지역만 서비스 가능합니다.</span>
+				<span style="color: white;">현재는 관악구 일부 지역만 서비스 가능합니다.</span>
 			</div>
 
 
@@ -276,7 +276,7 @@
 				<ul class="menu">
 					<c:choose>
 						<c:when test="${fn:contains(isyn,'Y') and type eq 'C'}">
-							<li><span style="color: white;">${name}(${id})님
+							<li><span style="color: white;">${name}님
 									환영홥니다.</span></li>
 							<li><span style="color: white;">현재 잔여 포인트 : ${point}
 							</span></li>
@@ -284,16 +284,16 @@
 							<li><a href="/comic/signout.do">로그아웃</a></li>
 						</c:when>
 						<c:when test="${isyn eq 'Y' and type eq 'S'}">
-							<div class="float-right btn-wrapper" style="margin-top: 40px;">
-								<span style="color: blue" class="navlogininfo">${name}(${id})님
-									환영합니다. || </span> <span style="color: blue" class="navlogininfo">현재
-									잔여 포인트 : ${point } || </span> <a href="/comic/myInfo.do"><span
-									style="color: blue" class="navlogininfo">마이페이지 || </span></a> <a
-									href="/comic/store/listbook.do"><span style="color: blue"
+							<div class="float-right btn-wrapper">
+								<span style="color: white" class="navlogininfo">${name}님
+									환영합니다. || </span> <span style="color: white" class="navlogininfo">현재
+									잔여 포인트 : ${point } ||<br> </span> <a href="/comic/myInfo.do"><span
+									style="color: white" class="navlogininfo">마이페이지 || </span></a> <a
+									href="/comic/store/listbook.do"><span style="color: white"
 									class="navlogininfo">도서관리 || </span></a> <a
-									href="/comic/store/deliverymanage.do"><span style="color: blue"
+									href="/comic/store/deliverymanage.do"><span style="color: white"
 									class="navlogininfo">배송관리 || </span></a> <a
-									href="/comic/signout.do"><span style="color: blue">로그아웃</span></a>
+									href="/comic/signout.do"><span style="color: white">로그아웃</span></a>
 							</div>
 						</c:when>
 						<c:otherwise>

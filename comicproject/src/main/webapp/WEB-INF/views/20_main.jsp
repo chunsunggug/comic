@@ -87,22 +87,22 @@
                                 <div class="flip-container">
                                     <div class="flipper">
                                         <div class="front">
-                                            <a href="detail.html">
-                                                <img src="/comic/resources/img/product1.jpg" alt="" class="img-responsive">
+                                            <a href="/comic/bookdetail.do?sidx=1&isbn=9791136233325">
+                                                <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F5402206%3Ftimestamp%3D20200813144925" alt="" class="img-responsive">
                                             </a>
                                         </div>
                                         <div class="back">
-                                            <a href="detail.html">
-                                                <img src="/comic/resources/img/product1_2.jpg" alt="" class="img-responsive">
+                                            <a href="/comic/bookdetail.do?sidx=1&isbn=9791136233325">
+                                                <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F5402206%3Ftimestamp%3D20200813144925" alt="" class="img-responsive">
                                             </a>
                                         </div>
                                     </div>
                                 </div>
-                                <a href="detail.html" class="invisible">
-                                    <img src="/comic/resources/img/product1.jpg" alt="" class="img-responsive">
+                                <a href="/comic/bookdetail.do?sidx=1&isbn=9791136233325" class="invisible">
+                                    <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F5402206%3Ftimestamp%3D20200813144925" alt="" class="img-responsive">
                                 </a>
                                 <div class="text">
-                                    <h3><a href="detail.html">1위 만화</a></h3>
+                                    <h3><a href="/comic/bookdetail.do?sidx=1&isbn=9791136233325">원피스 96권</a></h3>
                                 </div>
                                 <!-- /.text -->
                                     <div class="ribbon sale">
@@ -118,22 +118,22 @@
                                 <div class="flip-container">
                                     <div class="flipper">
                                         <div class="front">
-                                            <a href="detail.html">
-                                                <img src="/comic/resources/img/product2.jpg" alt="" class="img-responsive">
+                                            <a href="/comic/bookdetail.do?sidx=1&isbn=9791157546527">
+                                                <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F1574620%3Ftimestamp%3D20200806135931" alt="" class="img-responsive">
                                             </a>
                                         </div>
                                         <div class="back">
-                                            <a href="detail.html">
-                                                <img src="/comic/resources/img/product2_2.jpg" alt="" class="img-responsive">
+                                            <a href="/comic/bookdetail.do?sidx=1&isbn=9791157546527">
+                                                <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F1574620%3Ftimestamp%3D20200806135931" alt="" class="img-responsive">
                                             </a>
                                         </div>
                                     </div>
                                 </div>
-                                <a href="detail.html" class="invisible">
-                                    <img src="/comic/resources/img/product2.jpg" alt="" class="img-responsive">
+                                <a href="/comic/bookdetail.do?sidx=1&isbn=9791157546527" class="invisible">
+                                    <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F1574620%3Ftimestamp%3D20200806135931" alt="" class="img-responsive">
                                 </a>
                                 <div class="text">
-                                    <h3><a href="detail.html">2위 만화</a></h3>
+                                    <h3><a href="/comic/bookdetail.do?sidx=1&isbn=9791157546527">나루토 72권(완결)</a></h3>
                                 </div>
                                 <!-- /.text -->
 
@@ -155,22 +155,22 @@
                                 <div class="flip-container">
                                     <div class="flipper">
                                         <div class="front">
-                                            <a href="detail.html">
-                                                <img src="/comic/resources/img/product3.jpg" alt="" class="img-responsive">
+                                            <a href="/comic/bookdetail.do?sidx=1&isbn=9788926360835">
+                                                <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F437204%3Ftimestamp%3D20200806135332" alt="" class="img-responsive">
                                             </a>
                                         </div>
                                         <div class="back">
-                                            <a href="detail.html">
-                                                <img src="/comic/resources/img/product3_2.jpg" alt="" class="img-responsive">
+                                            <a href="/comic/bookdetail.do?sidx=1&isbn=9788926360835">
+                                                <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F437204%3Ftimestamp%3D20200806135332" alt="" class="img-responsive">
                                             </a>
                                         </div>
                                     </div>
                                 </div>
-                                <a href="detail.html" class="invisible">
-                                    <img src="/comic/resources/img/product3.jpg" alt="" class="img-responsive">
+                                <a href="/comic/bookdetail.do?sidx=1&isbn=9788926360835" class="invisible">
+                                    <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F437204%3Ftimestamp%3D20200806135332" alt="" class="img-responsive">
                                 </a>
                                 <div class="text">
-                                    <h3><a href="detail.html">3위 만화</a></h3>
+                                    <h3><a href="/comic/bookdetail.do?sidx=1&isbn=9788926360835">블리치 74권(완결)</a></h3>
                                 </div>
                                 <!-- /.text -->
                                 <div class="ribbon gift">
@@ -186,22 +186,22 @@
                                 <div class="flip-container">
                                     <div class="flipper">
                                         <div class="front">
-                                            <a href="detail.html">
-                                                <img src="/comic/resources/img/product3.jpg" alt="" class="img-responsive">
+                                            <a href="/comic/bookdetail.do?sidx=1&isbn=9791133487707">
+                                                <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F3943660%3Ftimestamp%3D20200813144544" alt="" class="img-responsive">
                                             </a>
                                         </div>
                                         <div class="back">
-                                            <a href="detail.html">
-                                                <img src="/comic/resources/img/product3_2.jpg" alt="" class="img-responsive">
+                                            <a href="/comic/bookdetail.do?sidx=1&isbn=9791133487707">
+                                                <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F3943660%3Ftimestamp%3D20200813144544" alt="" class="img-responsive">
                                             </a>
                                         </div>
                                     </div>
                                 </div>
-                                <a href="detail.html" class="invisible">
-                                    <img src="/comic/resources/img/product3.jpg" alt="" class="img-responsive">
+                                <a href="/comic/bookdetail.do?sidx=1&isbn=9791133487707" class="invisible">
+                                    <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F3943660%3Ftimestamp%3D20200813144544" alt="" class="img-responsive">
                                 </a>
                                 <div class="text">
-                                    <h3><a href="detail.html">Black Blouse Versace</a></h3>
+                                    <h3><a href="/comic/bookdetail.do?sidx=1&isbn=9791133487707">슬램덩크. 20: 북산 vs. 산왕공고(5)(완결)</a></h3>
                                 </div>
                                 <!-- /.text -->
                             </div>
@@ -213,22 +213,22 @@
                                 <div class="flip-container">
                                     <div class="flipper">
                                         <div class="front">
-                                            <a href="detail.html">
-                                                <img src="/comic/resources/img/product2.jpg" alt="" class="img-responsive">
+                                            <a href="/comic/bookdetail.do?sidx=1&isbn=9791135421761">
+                                                <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F5332980%3Ftimestamp%3D20200810132247" alt="" class="img-responsive">
                                             </a>
                                         </div>
                                         <div class="back">
-                                            <a href="detail.html">
-                                                <img src="/comic/resources/img/product2_2.jpg" alt="" class="img-responsive">
+                                            <a href="/comic/bookdetail.do?sidx=1&isbn=9791135421761">
+                                                <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F5332980%3Ftimestamp%3D20200810132247" alt="" class="img-responsive">
                                             </a>
                                         </div>
                                     </div>
                                 </div>
-                                <a href="detail.html" class="invisible">
-                                    <img src="/comic/resources/img/product2.jpg" alt="" class="img-responsive">
+                                <a href="/comic/bookdetail.do?sidx=1&isbn=9791135421761" class="invisible">
+                                    <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F5332980%3Ftimestamp%3D20200810132247" alt="" class="img-responsive">
                                 </a>
                                 <div class="text">
-                                    <h3><a href="detail.html">White Blouse Versace</a></h3>
+                                    <h3><a href="/comic/bookdetail.do?sidx=1&isbn=9791135421761">달빛 조각사 57권</a></h3>
                                 </div>
                                 <!-- /.text -->
 
@@ -241,22 +241,22 @@
                                 <div class="flip-container">
                                     <div class="flipper">
                                         <div class="front">
-                                            <a href="detail.html">
-                                                <img src="/comic/resources/img/product1.jpg" alt="" class="img-responsive">
+                                            <a href="/comic/bookdetail.do?sidx=1&isbn=9788926362754">
+                                                <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F436812%3Ftimestamp%3D20200627132145" alt="" class="img-responsive">
                                             </a>
                                         </div>
                                         <div class="back">
-                                            <a href="detail.html">
-                                                <img src="/comic/resources/img/product1_2.jpg" alt="" class="img-responsive">
+                                            <a href="/comic/bookdetail.do?sidx=1&isbn=9788926362754">
+                                                <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F436812%3Ftimestamp%3D20200627132145" alt="" class="img-responsive">
                                             </a>
                                         </div>
                                     </div>
                                 </div>
-                                <a href="detail.html" class="invisible">
-                                    <img src="/comic/resources/img/product1.jpg" alt="" class="img-responsive">
+                                <a href="/comic/bookdetail.do?sidx=1&isbn=9788926362754" class="invisible">
+                                    <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F436812%3Ftimestamp%3D20200627132145" alt="" class="img-responsive">
                                 </a>
                                 <div class="text">
-                                    <h3><a href="detail.html">Fur coat</a></h3>
+                                    <h3><a href="/comic/bookdetail.do?sidx=1&isbn=9791135421761">후르츠 바스켓 another 1권</a></h3>
                                 </div>
                                 <!-- /.text -->
 
@@ -271,22 +271,22 @@
                                 <div class="flip-container">
                                     <div class="flipper">
                                         <div class="front">
-                                            <a href="detail.html">
-                                                <img src="/comic/resources/img/product2.jpg" alt="" class="img-responsive">
+                                            <a href="/comic/bookdetail.do?sidx=1&isbn=9788954657556">
+                                                <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F5074295%3Ftimestamp%3D20200810131125" alt="" class="img-responsive">
                                             </a>
                                         </div>
                                         <div class="back">
-                                            <a href="detail.html">
-                                                <img src="/comic/resources/img/product2_2.jpg" alt="" class="img-responsive">
+                                            <a href="/comic/bookdetail.do?sidx=1&isbn=9788954657556">
+                                                <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F5074295%3Ftimestamp%3D20200810131125" alt="" class="img-responsive">
                                             </a>
                                         </div>
                                     </div>
                                 </div>
-                                <a href="detail.html" class="invisible">
-                                    <img src="/comic/resources/img/product2.jpg" alt="" class="img-responsive">
+                                <a href="/comic/bookdetail.do?sidx=1&isbn=9788954657556" class="invisible">
+                                    <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F5074295%3Ftimestamp%3D20200810131125" alt="" class="img-responsive">
                                 </a>
                                 <div class="text">
-                                    <h3><a href="detail.html">White Blouse Armani</a></h3>
+                                    <h3><a href="/comic/bookdetail.do?sidx=1&isbn=9788926362754">룬의 아이들 블러디드 2권</a></h3>
                                 </div>
                                 <!-- /.text -->
 
@@ -299,22 +299,22 @@
                                 <div class="flip-container">
                                     <div class="flipper">
                                         <div class="front">
-                                            <a href="detail.html">
-                                                <img src="/comic/resources/img/product3.jpg" alt="" class="img-responsive">
+                                            <a href="/comic/bookdetail.do?sidx=1&isbn=9791136221582">
+                                                <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F5248608%3Ftimestamp%3D20200813143758" alt="" class="img-responsive">
                                             </a>
                                         </div>
                                         <div class="back">
-                                            <a href="detail.html">
-                                                <img src="/comic/resources/img/product3_2.jpg" alt="" class="img-responsive">
+                                            <a href="/comic/bookdetail.do?sidx=1&isbn=9791136221582">
+                                                <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F5248608%3Ftimestamp%3D20200813143758" alt="" class="img-responsive">
                                             </a>
                                         </div>
                                     </div>
                                 </div>
-                                <a href="detail.html" class="invisible">
-                                    <img src="/comic/resources/img/product3.jpg" alt="" class="img-responsive">
+                                <a href="/comic/bookdetail.do?sidx=1&isbn=9791136221582" class="invisible">
+                                    <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F5248608%3Ftimestamp%3D20200813143758" alt="" class="img-responsive">
                                 </a>
                                 <div class="text">
-                                    <h3><a href="detail.html">Black Blouse Versace</a></h3>
+                                    <h3><a href="/comic/bookdetail.do?sidx=1&isbn=9788954657556">원펀맨</a></h3>
                                 </div>
                                 <!-- /.text -->
                             </div>

@@ -16,7 +16,7 @@ public class PageMaker {
 			//잘라서 sb append로 합치기
 			sb.append("<li><a href='");
 			sb.append(pagename); //pageTest.jsp까지
-			if( contains(sb.toString(), "?" ) )
+			if( pagename.contains("?") )
 				sb.append("&cp=");
 			else
 				sb.append("?cp=");
@@ -33,7 +33,7 @@ public class PageMaker {
 					sb.append("class='active'");
 				sb.append("><a href='");
 				sb.append(pagename);
-				if( contains(sb.toString(), "?" ) )
+				if( pagename.contains("?") )
 					sb.append("&cp=");
 				else
 					sb.append("?cp=");
@@ -48,7 +48,7 @@ public class PageMaker {
 			// 오른쪽 화살표
 			sb.append("<li><a href='");
 			sb.append(pagename);
-			if( contains(sb.toString(), "?" ) )
+			if( pagename.contains("?") )
 				sb.append("&cp=");
 			else
 				sb.append("?cp=");
@@ -60,9 +60,6 @@ public class PageMaker {
 			
 			return sb.toString();
 	}
-		private static boolean contains(String str, String find) {
-			return str.contains(find);
-		}
 }
 
 /*
