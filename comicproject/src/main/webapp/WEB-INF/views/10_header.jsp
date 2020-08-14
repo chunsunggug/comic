@@ -225,7 +225,7 @@
 		<div id="top">
 			<div class="container">
 				<div class="col-md-6 offer" data-animate="fadeInDown">
-					<span style="color: white;">현재는 봉천동 일부 지역만 서비스 가능합니다.</span>
+					<span style="color: white;">현재는 봉천동 일부 지역만 서비스 가능합니다...</span>
 				</div>
 
 
