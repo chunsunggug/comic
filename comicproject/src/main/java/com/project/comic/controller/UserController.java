@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.print.attribute.standard.PageRanges;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -19,13 +20,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.comic.kakao.KakaoAPI;
+import com.project.comic.mail.UserMailSendService;
+import com.project.comic.order.OrderService;
+import com.project.comic.order.OrderVO;
+import com.project.comic.page.PageMaker;
+import com.project.comic.user.UserDTO;
 import com.project.comic.user.UserDao;
 import com.project.comic.user.UserService;
 import com.project.comic.user.UserVO;
-import com.project.comic.kakao.KakaoAPI;
-import com.project.comic.mail.MailDTO;
-import com.project.comic.mail.UserMailSendService;
-import com.project.comic.user.UserDTO;
 
 @Controller
 public class UserController {
@@ -39,6 +42,9 @@ public class UserController {
 
 	@Autowired
 	private UserMailSendService mailsender;
+	
+	@Autowired
+	private OrderService orderService;
 
 	@Transactional
 	@RequestMapping(value = "/signup.do", method = RequestMethod.POST)
@@ -405,13 +411,30 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="bbooklist.do")
-	public ModelAndView bbookListPage() {
+	public ModelAndView bbookListPage(HttpSession session,
+			@RequestParam(value="cp", defaultValue="1")int cp) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("index");
 		mv.addObject("page", "user/bbooklist.jsp");
 		mv.addObject("panelidx", 1);
 		mv.addObject("left_panel", "");
+		
+		int uidx = (int)session.getAttribute("uidx");
+		List<OrderVO> vo_list = orderService.getOrdersPageByType(uidx, cp, 10, "B");
+		int tot = orderService.getOrdersCountByType(uidx, "B");
+		String pager = PageMaker.makePage("/comic/bbooklist.do", tot, 10, 10, cp);
+		
+		mv.addObject("items", vo_list);
+		mv.addObject("pagestr", pager);
+		
 		return mv;
+	}
+	
+	// 연장신청
+	@RequestMapping(value="delayreq.do")
+	@ResponseBody
+	public String delayREQ(@RequestParam("oaidx")int oaidx) {
+		return orderService.reqDelay(oaidx) + "";
 	}
 
 	private HashMap<String, String> addrSet(String addrDto, String idDto) {

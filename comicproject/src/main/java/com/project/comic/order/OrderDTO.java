@@ -26,4 +26,6 @@ public class OrderDTO {
 	private String uaddr;		// 유저 주소
 	private String isbn10;		// 조인해서 가져오는 isbn
 	private String isbn13;		// 
+	private int delcount;		// 연장 수
+	private String expdate;		// 예정 반납일
 }

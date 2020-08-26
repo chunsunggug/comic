@@ -18,6 +18,15 @@
   	limit #{start}, #{listsize}
   </select>
   
+  <select id="getOrdersPageByType" parameterType="java.util.Map" resultType="com.project.comic.order.OrderDTO">
+  	select * from t_order o, t_store_book sb WHERE o.uidx=#{uidx} AND sb.sbidx = o.sbidx and o.state like '${type}%' order by o.oidx
+  	limit #{start}, #{listsize}
+  </select>
+  
+  <select id="getOrdersCountByType" parameterType="java.util.Map" resultType="int">
+  	select count(*) from t_order WHERE uidx=#{uidx} AND state like '${type}%'
+  </select>
+  
   <select id="getDTO" parameterType="int" resultType="com.project.comic.order.OrderDTO">
   	select * from t_order where oaidx=#{oaidx}
   </select>
@@ -25,5 +34,13 @@
   <update id="changeState" parameterType="java.util.Map">
   	update t_order set state=#{state}, ${datetype}=now()
   	where oaidx=#{oaidx}
+  </update>
+  
+  <update id="setExpDate" parameterType="java.util.Map">
+  	UPDATE t_order SET expdate=date_add(bdcdate,interval #{exp} DAY) WHERE oaidx=#{oaidx};
+  </update>
+
+  <update id="delayExpDate" parameterType="java.util.Map">
+  	UPDATE t_order SET delcount=delcount + 1, expdate=date_add(expdate,interval #{exp} DAY) WHERE oaidx=#{oaidx};
   </update>
 </mapper>

@@ -15,11 +15,15 @@ public class StoreBookDTO {
 	private String category;
 	private String status;
 	private String name;
+	private int exp;
+	private int expdel;
+	private int maxexpcount;
 	
 	public StoreBookDTO(){}
 	
 	public StoreBookDTO(int sbidx, int sidx, String isbn13, String isbn10, int idx, String sdate, String udate,
-					 int point,String category, int total, int cnt, int losttot, String status, String name){
+					 int point,String category, int total, int cnt, int losttot, String status, String name,
+					 int exp, int expdel, int maxexpcount){
 		this.sbidx = sbidx;
 		this.name = name;
 		this.sidx = sidx;
@@ -31,6 +35,9 @@ public class StoreBookDTO {
 		this.category = category;
 		this.idx = idx;
 		this.status = status;
+		this.exp = exp;
+		this.expdel = expdel;
+		this.maxexpcount = maxexpcount;
 	}
 	
 }

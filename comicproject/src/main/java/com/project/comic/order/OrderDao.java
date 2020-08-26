@@ -38,6 +38,18 @@ public class OrderDao implements IOrderDao{
 	}
 	
 	@Override
+	public List getOrdersPageByType(int uidx, int cp, int listsize, String type) {
+		Map param = new HashMap();
+		
+		param.put("uidx", uidx);
+		param.put("type", type);
+		param.put("start", (cp-1) * listsize );
+		param.put("listsize", listsize);
+		
+		return sqlMap.selectList("getOrdersPageByType", param);
+	}
+	
+	@Override
 	public OrderDTO getDTO(int oaidx) {
 		return sqlMap.selectOne("getDTO", oaidx);
 	}
@@ -51,5 +63,35 @@ public class OrderDao implements IOrderDao{
 		param.put("state", state);
 		
 		return sqlMap.update("changeState", param);
+	}
+
+	@Override
+	public int setExpDate(int oaidx, int exp) {
+		Map param = new HashMap();
+
+		param.put("oaidx", oaidx);
+		param.put("exp", exp);
+		
+		return sqlMap.update("setExpDate", param);
+	}
+
+	@Override
+	public int delayExpDate(int oaidx, int exp) {
+		Map param = new HashMap();
+
+		param.put("oaidx", oaidx);
+		param.put("exp", exp);
+		
+		return sqlMap.update("delayExpDate", param);
+	}
+
+	@Override
+	public int getOrdersCountByType(int uidx, String type) {
+		Map param = new HashMap();
+
+		param.put("uidx", uidx );
+		param.put("uidx", type );
+		
+		return sqlMap.selectOne("getOrdersCountByType", param);
 	}
 }

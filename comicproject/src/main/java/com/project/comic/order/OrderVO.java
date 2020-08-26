@@ -1,5 +1,8 @@
 package com.project.comic.order;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.json.simple.JSONObject;
 
 import lombok.Data;
@@ -21,12 +24,15 @@ public class OrderVO {
 	private String rddate;		// 반납배송시작 시간
 	private String rdcdate;		// 반납배송완료 시간
 	private String odate;		// 주문등록 시간
+	private String expdate;		// 반납예정일
 	private int point;			// 대여료
 	private String uaddr;		// 유저 주소
 	private String reqtype;		// 요청구분
 	
 	private String title;		// 도서명
 	private String thumbnail;	// 커버그림 url
+	private int delcount;		// 연장횟수
+	private int deldate;		// 연체일수
 	
 	public void setDTO(OrderDTO dto) {
 		oaidx = dto.getOaidx();
@@ -45,6 +51,27 @@ public class OrderVO {
 		odate = dto.getOdate();
 		point = dto.getPoint();
 		uaddr = dto.getUaddr();
+		expdate = dto.getExpdate();
+		delcount = dto.getDelcount();
+		
+		try {
+			if( expdate != null ) {
+				Calendar day1 = Calendar.getInstance();
+				Calendar day2 = Calendar.getInstance();
+				
+				String[] expset = expdate.split("-");
+				
+				day1.set(Integer.parseInt(expset[0]),
+						Integer.parseInt(expset[1]),
+						Integer.parseInt(expset[2]) );
+				
+				Long diff = (day2.getTimeInMillis() - day1.getTimeInMillis()) / (24*60*60*1000);
+				deldate = diff < 0 ? 0 : diff.intValue() + 31;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 		
 		switch(state) {
 		case BDC:

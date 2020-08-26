@@ -189,7 +189,7 @@ public class OrderService {
 			result = 0;
 			for( OrderDTO dto : order_list) {
 				result += orderDao.addNewOrder(dto);
-				storeBookDaoImpl.updateBook(dto.getSbidx(), "W");
+				storeBookDaoImpl.updateBook(dto.getSbidx(), "W");	// 책 상태 W로 변경
 			}
 
 			if( result != order_list.size() ) throw new CreateOrderFailedException();
@@ -217,35 +217,69 @@ public class OrderService {
 		// DTO를 VO로 바꿔준다
 		if( dto_list != null) {
 			for(OrderDTO dto : dto_list) {
-				OrderVO vo = new OrderVO();
-				String isbn = dto.getIsbn10() != null ? dto.getIsbn10() : dto.getIsbn13();
-				JSONObject json_book = kakaoSearchService.getBook(isbn);
-				vo.setDTO(dto);
-				vo.setKakao(json_book);
+				OrderVO vo = orderDtoToVo(dto);
 				vo_list.add(vo);
 			}
 		}
 		return vo_list;
 	}
 	
-	public int nextStep(int oaidx) {
-		OrderDTO dto = orderDao.getDTO(oaidx);
+	public List<OrderVO> getOrdersPageByType(int sidx, int cp, int listsize, String type){
+		List<OrderDTO> dto_list = orderDao.getOrdersPageByType(sidx, cp, listsize, type);
+		List<OrderVO> vo_list = new ArrayList<OrderVO>();
 		
-		switch( dto.getState() ) {
+		if( dto_list != null) {
+			for(OrderDTO dto : dto_list) {
+				OrderVO vo = orderDtoToVo(dto);
+				vo_list.add(vo);
+			}
+		}
+		
+		return vo_list;
+	}
+	
+	public int getOrdersCountByType(int uidx, String type) {
+		return orderDao.getOrdersCountByType(uidx, type);
+	}
+	
+	@Transactional
+	public int reqDelay(int oaidx) {
+		OrderDTO odto = orderDao.getDTO(oaidx);
+		StoreBookDTO sbdto = storeBookDaoImpl.getBook( odto.getSbidx() );
+		
+		if ( odto.getDelcount() != sbdto.getMaxexpcount() ) {
+			return orderDao.delayExpDate( oaidx, sbdto.getExpdel() );
+		}
+		
+		return 0;
+	}
+	
+	@Transactional
+	public int nextStep(int oaidx) {
+		OrderDTO odto = orderDao.getDTO(oaidx);
+		
+		switch( odto.getState() ) {
 		case BREQ: 	
 			return orderDao.changeState(oaidx, "bcdate", OrderDTO.State.BC);
 		case BC: 	
 			return orderDao.changeState(oaidx, "bddate", OrderDTO.State.BD);
 		case BD:	
-			return orderDao.changeState(oaidx, "bdcdate", OrderDTO.State.BDC);
+			orderDao.changeState(oaidx, "bdcdate", OrderDTO.State.BDC);
+			StoreBookDTO sbdto = storeBookDaoImpl.getBook(odto.getSbidx());
+				
+			orderDao.setExpDate(odto.getOaidx(), sbdto.getExp());
+			storeBookDaoImpl.updateBook(sbdto.getSbidx(), "B");		// 대여중B로 상태 변경
+			return 1;
 		case BDC:	
-			return orderDao.changeState(oaidx, "rreqdate", OrderDTO.State.RREQ);
+			break;
 		case RREQ:	
 			return orderDao.changeState(oaidx, "rcdate", OrderDTO.State.RC);
 		case RC:	
 			return orderDao.changeState(oaidx, "rddate", OrderDTO.State.RD);
 		case RD:	
 			return orderDao.changeState(oaidx, "rdcdate", OrderDTO.State.RDC);
+		case RDC:
+			break;
 		}
 		
 		return 0;
@@ -286,5 +320,13 @@ public class OrderService {
 		return null;
 	}
 
+	private OrderVO orderDtoToVo(OrderDTO dto) {
+		OrderVO vo = new OrderVO();
+		String isbn = dto.getIsbn10() != null ? dto.getIsbn10() : dto.getIsbn13();
+		JSONObject json_book = kakaoSearchService.getBook(isbn);
+		vo.setDTO(dto);
+		vo.setKakao(json_book);
+		return vo;
+	}
 
 }
