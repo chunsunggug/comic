@@ -50,5 +50,6 @@ response.setDateHeader("Expires",0);
 
 		<!-- 사용자 정의 css -->
     <link href="/comic/resources/css/nav.scroll.css" rel="stylesheet" />
+    <script src="/comic/resources/js/jquery-1.11.0.min.js"></script>
 
 </head>

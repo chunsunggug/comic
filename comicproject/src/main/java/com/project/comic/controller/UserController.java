@@ -403,6 +403,16 @@ public class UserController {
 		System.out.println("여긴 유저 컨트롤러임 : " + userInfo.toString());
 		return "index";
 	}
+	
+	@RequestMapping(value="bbooklist.do")
+	public ModelAndView bbookListPage() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("index");
+		mv.addObject("page", "user/bbooklist.jsp");
+		mv.addObject("panelidx", 1);
+		mv.addObject("left_panel", "");
+		return mv;
+	}
 
 	private HashMap<String, String> addrSet(String addrDto, String idDto) {
 		System.out.println("받은 주소 : " + addrDto);

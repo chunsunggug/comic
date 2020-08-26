@@ -110,7 +110,6 @@
     
     <!-- *** SCRIPTS TO INCLUDE ***
  _________________________________________________________ -->
-    <script src="/comic/resources/js/jquery-1.11.0.min.js"></script>
     <script src="/comic/resources/js/bootstrap.min.js"></script>
     <script src="/comic/resources/js/jquery.cookie.js"></script>
     <script src="/comic/resources/js/waypoints.min.js"></script>

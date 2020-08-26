@@ -9,12 +9,21 @@ response.setDateHeader("Expires",0);
 <jsp:include page="00_head.jsp"></jsp:include>
 <jsp:include page="10_header.jsp"></jsp:include>
 <c:choose>
-<c:when test="${page ne null}">
-<jsp:include page="${page}"></jsp:include>
-</c:when>
-<c:otherwise>
-<jsp:include page="20_main.jsp"></jsp:include>
-</c:otherwise>
+	<c:when test="${left_panel != null}">
+		<jsp:include page="left_pan.jsp" />
 
+	</c:when>
+	<c:when test="${right_panel != null }">
+	</c:when>
+	<c:otherwise>
+		<c:choose>
+			<c:when test="${page ne null}">
+				<jsp:include page="${page}"></jsp:include>
+			</c:when>
+			<c:otherwise>
+				<jsp:include page="20_main.jsp"></jsp:include>
+			</c:otherwise>
+		</c:choose>	
+	</c:otherwise>
 </c:choose>
 <jsp:include page="30_footer.jsp"></jsp:include>
