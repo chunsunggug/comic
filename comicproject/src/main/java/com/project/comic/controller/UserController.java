@@ -478,9 +478,6 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "/deleteUser.do", method = RequestMethod.POST)
 	public String DeleteUser(@RequestParam String uidx) {
-		
-		
-		
 		int result = userDao.deleteUser(Integer.parseInt(uidx));
 		System.out.println("영향 행 : " + result);
 
