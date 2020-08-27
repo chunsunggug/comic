@@ -219,3 +219,26 @@ function removeCheck() {
 	     return false;
 	 }
 }
+
+function deleteUser(user){
+	var con = confirm("정말로 탈퇴할까요?");
+	if( con == false )
+		return;
+	
+	var param = "uidx=" + user;
+
+	$.ajax({
+		type: 'post',
+		url: '/comic/deleteUser.do?'+param,
+		contentType: 'application/json; charset=utf-8',
+		dataType: 'text',
+		success: function(result){
+			if(result == 1) {
+				alert("강제 탈퇴가 완료되었습니다");
+				window.location.replace("http://localhost:8080/comic/listuser.do");
+			}
+			else
+				alert("오류가 발생하였습니다.");
+		}
+	});
+}

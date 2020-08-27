@@ -125,19 +125,19 @@ public class UserController {
 		uvo = userService.logingUser(mapLogin);
 
 		if (uvo != null) {
-			if (uvo.getIsYn().equals("Y")) {
+			if (uvo.getIsyn().equals("Y")) {
 
 				session.setAttribute("uidx", uvo.getUidx());
 				session.setAttribute("id", uvo.getId());
 				session.setAttribute("name", uvo.getName());
 				session.setAttribute("point", uvo.getPoint());
 				session.setAttribute("type", uvo.getType());
-				session.setAttribute("isyn", uvo.getIsYn());
-				session.setMaxInactiveInterval(-1); // 기본 로그인 유지 시간 60초*10
+				session.setAttribute("isyn", uvo.getIsyn());
+				session.setMaxInactiveInterval(60*10); // 기본 로그인 유지 시간 60초*10 = 10분
 				mv.addObject("msg", (String) uvo.getName() + "님을 환영합니다." + "정상적으로 로그인이 완료되었습니다.");
 				mv.addObject("gourl", "index.do");
 
-			} else if(uvo.getIsYn().equals("W")) {
+			} else if(uvo.getIsyn().equals("W")) {
 				
 				mv.addObject("id", uvo.getId());
 				mv.addObject("msg", "현재 회원님은 이메일 인증이 이루어지지 않았습니다.<br>등록하신 메일의 인증 버튼을 눌러주세요.");
@@ -317,6 +317,9 @@ public class UserController {
 			mv.addObject("uvo", uvo);
 			mv.addObject("udto", udto);
 		}
+
+		mv.addObject("panelidx", 0);
+		mv.addObject("left_panel", "");
 		mv.addObject("page", url + ".jsp");
 		url = "index";
 		mv.setViewName(url);
@@ -396,8 +399,9 @@ public class UserController {
 			session.setAttribute("name", uvo.getName());// userInfo.get("name")
 			session.setAttribute("point", uvo.getPoint());
 			session.setAttribute("type", uvo.getType());
-			session.setAttribute("isyn", uvo.getIsYn());
+			session.setAttribute("isyn", uvo.getIsyn());
 			session.setAttribute("token", AccessToken);
+			session.setMaxInactiveInterval(60*10);
 		}
 
 		System.out.println("여긴 유저 컨트롤러임 : " + userInfo.toString());
@@ -414,6 +418,54 @@ public class UserController {
 		return mv;
 	}
 
+	@RequestMapping(value = "/listuser.do", method = RequestMethod.GET)
+	public ModelAndView UserList(HttpServletRequest req,HttpSession session) {
+		
+		System.out.println("session:" + session.getAttribute("isyn"));
+		System.out.println("session:" + session.getAttribute("type"));
+		ModelAndView mv = new ModelAndView();
+		List userList =  userDao.getUserAll();
+		url = "user/login";
+		if(session.getAttribute("isyn")!=null) {
+			String type = (String)session.getAttribute("type");
+			if(type.equals("S")||type.equals("A")) {
+				mv.setViewName("index");
+				mv.addObject("userList",userList);
+				mv.addObject("page", "user/listUser.jsp");
+				mv.addObject("panelidx", 4);
+				mv.addObject("left_panel", "");
+			}else {
+				
+				mv.addObject("msg", "사용 권한 확인 후 이용바랍니다.");
+				mv.addObject("gourl", "index.do");
+				mv.setViewName(url);
+				return mv;
+			}
+			
+		}else {
+			mv.addObject("msg", "로그인 확인 후 이용바랍니다.");
+			mv.addObject("gourl", "index.do");
+			mv.setViewName(url);
+			return mv;
+		}
+		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/deleteUser.do", method = RequestMethod.POST)
+	public String DeleteUser(@RequestParam String uidx) {
+		
+		
+		
+		int result = userDao.deleteUser(Integer.parseInt(uidx));
+		System.out.println("영향 행 : " + result);
+
+		return String.valueOf(result);
+	}	
+	
+	
+	
+	
 	private HashMap<String, String> addrSet(String addrDto, String idDto) {
 		System.out.println("받은 주소 : " + addrDto);
 		String[] addr = addrDto.split(" ");

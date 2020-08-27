@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page session="true" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 response.setHeader("Cache-Control","no-cache");
 response.setHeader("Pragma","no-cache");
@@ -20,7 +20,7 @@ response.setDateHeader("Expires",0);
     <meta name="keywords" content="">
 
     <title>
-        행복한 토라비 - 도서 대여 배달 서비스
+        방빠닥 코믹스 - 도서 대여 배달 서비스
     </title>
 
     <meta name="keywords" content="">

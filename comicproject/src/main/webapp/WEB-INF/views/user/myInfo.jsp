@@ -6,66 +6,15 @@
 <c:set var="uvo" value="${uvo }" scope="page" /> 
 
 
-    <div class="main-wrapper">
+    <main>
 
 <!-- ====================================
 ———	INTERESTED
 ===================================== -->
-<section class="pt-md-10 sec-pb-70 pt-8 pb-6 bg-light">
-	<div class="container">
-		
-    <div id="all">
 
-        <div id="content">
-            <div class="container">
+			
 
                 <div class="col-md-12">
-
-                    <ul class="breadcrumb">
-                        <li><a href="/comic/index.do">Home</a>
-                        </li>
-                        <li>My Page</li>
-                    </ul>
-
-                </div>
-
-                <div class="col-md-3">
-                    <!-- *** CUSTOMER MENU ***
- _________________________________________________________ -->
-                    <div class="panel panel-default sidebar-menu">
-
-                        <div class="panel-heading">
-                            <h3 class="panel-title">My Page Section</h3>
-                        </div>
-
-                        <div class="panel-body">
-
-                            <ul class="nav nav-pills nav-stacked">
-                                <li class="active">
-                                    <a href="/comic/myInfo.do"><i class="fa fa-list"></i>내 정보</a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-heart"></i>대여 신청 목록</a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-user"></i>대여 완료 목록</a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-question"></i>나의 후기 작성 글</a>
-                                </li>
-                                <li>
-                                    <a href="#" onclick="removeCheck()"><i class="fa fa-sign-out"></i>회원탈퇴</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <!-- /.col-md-3 -->
-
-                    <!-- *** CUSTOMER MENU END *** -->
-                </div>
-
-                <div class="col-md-9">
                     <div class="box">
                         <h1>내 정보</h1>
                         <p class="lead">개인 정보 변경을 원하시면 하단의 내용 변경 후 수정 버튼을 눌러주세요.</p>
@@ -177,15 +126,6 @@
                     </div>
                 </div>
 
-            </div>
-            <!-- /.container -->
-        </div>
-        <!-- /#content -->
-
-
-		
-	</div>
-</section>
 
 
 

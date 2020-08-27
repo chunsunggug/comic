@@ -4,6 +4,11 @@ import lombok.Getter;
 
 @Getter
 public class UserVO {
+	
+	public void setSdate(String sdate) {
+		this.sdate = sdate.substring(0,sdate.indexOf("."));
+	}
+
 	private int uidx;
 	private String addr;
 	private String id;
@@ -18,7 +23,7 @@ public class UserVO {
 	private String dong;
 	private String detail;
 	private String type;
-	private String isYn;
+	private String isyn;
 	private String sdate;
 	
 	public UserVO() {}
@@ -28,7 +33,7 @@ public class UserVO {
 	}
 
 	public UserVO(int uidx,String addr, String id, String name, String phone, String birth, int point, String post,
-			String si, String gu, String dong, String detail,String type,String isYn,String sdate) {
+			String si, String gu, String dong, String detail,String type,String isyn,String sdate) {
 		super();
 		this.uidx = uidx;
 		this.addr = addr;
@@ -43,16 +48,16 @@ public class UserVO {
 		this.dong = dong;
 		this.detail = detail;
 		this.type = type;
-		this.isYn = isYn;
+		this.isyn = isyn;
 		this.sdate = sdate;
 	}
 	@Override 
 	public String toString() {
-		return "UserVO[uidx="+uidx+",addr="+addr+",id="+id+",name="+name+",phone="+phone+",birth="+birth+",point="+point+",post="+post+",si="+si+",gu="+gu+",dong="+dong+",detail="+detail+",type="+type+",isYn="+isYn+",sdate"+sdate;
+		return "UserVO[uidx="+uidx+",addr="+addr+",id="+id+",name="+name+",phone="+phone+",birth="+birth+",point="+point+",post="+post+",si="+si+",gu="+gu+",dong="+dong+",detail="+detail+",type="+type+",isyn="+isyn+",sdate"+sdate;
 	}
 	
 	public String getFullAddr() {
-		String str = si + " " + gu + " " + dong + " " + detail;
+		String str =post +" "+ si + " " + gu + " " + dong + " " + detail;
 		return str;
 	}
 	
