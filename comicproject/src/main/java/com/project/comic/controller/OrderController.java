@@ -2,8 +2,6 @@ package com.project.comic.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,14 +15,13 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.project.comic.Utility;
 import com.project.comic.book.BookGroupVO;
 import com.project.comic.order.OrderService;
-import com.project.comic.order.OrderVO;
-import com.project.comic.page.PageMaker;
 import com.project.comic.storebook.IStoreBookService;
 
 @Controller
@@ -96,6 +93,23 @@ public class OrderController {
 		}
 		
 		return mv;
+	}
+	
+	@RequestMapping(value="directpay.do")
+	@ResponseBody
+	public String directPay(@RequestParam("sidx")int sidx, @RequestParam("isbn")String isbn, HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		String user_id = (String)session.getAttribute("id");
+		int uidx = (int)session.getAttribute("uidx");
+		int result = 0;
+		
+		try {
+			result = orderService.payPoint(uidx, user_id, sidx, isbn, -1);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result+"";
 	}
 
 }

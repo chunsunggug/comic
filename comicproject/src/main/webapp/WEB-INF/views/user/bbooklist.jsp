@@ -3,8 +3,7 @@
 
 <div class="col-md-12">
 			<div class="container-fluid text-right">
-				<button class="btn btn-primary" data-toggle="modal" type="button"
-					data-target="#add-book-modal">반납신청</button>
+				<button id="rreqbtn" class="btn btn-primary" type="button">반납신청</button>
 			</div>
 			<div class="container-fluid text-center">
 				<table class="table table-bordered">
@@ -78,4 +77,32 @@ function delayreq(value){
 	});
 	
 };
+
+$('#rreqbtn').click( function() {
+	var items = $('.cb:checked');
+	var values = new Array();
+	var total = 0;
+	
+	items.each(function(index,item){
+		values.push(item.value);
+		total++;
+	});
+	
+	if(total == 0 ) return;
+	
+	$.ajax({
+		url : "/comic/store/breqok.do",
+		type : "post",
+		data : JSON.stringify(values),
+		dataType : "text",
+		success : function(result){
+			if(result == total){
+				alert("반납신청이 완료되었습니다");
+				location.replace(replaceurl);
+			}else{
+				alert("반납신청이 실패하였습니다");
+			}
+		}
+	});
+ });
 </script>

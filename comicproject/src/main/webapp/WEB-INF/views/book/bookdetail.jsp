@@ -49,11 +49,14 @@
 							</p>
 							<p class="price">${item.point}</p>
 							<p class="text-center buttons">
-							<h5></h5>
-								<a href='javascript:addCart(${item.sidx},"${item.isbn13}")' class="btn btn-primary"><i
-									class="fa fa-shopping-cart"></i> 장바구니 담기</a> <a
-									href="#" class="btn btn-default"><i
-									class="fa fa-heart"></i> 찜하기 </a>
+								<h5></h5>
+								<a href='javascript:addCart(${item.sidx},"${item.isbn13}")' class="btn btn-primary">
+									<i class="fa fa-shopping-cart"></i>
+									장바구니 담기
+								</a>
+								<a href="javascript:directPay(${item.sidx},${item.isbn13})" class="btn btn-default">
+									<i class="fa fa-heart"></i> 바로대여하기
+								</a>
 							</p>
 
 						</div>
@@ -93,7 +96,22 @@
 	</div>
 </section>
 
+<script>
+function directPay(sidx, isbn){
+	$.ajax({
+		url : "/comic/order/directpay.do?isbn="+isbn+"&sidx="+sidx,
+		success : function(result){
 
+			if( result >0  ){ 
+				alert("대여신청이 완료되었습니다");
+				return;
+			}else{
+				alert("대여신청이 실패하였습니다");
+			}
+		}
+	});
+}
+</script>
 
 
 <script src="/comic/resources/js/pay/cart.js?v=<%=System.currentTimeMillis() %>"></script>

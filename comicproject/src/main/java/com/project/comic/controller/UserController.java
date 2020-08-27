@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import javax.print.attribute.standard.PageRanges;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.comic.Utility;
 import com.project.comic.kakao.KakaoAPI;
 import com.project.comic.mail.UserMailSendService;
 import com.project.comic.order.OrderService;
@@ -455,6 +456,19 @@ public class UserController {
 		}
 		mapAddr.put("uid", idDto);
 		return mapAddr;
+	}
+	
+	// 반납신청
+	@RequestMapping(value="returnreq.do")
+	@ResponseBody
+	public String returnREQ(@RequestParam("oaidx")String json_oaidx) {
+		JSONArray json_arr = (JSONArray)Utility.JSONParse(json_oaidx);
+		int[] oaidx_arr = new int[json_arr.size()];
+		
+		for(int i=0; i < json_arr.size(); i++ )
+			oaidx_arr[i] = (int)json_arr.get(i);
+		
+		return orderService.returnREQ(oaidx_arr) + "";
 	}
 	
 	 /**

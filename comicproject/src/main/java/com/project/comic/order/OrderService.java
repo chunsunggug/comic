@@ -23,6 +23,7 @@ import com.project.comic.book.kakao.KakaoSearchService;
 import com.project.comic.storebook.IStoreBookDao;
 import com.project.comic.storebook.IStoreBookService;
 import com.project.comic.storebook.StoreBookDTO;
+import com.project.comic.user.UserDTO;
 import com.project.comic.user.UserDao;
 import com.project.comic.user.UserVO;
 
@@ -144,6 +145,8 @@ public class OrderService {
 		int user_point = (int)session.getAttribute("point");
 		String user_id = (String)session.getAttribute("id");
 		int total_point = 0;
+		int left_point = 0;
+		int result = 0;
 
 		JSONArray item_arr = (JSONArray)valueToDecodedJSON( cookie_value );
 		List<OrderDTO> order_list = new ArrayList<OrderDTO>();
@@ -155,59 +158,62 @@ public class OrderService {
 			JSONObject tmp = (JSONObject)item_arr.get(i);
 			int sidx = Integer.parseInt(tmp.get("sidx").toString());
 			String isbn = (String)tmp.get("isbn");
-			BookGroupVO vo = (BookGroupVO)storeBookService.getBookGroupVO( sidx, isbn );
-			OrderDTO dto_tmp = new OrderDTO();
-
-			total_point += vo.getPoint();
-
-			// 주문번호, 점포책고유번호, 대여료
-			dto_tmp.setOidx( new_oidx );
-			dto_tmp.setPoint( vo.getPoint() );
-			dto_tmp.setUidx(uidx);
-			dto_tmp.setSidx(sidx);
-			List<StoreBookDTO> canBorrow = storeBookDaoImpl.getBorrowableBooks(sidx, isbn);
-
-			if( canBorrow.size() == 0 ) return -3;
-
-			dto_tmp.setSbidx(canBorrow.get(0).getSbidx());
-
-			// 주소 가져와서 세트
-			UserVO user_vo = userDaoImpl.myInfo( user_id );
-			dto_tmp.setUaddr( user_vo.getFullAddr() );
-			order_list.add( dto_tmp );
+			
+			left_point = payPoint(uidx, user_id, sidx, isbn, new_oidx);
+			result++;
 		}
+		
+		session.setAttribute("point", left_point);
+		// 쿠키 비우기
+		Cookie cookie = new Cookie("comiccart", "");
+		cookie.setMaxAge(0);
+		cookie.setPath("/comic");
+		response.addCookie(cookie);
+		
+		return result;
 
-		// 유저 포인트가 충분하면 결제 시작
-		if( user_point >= total_point) {
+	}
+	
+	// 묶음주문일 경우 oidx를 지정해주고 아니면 -1
+	@Transactional
+	public int payPoint(int uidx,String user_id, int sidx, String isbn, int oidx) {
+		BookGroupVO vo = (BookGroupVO)storeBookService.getBookGroupVO( sidx, isbn );
+		OrderDTO odto = new OrderDTO();
 
+		// 주문번호, 점포책고유번호, 대여료
+		oidx = oidx < 0 ? orderDao.getMaxOidx() + 1 : oidx;
+		odto.setOidx( oidx );
+		odto.setPoint( vo.getPoint() );
+		odto.setUidx(uidx);
+		odto.setSidx(sidx);
+		List<StoreBookDTO> canBorrow = storeBookDaoImpl.getBorrowableBooks(sidx, isbn);
+
+		if( canBorrow.size() == 0 ) throw new NoExistBorrowableBookException();
+
+		odto.setSbidx(canBorrow.get(0).getSbidx());
+
+		// 주소 가져와서 세트
+		UserVO user_vo = userDaoImpl.myInfo( user_id );
+		odto.setUaddr( user_vo.getFullAddr() );
+		
+		UserDTO udto = userDaoImpl.getUser(user_id);
+		
+		if( udto.getPoint() >= vo.getPoint() ) {
 			// 점수 빼기
-			session.setAttribute( "point", user_point - total_point);
-			int result = userDaoImpl.payPoint( uidx, total_point );
+			int result = userDaoImpl.payPoint( uidx, vo.getPoint() );
 
 			if( result == 0 ) throw new PayFailedException();	// payPoint sql 실패
 
 			result = 0;
-			for( OrderDTO dto : order_list) {
-				result += orderDao.addNewOrder(dto);
-				storeBookDaoImpl.updateBook(dto.getSbidx(), "W");	// 책 상태 W로 변경
-			}
+			result += orderDao.addNewOrder(odto);
+			result += storeBookDaoImpl.updateBook(odto.getSbidx(), "W");	// 책 상태 W로 변경
 
-			if( result != order_list.size() ) throw new CreateOrderFailedException();
-			
-			// 쿠키 비우기
-			for(int i=0; i < item_arr.size(); i++) {
-				JSONObject json_ = (JSONObject)item_arr.get(i);
-				int sidx = Integer.parseInt(json_.get("sidx").toString());
-				String isbn = (String)json_.get("isbn");
-				DeleteItemCart(response, request, sidx, isbn);
-			}
-			
-			return result;
+			if( result != 2 ) throw new CreateOrderFailedException();
 
-		}else {
-			return -1;	// 유저의 포인트가 적다
-		}		
-
+			return udto.getPoint() - vo.getPoint();
+		}
+		else
+			throw new RequireMorePointException();
 	}
 	
 	public List<OrderVO> getOrdersPageByState(int sidx, int cp, int listsize, OrderDTO.State state){
@@ -243,6 +249,25 @@ public class OrderService {
 	}
 	
 	@Transactional
+	public int returnREQ(int oaidx) {
+		OrderDTO odto = orderDao.getDTO(oaidx);
+		if( odto.getState() == OrderDTO.State.BDC ) {
+			nextStep( oaidx );
+			return 1;
+		}
+		return 0;
+	}
+
+	@Transactional
+	public int returnREQ(int[] oaidx) {
+		int result = 0;
+		for(int i=0; i < oaidx.length; i++)
+			result += returnREQ(oaidx[i]);
+		
+		return result;
+	}
+	
+	@Transactional
 	public int reqDelay(int oaidx) {
 		OrderDTO odto = orderDao.getDTO(oaidx);
 		StoreBookDTO sbdto = storeBookDaoImpl.getBook( odto.getSbidx() );
@@ -255,8 +280,9 @@ public class OrderService {
 	}
 	
 	@Transactional
-	public int nextStep(int oaidx) {
+	private int nextStep(int oaidx) {
 		OrderDTO odto = orderDao.getDTO(oaidx);
+		StoreBookDTO sbdto;
 		
 		switch( odto.getState() ) {
 		case BREQ: 	
@@ -265,19 +291,24 @@ public class OrderService {
 			return orderDao.changeState(oaidx, "bddate", OrderDTO.State.BD);
 		case BD:	
 			orderDao.changeState(oaidx, "bdcdate", OrderDTO.State.BDC);
-			StoreBookDTO sbdto = storeBookDaoImpl.getBook(odto.getSbidx());
+			sbdto = storeBookDaoImpl.getBook(odto.getSbidx());
 				
 			orderDao.setExpDate(odto.getOaidx(), sbdto.getExp());
 			storeBookDaoImpl.updateBook(sbdto.getSbidx(), "B");		// 대여중B로 상태 변경
 			return 1;
-		case BDC:	
-			break;
+		case BDC:
+			orderDao.changeState(oaidx, "rreqdate", OrderDTO.State.RREQ);
+			sbdto = storeBookDaoImpl.getBook(odto.getSbidx());
+		
+			return storeBookDaoImpl.updateBook(sbdto.getSbidx(), "RW");		// 반납대기로 상태 변경
 		case RREQ:	
 			return orderDao.changeState(oaidx, "rcdate", OrderDTO.State.RC);
 		case RC:	
 			return orderDao.changeState(oaidx, "rddate", OrderDTO.State.RD);
 		case RD:	
-			return orderDao.changeState(oaidx, "rdcdate", OrderDTO.State.RDC);
+			sbdto = storeBookDaoImpl.getBook(odto.getSbidx());
+			orderDao.changeState(oaidx, "rdcdate", OrderDTO.State.RDC);
+			return storeBookDaoImpl.updateBook(sbdto.getSbidx(), "S");
 		case RDC:
 			break;
 		}

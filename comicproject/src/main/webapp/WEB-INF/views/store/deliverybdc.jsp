@@ -7,10 +7,10 @@
 			<option value="r">반납</option>
 		</select>
 		<select id="step">
-			<option value="req" selected>요청</option>
+			<option value="req">요청</option>
 			<option value="c">확인</option>
 			<option value="d">배송</option>
-			<option value="dc">완료</option>
+			<option value="dc" selected>완료</option>
 		</select>
 		<button class="btn btn-primary" type="button" id="view">조회</button>
 	</div>
@@ -47,9 +47,9 @@
 		</table>
 	</div>
 
-	<div class="container-fluid">
-		<ul class="pagination">${pagestr}
-		</ul>
-	</div>
+	<div class="container-fluid" style="text-align: center;">
+			<ul class="pagination">${pagestr}
+			</ul>
+		</div>
 
 

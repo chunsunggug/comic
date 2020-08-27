@@ -3,8 +3,8 @@
 
 	<div class="container-fluid text-right">
 		<select id="type">
-			<option value="b" selected>대여</option>
-			<option value="r">반납</option>
+			<option value="b">대여</option>
+			<option value="r" selected>반납</option>
 		</select>
 		<select id="step">
 			<option value="req" selected>요청</option>
@@ -41,17 +41,17 @@
 							class="img-responsive" src="${item.thumbnail}" /></th>
 						<th style="vertical-align: middle">${item.title}</th>
 						<th style="vertical-align: middle">${item.point}</th>
-						<th style="vertical-align: middle">${item.breqdate}</th>
-						<th style="vertical-align: middle">${item.bcdate}</th>
+						<th style="vertical-align: middle">${item.rreqdate}</th>
+						<th style="vertical-align: middle">${item.rcdate}</th>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 	</div>
 
-	<div class="container-fluid">
-		<ul class="pagination">${pagestr}
-		</ul>
-	</div>
+	<div class="container-fluid" style="text-align: center;">
+			<ul class="pagination">${pagestr}
+			</ul>
+		</div>
 
 
