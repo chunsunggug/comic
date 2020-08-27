@@ -105,12 +105,16 @@ CREATE TABLE `t_store_book` (
 	`category` VARCHAR(50) NULL COLLATE 'utf8_general_ci',
 	`udate` DATE NOT NULL DEFAULT current_timestamp() COMMENT '최근수정날짜',
 	`status` VARCHAR(5) NOT NULL DEFAULT 'S' COMMENT 'S입점,L분실' COLLATE 'utf8_general_ci',
+	`exp` INT(11) NOT NULL DEFAULT '3',
+	`expdel` INT(11) NOT NULL DEFAULT '3',
+	`maxexpcount` INT(11) NOT NULL DEFAULT '2',
 	PRIMARY KEY (`sbidx`) USING BTREE
 )
 COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=15
 ;
+
 
 
 drop table if exists t_order cascade;
@@ -129,15 +133,18 @@ CREATE TABLE `t_order` (
 	`rddate` DATETIME NULL,
 	`rdcdate` DATETIME NULL,
 	`odate` DATETIME NOT NULL DEFAULT current_timestamp(),
-	`state` VARCHAR(50) NOT NULL DEFAULT BREQ COLLATE 'utf8_general_ci',
+	`state` VARCHAR(50) NOT NULL DEFAULT 'BREQ' COLLATE 'utf8_general_ci',
 	`point` INT(11) NOT NULL,
 	`uaddr` VARCHAR(255) NOT NULL COLLATE 'utf8_general_ci',
+	`delcount` INT(11) NOT NULL DEFAULT '0',
+	`expdate` DATE NULL COMMENT '반납예정일',
 	PRIMARY KEY (`oaidx`) USING BTREE
 )
 COLLATE='utf8_general_ci'
 ENGINE=InnoDB
-AUTO_INCREMENT=3
+AUTO_INCREMENT=6
 ;
+
 
 
 
