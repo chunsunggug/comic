@@ -98,7 +98,7 @@ $('#rreqbtn').click( function() {
 		success : function(result){
 			if(result == total){
 				alert("반납신청이 완료되었습니다");
-				location.replace(replaceurl);
+				location.replace(true);
 			}else{
 				alert("반납신청이 실패하였습니다");
 			}

@@ -103,7 +103,7 @@ function addBookData(data){
 		url: '/comic/store/register.do?'+param,
 		dataType: 'text',
 		success: function(result){
-			if(result == 1) {
+			if(result >= 1) {
 				alert("도서 추가가 완료되었습니다");
 				window.location.replace("http://localhost:8080/comic/store/listbook.do");
 			}

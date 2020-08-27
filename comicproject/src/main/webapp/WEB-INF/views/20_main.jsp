@@ -256,7 +256,7 @@
                                     <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F436812%3Ftimestamp%3D20200627132145" alt="" class="img-responsive">
                                 </a>
                                 <div class="text">
-                                    <h3><a href="/comic/bookdetail.do?sidx=1&isbn=9791135421761">후르츠 바스켓 another 1권</a></h3>
+                                    <h3><a href="/comic/bookdetail.do?sidx=1&isbn=9788926362754">후르츠 바스켓 another 1권</a></h3>
                                 </div>
                                 <!-- /.text -->
 
@@ -286,7 +286,7 @@
                                     <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F5074295%3Ftimestamp%3D20200810131125" alt="" class="img-responsive">
                                 </a>
                                 <div class="text">
-                                    <h3><a href="/comic/bookdetail.do?sidx=1&isbn=9788926362754">룬의 아이들 블러디드 2권</a></h3>
+                                    <h3><a href="/comic/bookdetail.do?sidx=1&isbn=9788954657556">룬의 아이들 블러디드 2권</a></h3>
                                 </div>
                                 <!-- /.text -->
 
@@ -314,7 +314,7 @@
                                     <img style="width:183px;height:244px;" src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F5248608%3Ftimestamp%3D20200813143758" alt="" class="img-responsive">
                                 </a>
                                 <div class="text">
-                                    <h3><a href="/comic/bookdetail.do?sidx=1&isbn=9788954657556">원펀맨</a></h3>
+                                    <h3><a href="/comic/bookdetail.do?sidx=1&isbn=9791136221582">원펀맨</a></h3>
                                 </div>
                                 <!-- /.text -->
                             </div>

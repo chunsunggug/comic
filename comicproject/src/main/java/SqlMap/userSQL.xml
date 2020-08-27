@@ -26,7 +26,7 @@
 
 	<insert id="addUser"
 		parameterType="com.project.comic.user.UserDTO">
-		insert into t_user(id,pwd,name,addr,phone,birth,isYn)
+		insert into t_user(id,pwd,name,addr,phone,birth,isyn)
 		values(#{id},#{pwd},#{name},#{addr},#{phone},#{birth},#{isyn})
 	</insert>
 

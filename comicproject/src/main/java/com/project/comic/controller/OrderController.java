@@ -1,5 +1,6 @@
 package com.project.comic.controller;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
@@ -88,11 +89,18 @@ public class OrderController {
 			
 			if( result < 0 ) {
 				System.out.println("결제 실패 !! : " + result);
-				mv.addObject( "page", "20_main.jsp");// "pay/payresult.jsp" );
+				mv.addObject( "page", "20_main.jsp");
+				return mv;
 			}
 		}
 		
-		return mv;
+		try {
+			response.sendRedirect("/comic/bbooklist.do");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	@RequestMapping(value="directpay.do")
