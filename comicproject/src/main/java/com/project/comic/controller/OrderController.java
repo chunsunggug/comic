@@ -100,16 +100,21 @@ public class OrderController {
 	public String directPay(@RequestParam("sidx")int sidx, @RequestParam("isbn")String isbn, HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String user_id = (String)session.getAttribute("id");
+		int point = (int)session.getAttribute("point");
 		int uidx = (int)session.getAttribute("uidx");
-		int result = 0;
+		int left_point = 0;
 		
 		try {
-			result = orderService.payPoint(uidx, user_id, sidx, isbn, -1);
+			left_point = orderService.payPoint(uidx, user_id, sidx, isbn, -1);
+			if( point != left_point )
+				session.setAttribute("point", left_point);
+			
+			return left_point+"";
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		
-		return result+"";
+		return -1+"";
 	}
 
 }
