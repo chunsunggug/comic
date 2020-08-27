@@ -104,6 +104,7 @@ function directPay(sidx, isbn){
 
 			if( result >0  ){ 
 				alert("대여신청이 완료되었습니다");
+				window.location.reload(true);
 				return;
 			}else{
 				alert("대여신청이 실패하였습니다");

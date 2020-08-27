@@ -47,7 +47,7 @@
 				</table>
 			</div>
 
-			<div class="container-fluid">
+			<div class="container-fluid" style="text-align: center;">
 				<ul class="pagination">${pagestr}
 				</ul>
 			</div>

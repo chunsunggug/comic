@@ -76,7 +76,7 @@ public class StoreController {
 		mv.setViewName("index");
 		mv.addObject("page","store/listbook.jsp");
 		mv.addObject("left_panel","");
-		mv.addObject("panelidx", 4);
+		mv.addObject("panelidx", 5);
 		mv.addObject( "listitem", list_vo );
 		mv.addObject("pagestr", pagestr);
 		
@@ -165,7 +165,7 @@ public class StoreController {
 		dto.setIsbn10( (String)param.get("isbn") );
 		dto.setIsbn13( (String)param.get("isbn") );
 		dto.setPoint( Integer.parseInt((String)param.get("point")) );
-		dto.setSidx(1); // session.getAttribute("sidx");
+		dto.setSidx((int)session.getAttribute("uidx"));
 		
 		int result = storeBookService.add( dto,
 						Integer.parseInt((String)param.get("total")) );
@@ -230,7 +230,7 @@ public class StoreController {
 		mv.setViewName("index");
 		mv.addObject("page","store/deliverymanage.jsp");
 		mv.addObject("left_panel", "");
-		mv.addObject("panelidx", 5);
+		mv.addObject("panelidx", 6);
 
 		mv.addObject("order_list", vo_list);
 		

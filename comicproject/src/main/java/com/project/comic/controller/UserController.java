@@ -56,9 +56,11 @@ public class UserController {
 		
 		String kakao = (String) session.getAttribute("token");
 		System.out.println("kakao token : "+kakao);
+		System.out.println("kakao pwd : "+session.getAttribute("pwd"));
 		if(kakao==null) {
 			userDto.setIsyn("W");
 		}else {
+			
 			userDto.setPwd((String)session.getAttribute("pwd"));
 			userDto.setIsyn("YK");
 		}
