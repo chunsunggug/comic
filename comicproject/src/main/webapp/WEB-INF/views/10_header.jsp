@@ -19,7 +19,7 @@
 <c:set var="name" value="${name }" scope="session" />
 <c:set var="point" value="${point }" scope="session" />
 <c:set var="type" value="${type }" scope="session" />
-<c:set var="isYn" value="${isYn }" scope="session" />
+<c:set var="isyn" value="${isyn }" scope="session" />
 
 
 <body>
@@ -288,7 +288,9 @@
 								<span style="color: white" class="navlogininfo">${name}님
 									환영합니다. || </span> <span style="color: white" class="navlogininfo">현재
 									잔여 포인트 : ${point } ||<br> </span> <a href="/comic/myInfo.do"><span
-									style="color: white" class="navlogininfo">마이페이지 || </span></a> <a
+									style="color: white" class="navlogininfo">마이페이지 || </span></a><a
+									href="/comic/listuser.do"><span style="color: white"
+									class="navlogininfo">회원관리 || </span></a> <a
 									href="/comic/store/listbook.do"><span style="color: white"
 									class="navlogininfo">도서관리 || </span></a> <a
 									href="/comic/store/deliverymanage.do"><span style="color: white"

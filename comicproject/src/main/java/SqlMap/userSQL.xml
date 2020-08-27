@@ -20,9 +20,9 @@
 	</select>
 
 	<select id="getUserAll"
-		resultType="com.project.comic.user.UserDTO">
-		select * from t_user;
-	</select>
+		resultType="com.project.comic.user.UserVO">
+		SELECT * FROM v_login WHERE isyn !='n' AND type = 'C' ORDER BY uidx asc
+		</select>
 
 	<insert id="addUser"
 		parameterType="com.project.comic.user.UserDTO">

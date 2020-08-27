@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page session="true" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!-- *** FOOTER ***
  _________________________________________________________ -->
@@ -59,12 +59,12 @@
 
                     <div class="col-md-4 col-sm-6">
 
- <center>                       <h4>Store Address</h4></center>
+ <center>                       <h4><b>제휴 예정 도서관</b></h4></center>
 
-           <center>             <p><strong>대한민국(South Korea)</strong>
-                            <br>서울특별시
-                            <br>관악구 성현동 35-8
-                            <br>지층 행복한 토라비
+           <center>             <p>구립공공도서관
+                            <br>구립작은도서관
+                            <br>U-도서관
+                            <br>민간 도서 대여점
                         </p></center>
 
 
