@@ -76,7 +76,7 @@ public class StoreController {
 		mv.setViewName("index");
 		mv.addObject("page","store/listbook.jsp");
 		mv.addObject("left_panel","");
-		mv.addObject("panelidx", 5);
+		mv.addObject("pan_id", "pan_bookmng");
 		mv.addObject( "listitem", list_vo );
 		mv.addObject("pagestr", pagestr);
 		
@@ -230,7 +230,7 @@ public class StoreController {
 		mv.setViewName("index");
 		mv.addObject("page","store/deliverymanage.jsp");
 		mv.addObject("left_panel", "");
-		mv.addObject("panelidx", 6);
+		mv.addObject("pan_id", "pan_delmng");
 
 		mv.addObject("order_list", vo_list);
 		

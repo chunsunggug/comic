@@ -16,16 +16,18 @@
 					<h3 class="panel-title">My Page Section</h3>
 				</div>
 				<div class="panel-body">
-					<ul class="nav nav-pills nav-stacked panel_ul">
-						<li><a href="/comic/myInfo.do"><i
+					<ul class="nav nav-pills nav-stacked">
+						<li id="pan_myinfo"><a href="/comic/myInfo.do"><i
 								class="fa fa-list"></i>내 정보</a></li>
-						<li><a href="/comic/bbooklist.do"><i class="fa fa-heart"></i>대여 신청 목록</a></li>
+						<li id="pan_bbooklist"><a href="/comic/bbooklist.do"><i class="fa fa-heart"></i>대여 신청 목록</a></li>
 						<li><a href="#"><i class="fa fa-user"></i>대여 완료 목록</a></li>
 						<li><a href="#"><i class="fa fa-question"></i>나의 후기 작성 글</a>
 						</li>
-						<li><a href="/comic/listuser.do"><i class="fa fa-heart"></i>회원관리</a></li>
-						<li><a href="/comic/store/listbook.do"><i class="fa fa-heart"></i>도서관리</a></li>
-						<li><a href="/comic/store/deliverymanage.do"><i class="fa fa-heart"></i>배송관리</a></li>
+						<c:if test="${type ne 'C' }">
+						<li id="pan_memmng"><a href="/comic/listuser.do"><i class="fa fa-heart"></i>회원관리</a></li>
+						<li id="pan_bookmng"><a href="/comic/store/listbook.do"><i class="fa fa-heart"></i>도서관리</a></li>
+						<li id="pan_delmng"><a href="/comic/store/deliverymanage.do"><i class="fa fa-heart"></i>배송관리</a></li>
+						</c:if>
 						<li><a href="#" onclick="removeCheck()"><i
 								class="fa fa-sign-out"></i>회원탈퇴</a></li>
 					</ul>
@@ -43,8 +45,7 @@
 <script>
 
 $(document).ready(function(){
-	var panelitem = $('.panel_ul li').eq(${panelidx});
-	panelitem.addClass('active');
+	var panelitem = $('#${pan_id}').addClass('active');
 	$('.breadcrumb').append("<li>"+panelitem.children('a')[0].innerText+"</li>");
 });
 </script>

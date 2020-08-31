@@ -327,8 +327,8 @@ public class UserController {
 			mv.addObject("udto", udto);
 		}
 
-		mv.addObject("panelidx", 0);
 		mv.addObject("left_panel", "");
+		mv.addObject("pan_id", "pan_myinfo");
 		mv.addObject("page", url + ".jsp");
 		url = "index";
 		mv.setViewName(url);
@@ -423,8 +423,8 @@ public class UserController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("index");
 		mv.addObject("page", "user/bbooklist.jsp");
-		mv.addObject("panelidx", 1);
 		mv.addObject("left_panel", "");
+		mv.addObject("pan_id", "pan_bbooklist");
 		
 		int uidx = (int)session.getAttribute("uidx");
 		List<OrderVO> vo_list = orderService.getOrdersPageByType(uidx, cp, 10, "B");
