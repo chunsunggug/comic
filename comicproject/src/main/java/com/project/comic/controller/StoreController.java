@@ -1,6 +1,5 @@
 package com.project.comic.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +25,6 @@ import com.project.comic.book.kakao.BookGroupVOMakerByKakao;
 import com.project.comic.book.kakao.BookVOMakerByKakao;
 import com.project.comic.book.kakao.KakaoQueryModel;
 import com.project.comic.order.OrderDTO;
-import com.project.comic.order.OrderDTO.State;
 import com.project.comic.order.OrderService;
 import com.project.comic.order.OrderVO;
 import com.project.comic.page.PageMaker;
@@ -63,7 +61,12 @@ public class StoreController {
 	@RequestMapping(value="/listbook.do")
 	public ModelAndView listBook(HttpSession session,
 			@RequestParam(value="cp", defaultValue="1")int cp) {
+		ModelAndView mv = isStore(session);
 		
+		if( mv != null )
+			return mv;
+		
+		mv = new ModelAndView();
 		int sidx = (int)session.getAttribute("uidx");
 		List<StoreBookDTO> list_dto = storeBookService.getPageList(cp, PAGE_LIST_SIZE, 1);
 		List<BookVO> list_vo = bookVOMakerByKakao.getVOList(list_dto);
@@ -71,7 +74,6 @@ public class StoreController {
 		int total = storeBookService.getBooksCountAll(sidx);
 		String pagestr = PageMaker.makePage("/comic/store/listbook.do", total, PAGE_LIST_SIZE, PAGE_SIZE, cp);
 		
-		ModelAndView mv = new ModelAndView();
 		
 		mv.setViewName("index");
 		mv.addObject("page","store/listbook.jsp");
@@ -218,11 +220,16 @@ public class StoreController {
 	public ModelAndView delivery(HttpSession session,
 			@RequestParam(value="cp", defaultValue="1")int cp,
 			@RequestParam(value="state", defaultValue="breq") String state_) {
+		ModelAndView mv = isStore(session);
+		
+		if( mv != null )
+			return mv;
+		
+		mv = new ModelAndView();
 		int sidx = (int)session.getAttribute("uidx");
 		OrderDTO.State state = Enum.valueOf(OrderDTO.State.class, state_.toUpperCase());
 		String lower_case = state.toString().toLowerCase();
 		List<OrderVO> vo_list = orderService.getOrdersPageByState(sidx, cp, 10, state);
-		ModelAndView mv = new ModelAndView();
 		
 		mv.addObject("delivery_page", "delivery" + lower_case + ".jsp"); 
 		String pager = PageMaker.makePage("/comic/store/deliverymanage.do?state=" +lower_case, vo_list.size(), 10, 10, cp);
@@ -257,5 +264,17 @@ public class StoreController {
 		int result = orderService.nextStep(oaidx);
 		
 		return result+"";
+	}
+	
+	// 관리자가 아닌 유저는 못들어오게 한다
+	public ModelAndView isStore(HttpSession session) {
+		String type = (String)session.getAttribute("type");
+		if(!type.equals("S")) {
+			ModelAndView mv = new ModelAndView();
+			mv.setViewName("notstore");
+			return mv;
+		}
+		
+		return null;
 	}
 }
